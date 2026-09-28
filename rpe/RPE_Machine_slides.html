@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="en" data-base="1.5.0" data-persist="on" data-page="rpe-machine-slides" data-profile="deck">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f7f6f1" id="themeColor">
+<meta name="description" content="A 30-minute PhD coursework presentation on paper mills, tortured phrases and generative AI in research integrity, with live phone polls, a scored quiz and a leaderboard.">
+<title>The Machine That Writes Papers · RPE coursework talk</title>
+<script>document.documentElement.classList.add('js')</script>
+<script>try{var r=document.documentElement,t=localStorage.getItem('kp:theme');if(t==='light'||t==='dark')r.dataset.theme=t}catch(e){}</script>
+<style>
+/* DESIGN: Evidence desk. Paper white, ink navy, one verdigris accent for "human", one amber for "machine";
+   serif display for claims, mono for evidence lines. Restrained for an evaluation panel; the loud moments are
+   the live bars filling and the leaderboard confetti. */
+/* ===== 1. TOKENS — names are fixed by kp-html-base; VALUES are the page's own design choice ===== */
+:root{
+  --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+  --sal:env(safe-area-inset-left,0px); --sar:env(safe-area-inset-right,0px);
+  --pad:clamp(16px,4vw,32px); --gap:clamp(12px,3vw,24px);
+  --r:16px; --r-lg:24px; --r-pill:999px;
+  --nav-h:65px; --dock-h:73px; --measure:68ch;
+  --dur-1:140ms; --dur-2:260ms; --dur-3:460ms;
+  --ease-out:cubic-bezier(.22,.61,.36,1); --ease-in:cubic-bezier(.55,.06,.68,.19);
+  --ease-soft:cubic-bezier(.2,.8,.2,1); --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --step--1:clamp(.84rem,.82rem + .1vw,.9rem);
+  --step-0:clamp(1rem,.95rem + .25vw,1.12rem);
+  --step-1:clamp(1.2rem,1.1rem + .5vw,1.45rem);
+  --step-2:clamp(1.6rem,1.32rem + 1.4vw,2.4rem);
+  --step-3:clamp(2.1rem,1.6rem + 2.5vw,3.4rem);
+  --font-body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-display:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --font-mono:ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,monospace;
+  --bg:#f7f6f1; --card:#fffefb; --soft:#ece9df; --fg:#17202c; --muted:#4e5665;
+  --line:#cdc8ba; --accent:#0f6f78; --accent-fg:#fffefb; --accent-2:#b4600b;
+  --nav-bg:rgba(247,246,241,.88);
+  --shadow-1:0 1px 2px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+  --shadow-2:0 6px 18px rgba(0,0,0,.08),0 1px 3px rgba(0,0,0,.05);
+  --shadow-3:0 18px 48px rgba(0,0,0,.14);
+  --ambient-glow:rgba(15,111,120,.08); --ambient-rule:rgba(23,32,44,.035);
+  --glass:rgba(255,254,251,.74); --code-bg:#1e1e2e; --code-fg:#f2f2f0;
+  --ok:#1d7a4f; --warn:#8a5a00; --bad:#b3261e;
+  --human:#0f6f78; --machine:#b4600b; --human-soft:rgba(15,111,120,.14); --machine-soft:rgba(180,96,11,.16);
+  --qr-bg:#ffffff; --qr-fg:#111111; /* QR only: fixed in both themes so scanners read it */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#10141b; --card:#181e28; --soft:#242c39; --fg:#ecebe5; --muted:#a9b0bc;
+    --line:#3a4354; --accent:#6fd0d8; --accent-fg:#10141b; --accent-2:#f0b35d;
+    --nav-bg:rgba(16,20,27,.88);
+    --shadow-1:0 1px 2px rgba(0,0,0,.4); --shadow-2:0 8px 22px rgba(0,0,0,.45); --shadow-3:0 22px 56px rgba(0,0,0,.6);
+    --ambient-glow:rgba(111,208,216,.07); --ambient-rule:rgba(236,235,229,.03);
+    --glass:rgba(24,30,40,.74); --code-bg:#11121a; --code-fg:#f2f2f0;
+    --ok:#6fd3a0; --warn:#f0c05a; --bad:#ff8a80;
+    --human:#6fd0d8; --machine:#f0b35d; --human-soft:rgba(111,208,216,.16); --machine-soft:rgba(240,179,93,.18);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10141b; --card:#181e28; --soft:#242c39; --fg:#ecebe5; --muted:#a9b0bc;
+  --line:#3a4354; --accent:#6fd0d8; --accent-fg:#10141b; --accent-2:#f0b35d;
+  --nav-bg:rgba(16,20,27,.88);
+  --shadow-1:0 1px 2px rgba(0,0,0,.4); --shadow-2:0 8px 22px rgba(0,0,0,.45); --shadow-3:0 22px 56px rgba(0,0,0,.6);
+  --ambient-glow:rgba(111,208,216,.07); --ambient-rule:rgba(236,235,229,.03);
+  --glass:rgba(24,30,40,.74); --code-bg:#11121a; --code-fg:#f2f2f0;
+  --ok:#6fd3a0; --warn:#f0c05a; --bad:#ff8a80;
+  --human:#6fd0d8; --machine:#f0b35d; --human-soft:rgba(111,208,216,.16); --machine-soft:rgba(240,179,93,.18);
+}
+
+/* ===== 2. RESET / BASE ===== */
+*,*::before,*::after{box-sizing:border-box}
+html{color-scheme:light dark;-webkit-text-size-adjust:100%;text-size-adjust:100%;
+  scroll-padding-top:calc(var(--nav-h) + var(--sat) + 12px);scroll-behavior:smooth}
+:root[data-theme="light"]{color-scheme:light}
+:root[data-theme="dark"]{color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:400 var(--step-0)/1.55 var(--font-body);
+  overflow-x:clip;-webkit-tap-highlight-color:transparent;text-rendering:optimizeLegibility;
+  padding-top:calc(var(--nav-h) + var(--sat) + var(--gap));
+  padding-bottom:calc(var(--sab) + var(--gap));
+  padding-left:calc(var(--sal) + var(--pad)); padding-right:calc(var(--sar) + var(--pad))}
+img,video,canvas,svg{max-width:100%;display:block;height:auto}
+h1,h2,h3{font-family:var(--font-display)}
+h1{font-size:var(--step-3);line-height:1.08;margin:.2em 0 .4em;text-wrap:balance}
+h2{font-size:var(--step-2);line-height:1.15;margin:1.2em 0 .4em;text-wrap:balance}
+h3{font-size:var(--step-1);line-height:1.25;margin:1em 0 .35em}
+p{text-wrap:pretty}
+code,kbd,pre{font-family:var(--font-mono)}
+button,input,select,textarea{font:inherit;color:inherit}
+input:not([type=checkbox]):not([type=radio]):not([type=range]),select,textarea{font-size:max(16px,1em);min-height:48px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);max-width:100%}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-9999px}
+.skip:focus{display:inline-flex;align-items:center;min-height:48px;left:12px;top:calc(var(--sat) + 8px);z-index:100;background:var(--card);color:var(--fg);padding:12px 16px;border-radius:10px;border:1px solid var(--line)}
+
+/* ===== 3. NAV (kp-html-base — edit HERE ONLY, every skill inherits) ===== */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;gap:8px;
+  padding:calc(var(--sat) + 8px) calc(var(--sar) + var(--pad)) 8px calc(var(--sal) + var(--pad));
+  background:var(--nav-bg);border-bottom:1px solid var(--line);
+  -webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.nav{background:var(--card)}}
+.nav-brand{display:flex;align-items:center;gap:10px;min-width:0;margin-right:auto}
+.nav-brand>div{min-width:0}
+.nav-logo{width:40px;height:40px;flex:none;border-radius:50%;object-fit:contain;background:transparent}
+.nav-name{font-weight:700;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-sub{font-size:.75rem;line-height:1.2;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-cta{display:inline-flex;align-items:center;min-height:48px;padding:0 14px;flex:none;
+  border-radius:var(--r-pill);background:var(--accent);color:var(--accent-fg);
+  font-size:.85rem;font-weight:600;text-decoration:none;white-space:nowrap}
+.theme-toggle{flex:none;width:48px;height:48px;border:0;border-radius:50%;background:transparent;
+  font-size:1.25rem;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+@media (hover:hover){.theme-toggle:hover{background:var(--soft)}}
+.nav-roll{cursor:default;background:var(--soft);color:var(--fg);border:1px solid var(--line);font-variant-numeric:tabular-nums;max-width:44vw;overflow:hidden}
+@media (max-width:379px){.nav-sub{display:none}.nav-cta{padding:0 10px;font-size:.78rem}.nav-roll-label{display:none}}
+@media (max-width:479px){.nav-roll-label{display:none}.nav-roll{padding:0 12px}}
+
+/* ===== 4. LAYOUT / COMPONENTS ===== */
+.wrap{max-width:72rem;margin-inline:auto}
+.measure{max-width:var(--measure)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:var(--gap)}
+.btn{min-height:48px;min-width:48px;padding:12px 20px;border-radius:var(--r-pill);cursor:pointer;
+  border:1px solid var(--line);background:var(--card);
+  transition:transform var(--dur-1) var(--ease-out),border-color var(--dur-1) var(--ease-out)}
+.btn:active{transform:scale(.96)}
+.btn:disabled{opacity:.45;cursor:default;transform:none}
+.btn-primary{background:var(--accent);color:var(--accent-fg);border-color:transparent}
+@media (hover:hover){.btn:not(:disabled):hover{border-color:var(--accent)}}
+.num{font-variant-numeric:tabular-nums}
+.meter{height:8px;border-radius:var(--r-pill);background:var(--soft);overflow:hidden}
+.meter>span{display:block;height:100%;border-radius:inherit;background:var(--accent);transform-origin:0 50%;transform:scaleX(var(--p,0));transition:transform var(--dur-3) var(--ease-out)}
+body.has-dock{padding-bottom:calc(var(--dock-h) + var(--sab) + var(--gap))}
+.dock{position:fixed;inset:auto 0 0 0;z-index:40;display:flex;gap:12px;align-items:center;
+  padding:12px calc(var(--sar) + var(--pad)) calc(var(--sab) + 12px) calc(var(--sal) + var(--pad));
+  background:var(--nav-bg);border-top:1px solid var(--line);
+  -webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.dock{background:var(--card)}}
+.dock .btn{flex:1;padding-block:0;line-height:1.2}
+.dock-status{flex:none;font-variant-numeric:tabular-nums;color:var(--muted);font-size:.9rem;min-width:4.5em;text-align:center}
+/* option rows (audience): whole row is the tap target */
+.opts{display:grid;gap:10px;margin:0;padding:0;border:0}
+.opt{position:relative;display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 16px;
+  border-radius:var(--r);background:var(--soft);border:2px solid var(--line);cursor:pointer;
+  transition:border-color var(--dur-1) var(--ease-out),transform var(--dur-1) var(--ease-out)}
+.opt input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.opt-mark{flex:none;width:28px;height:28px;border-radius:50%;border:2px solid var(--muted);background:var(--card);
+  display:inline-grid;place-items:center;font:700 .8rem/1 var(--font-mono)}
+.opt input:checked + .opt-mark{border-color:var(--accent);background:var(--accent);color:var(--accent-fg)}
+.opt:has(input:checked){border-color:var(--accent)}
+.opt:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:3px}
+.opt:active{transform:scale(.99)}
+.opt-text{min-width:0;overflow-wrap:anywhere}
+.countdown,.countup{font-variant-numeric:tabular-nums}
+
+/* ===== 5. MOTION ===== */
+.js [data-reveal]{opacity:0;transform:translate3d(0,20px,0);
+  transition:opacity var(--dur-3) var(--ease-soft) var(--d,0ms),transform var(--dur-3) var(--ease-soft) var(--d,0ms)}
+.js [data-reveal].is-in{opacity:1;transform:none}
+@keyframes kp-rise{from{opacity:0;transform:translate3d(0,24px,0)}to{opacity:1;transform:none}}
+@keyframes kp-slam{0%{opacity:0;transform:rotate(var(--tilt,-6deg)) scale(2.4)}62%{opacity:1;transform:rotate(var(--tilt,-6deg)) scale(.94)}100%{opacity:1;transform:rotate(var(--tilt,-6deg)) scale(1)}}
+@keyframes kp-pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}
+@keyframes kp-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.kp-rise{animation:kp-rise var(--dur-3) var(--ease-soft) both}
+.kp-slam{display:inline-block;animation:kp-slam .55s var(--ease-spring) both}
+.kp-pop{animation:kp-pop var(--dur-3) var(--ease-spring) both}
+.pulse{animation:kp-pulse 2.4s ease-in-out infinite}
+body[data-ambient]::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(1100px 650px at 75% -10%,var(--ambient-glow),transparent 60%),
+    repeating-linear-gradient(0deg,transparent 0 46px,var(--ambient-rule) 46px 47px)}
+[data-motion="paused"] *,[data-motion="paused"] *::before,[data-motion="paused"] *::after{animation-play-state:paused !important}
+@media print{
+  .nav,.dock,.theme-toggle,[data-pause-motion]{display:none !important}
+  body{padding:0;background:#fff;color:#000}
+  .js [data-reveal]{opacity:1 !important;transform:none !important}
+}
+
+/* ===== KIT: DECK / STAGE (kp-html-base 1.5.0) ===== */
+.deck{max-width:none;margin:0}
+.slide{padding-block:var(--gap) calc(var(--gap) * 2);border-bottom:1px solid var(--line)}
+.slide:focus{outline:none}
+.slide-inner{max-width:72rem;margin-inline:auto;width:100%}
+.js .deck:not(.is-all) .slide{position:fixed;z-index:1;left:0;right:0;
+  top:var(--deck-top,calc(var(--nav-h) + var(--sat) + 3px));bottom:var(--deck-bottom,calc(var(--dock-h) + var(--sab)));
+  overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  display:flex;flex-direction:column;border:0;
+  padding:var(--gap) calc(var(--sar) + var(--pad)) calc(var(--gap) * 1.5) calc(var(--sal) + var(--pad));
+  opacity:0;visibility:hidden;
+  transition:opacity var(--dur-3) var(--ease-out),visibility 0s linear var(--dur-3)}
+.js .deck:not(.is-all) .slide.is-active{z-index:2;opacity:1;visibility:visible;
+  transition:opacity var(--dur-3) var(--ease-out),visibility 0s}
+.js .deck:not(.is-all) .slide-inner{margin:auto}
+.deck-progress{position:fixed;left:0;right:0;top:var(--deck-bar,calc(var(--nav-h) + var(--sat)));height:3px;z-index:45;background:var(--soft);display:none}
+.deck-progress>span{display:block;height:100%;background:var(--accent);transform-origin:0 50%;transform:scaleX(var(--p,0));
+  transition:transform var(--dur-3) var(--ease-out)}
+.deck-dock{display:none}
+.js .deck-progress{display:block}
+.js .deck-dock{display:flex}
+.deck-dock .btn{padding:12px 14px;white-space:nowrap}
+.deck-dock [data-deck-notes]{flex:none}
+@media (max-width:479px){.deck-dock .lbl{display:none}}
+.deck-notes{position:fixed;z-index:55;left:calc(var(--sal) + var(--pad));right:calc(var(--sar) + var(--pad));
+  bottom:calc(var(--dock-h) + var(--sab) + 10px);max-width:760px;margin-inline:auto;max-height:40dvh;overflow:auto;
+  box-shadow:var(--shadow-3);border-color:var(--accent)}
+.deck-notes h2{font:700 .72rem/1 var(--font-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0 0 .6em}
+.deck-notes p{margin:0}
+.js .deck.is-all .slide{position:static}
+@media print{
+  .js .deck .slide{position:static !important;opacity:1 !important;visibility:visible !important;break-after:page}
+  .deck-progress,.deck-notes,.deck-dock{display:none !important}
+}
+.slide h1,.slide h2{margin-top:.25em}
+@media (min-width:768px){.deck-dock{justify-content:center}.deck-dock .btn{flex:0 1 14rem}}
+.deck-time{margin:.6em 0 0;font:600 .8rem/1.4 var(--font-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.src{font:500 .74rem/1.45 var(--font-mono);color:var(--muted);margin-top:1rem;overflow-wrap:anywhere}
+.refs{list-style:none;padding:0;margin:0;display:grid;gap:.7rem}
+.refs>li{padding-left:1.8em;text-indent:-1.8em;overflow-wrap:anywhere;font-size:.95rem}
+
+/* ===== PAGE DESIGN ===== */
+.kicker{font:700 .74rem/1.3 var(--font-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0}
+.slide h1{font-size:clamp(2.1rem,1.4rem + 3.6vw,4.2rem);line-height:1.05;max-width:20ch}
+.slide h2{max-width:30ch}
+h1 em,h2 em{font-style:italic;color:var(--accent-2)}
+.byline{color:var(--muted);font-size:var(--step-1)}
+.sub{font-size:var(--step-1);color:var(--muted);max-width:40ch;margin:.2em 0 .8em}
+.facts{display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));border-block:1px solid var(--line);padding-block:var(--gap);margin-top:var(--gap)}
+.fact b{display:block;font:700 clamp(1.6rem,1.2rem + 1.8vw,2.6rem)/1.1 var(--font-display);color:var(--accent)}
+.fact>span{color:var(--muted);font-size:var(--step--1)}
+.units{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));margin-top:var(--gap)}
+.unit{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:grid;gap:4px;box-shadow:var(--shadow-1)}
+.unit b{font-family:var(--font-display);font-size:var(--step-1);color:var(--accent)}
+.tag{font:700 .68rem/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);margin-top:var(--gap)}
+.table-wrap table{border-collapse:collapse;width:100%;background:var(--card)}
+.table-wrap th,.table-wrap td{padding:10px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.table-wrap th{background:var(--soft);font-size:.85rem}
+.stamp{font:700 1.05rem/1.1 var(--font-mono);letter-spacing:.18em;color:var(--accent-2);border:3px double currentColor;border-radius:.4em;padding:.45em .8em;--tilt:-5deg;transform:rotate(var(--tilt));display:inline-block;margin-left:.4em}
+.qa{font:700 var(--step-2)/1.1 var(--font-display);color:var(--accent);margin-top:var(--gap)}
+.two{display:grid;gap:var(--gap);grid-template-columns:1fr}
+@media (min-width:900px){.two{grid-template-columns:1fr 1fr;align-items:start}}
+.quote{font-family:var(--font-display);font-size:var(--step-1);line-height:1.35;border-left:4px solid var(--accent-2);padding:.2em 0 .2em 1em;margin:var(--gap) 0}
+.quote small{display:block;font:500 .8rem/1.4 var(--font-mono);color:var(--muted);margin-top:.5em}
+.pill{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:4px 12px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--soft);font:600 .8rem/1 var(--font-mono);color:var(--fg)}
+.pill.on{border-color:var(--ok);color:var(--ok)}
+.pill.off{border-color:var(--bad);color:var(--bad)}
+.tp{font-family:var(--font-mono);font-weight:700;color:var(--machine);background:var(--machine-soft);padding:.05em .35em;border-radius:6px}
+.hm{font-family:var(--font-mono);font-weight:700;color:var(--human);background:var(--human-soft);padding:.05em .35em;border-radius:6px}
+.list{margin:.4em 0 0;padding-left:1.2em;display:grid;gap:.4em}
+.small{font-size:var(--step--1);color:var(--muted)}
+
+/* live question panel (presenter) */
+.live{margin-top:var(--gap);display:grid;gap:var(--gap)}
+.live-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.live-ctl{display:flex;flex-wrap:wrap;gap:8px;margin-left:auto}
+.bars{display:grid;gap:10px}
+.bar{display:grid;grid-template-columns:2.2rem 1fr 4.5rem;gap:10px;align-items:center}
+.bar .k{font:700 .9rem/1 var(--font-mono);width:2.2rem;height:2.2rem;border-radius:50%;display:inline-grid;place-items:center;border:2px solid var(--line);background:var(--card)}
+.bar .t{display:grid;gap:4px;min-width:0}
+.bar .t span{overflow-wrap:anywhere}
+.bar .m{height:14px;border-radius:var(--r-pill);background:var(--soft);overflow:hidden}
+.bar .m>i{display:block;height:100%;background:var(--accent);transform-origin:0 50%;transform:scaleX(var(--p,0));transition:transform var(--dur-3) var(--ease-out)}
+.bar .n{font:700 1rem/1 var(--font-mono);text-align:right;font-variant-numeric:tabular-nums}
+.bar.correct .k{border-color:var(--ok);background:var(--ok);color:var(--accent-fg)}
+.bar.correct .m>i{background:var(--ok)}
+.tally{display:none;gap:6px}
+.deck.offline .tally{display:flex}
+.tally .btn{padding:8px 12px;min-height:44px}
+.answer{display:none;align-items:center;gap:12px;flex-wrap:wrap}
+.answer.show{display:flex}
+
+/* join slide */
+.join{display:grid;gap:var(--gap);grid-template-columns:1fr;align-items:center}
+@media (min-width:800px){.join{grid-template-columns:auto 1fr}}
+.qr{width:min(58vw,320px);aspect-ratio:1;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px;display:grid;place-items:center}
+.qr svg{width:100%;height:100%}
+.qr{background:var(--qr-bg)} /* a QR must stay dark-on-light in both themes so every scanner reads it */
+.qr svg rect{fill:var(--qr-bg)}
+.qr svg path{fill:var(--qr-fg)}
+.qr .qr-placeholder{color:var(--muted);text-align:center;font-size:.9rem}
+.join-url{font:700 clamp(1rem,.8rem + 1.2vw,1.6rem)/1.3 var(--font-mono);overflow-wrap:anywhere;margin:.2em 0}
+.joined{font:700 clamp(2.4rem,2rem + 3vw,4.6rem)/1 var(--font-display);color:var(--accent);margin:.1em 0}
+.setup{display:grid;gap:10px;margin-top:var(--gap)}
+.setup input{width:100%}
+
+/* playground: spin slider */
+.spin{display:grid;gap:var(--gap)}
+.sentence{font-family:var(--font-display);font-size:clamp(1.15rem,1rem + .9vw,1.7rem);line-height:1.45;padding:var(--gap);background:var(--card);border:1px solid var(--line);border-radius:var(--r);min-height:5.5em}
+.sentence .w{display:inline-block;transition:opacity var(--dur-2) var(--ease-out),transform var(--dur-2) var(--ease-out)}
+.sentence .w.spun{color:var(--machine);font-family:var(--font-mono);font-size:.9em;background:var(--machine-soft);border-radius:6px;padding:0 .25em;animation:kp-pop var(--dur-3) var(--ease-spring) both}
+.range{display:grid;gap:6px}
+.range input[type=range]{width:100%;min-height:48px;accent-color:var(--accent);margin:0}
+.meters{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:700px){.meters{grid-template-columns:1fr 1fr}}
+.mtr{display:grid;gap:6px}
+.mtr .lbl{display:flex;justify-content:space-between;font:600 .85rem/1.3 var(--font-mono)}
+.mtr .meter{height:14px}
+.mtr.bad .meter>span{background:var(--machine)}
+.mtr.good .meter>span{background:var(--human)}
+
+/* playground: pipeline */
+.pipe{display:grid;gap:12px}
+.modes{display:flex;flex-wrap:wrap;gap:8px}
+.modes .btn[aria-pressed="true"]{background:var(--accent);color:var(--accent-fg);border-color:transparent}
+.stages{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr))}
+.stage{position:relative;background:var(--card);border:2px solid var(--line);border-radius:var(--r);padding:12px 12px 12px;display:grid;gap:6px;min-height:118px;transition:border-color var(--dur-3) var(--ease-out),transform var(--dur-3) var(--ease-out)}
+.stage b{font-family:var(--font-display);font-size:var(--step-1)}
+.stage .who{font:700 .7rem/1.2 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.stage .why{font-size:.85rem;color:var(--muted);opacity:0;transform:translateY(6px);transition:opacity var(--dur-3) var(--ease-out),transform var(--dur-3) var(--ease-out)}
+.stage[data-state="machine"]{border-color:var(--machine);background:var(--machine-soft)}
+.stage[data-state="machine"] .who{color:var(--machine)}
+.stage[data-state="fake"]{border-color:var(--bad);background:var(--machine-soft)}
+.stage[data-state="fake"] .who{color:var(--bad)}
+.stage[data-state="human"]{border-color:var(--human)}
+.stage[data-state="human"] .who{color:var(--human)}
+.stage.show .why{opacity:1;transform:none}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font:600 .8rem/1.3 var(--font-mono);color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px;border:2px solid var(--line)}
+.legend i.h{border-color:var(--human)} .legend i.m{border-color:var(--machine);background:var(--machine-soft)} .legend i.f{border-color:var(--bad);background:var(--machine-soft)}
+
+/* playground: detector base-rate */
+.det{display:grid;gap:var(--gap)}
+@media (min-width:900px){.det{grid-template-columns:1.1fr 1fr;align-items:start}}
+.dots{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;max-width:360px}
+.dot{aspect-ratio:1;border-radius:50%;background:var(--soft);border:2px solid var(--line);transition:background var(--dur-3) var(--ease-out),border-color var(--dur-3) var(--ease-out),transform var(--dur-3) var(--ease-spring)}
+.dot.used{background:var(--machine-soft);border-color:var(--machine)}
+.dot.flag{transform:scale(1.18);border-color:var(--bad)}
+.dot.flag.used{background:var(--machine)}
+.dot.flag:not(.used){background:var(--bad)}
+.det-out{display:grid;gap:10px}
+.det-out .big{font:700 clamp(1.8rem,1.4rem + 2vw,3rem)/1.1 var(--font-display);color:var(--bad)}
+.dlegend{display:flex;flex-wrap:wrap;gap:12px;font:600 .8rem/1.3 var(--font-mono);color:var(--muted)}
+.dlegend i{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:-2px;margin-right:6px;border:2px solid var(--line);background:var(--soft)}
+.dlegend i.u{background:var(--machine-soft);border-color:var(--machine)} .dlegend i.fu{background:var(--machine);border-color:var(--bad)} .dlegend i.fi{background:var(--bad);border-color:var(--bad)}
+
+/* growth chart */
+.hbars{display:grid;gap:12px;margin-top:var(--gap)}
+.hbar{display:grid;grid-template-columns:minmax(7rem,12rem) 1fr 5.5rem;gap:10px;align-items:center;font-size:.95rem}
+.hbar .m{height:18px;border-radius:var(--r-pill);background:var(--soft);overflow:hidden}
+.hbar .m>i{display:block;height:100%;background:var(--machine);transform-origin:0 50%;transform:scaleX(var(--p,0));transition:transform .9s var(--ease-out)}
+.hbar .n{font:700 .95rem/1 var(--font-mono);text-align:right}
+
+/* passages (human or machine) */
+.passages{display:grid;gap:var(--gap);grid-template-columns:1fr}
+@media (min-width:900px){.passages{grid-template-columns:1fr 1fr}}
+.passage{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:var(--gap);display:grid;gap:8px}
+.passage b{font:700 1rem/1 var(--font-mono);color:var(--accent)}
+.passage p{margin:0;font-size:.98rem}
+.placeholder{border:2px dashed var(--accent-2);border-radius:10px;padding:8px 10px;color:var(--accent-2);font-weight:600}
+
+/* leaderboard */
+.lb{display:grid;gap:8px;margin-top:var(--gap)}
+.lb-row{display:grid;grid-template-columns:2.4rem 1fr auto;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px;animation:kp-rise var(--dur-3) var(--ease-soft) both}
+.lb-row .rk{font:700 1.1rem/1 var(--font-mono);color:var(--muted)}
+.lb-row.top .rk{color:var(--accent-2)}
+.lb-row .nm{font-weight:700;overflow-wrap:anywhere}
+.lb-row .pt{font:700 1.1rem/1 var(--font-mono);font-variant-numeric:tabular-nums}
+.lb-row.top{border-color:var(--accent-2);box-shadow:var(--shadow-2)}
+.lb-empty{color:var(--muted)}
+.rules{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));margin-top:var(--gap);counter-reset:r}
+.rule{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:6px;box-shadow:var(--shadow-1)}
+.rule b{font-family:var(--font-display);font-size:var(--step-1)}
+.rule::before{counter-increment:r;content:counter(r);font:700 1.6rem/1 var(--font-display);color:var(--accent-2)}
+
+/* ===== AUDIENCE MODE (same file, ?join) ===== */
+body.aud-mode{padding-bottom:calc(var(--sab) + var(--gap))}
+body.aud-mode .deck,body.aud-mode .deck-progress,body.aud-mode .deck-dock,body.aud-mode .deck-notes{display:none !important}
+.aud{display:none;max-width:34rem;margin-inline:auto}
+body.aud-mode .aud{display:block}
+.aud .screen{display:grid;gap:var(--gap)}
+.aud .screen[hidden]{display:none}
+.aud h2{margin-top:.2em}
+.aud .q{font-family:var(--font-display);font-size:var(--step-1);line-height:1.35;margin:0}
+.aud .status{color:var(--muted);font:600 .85rem/1.4 var(--font-mono)}
+.aud .wait{display:grid;place-items:center;gap:12px;padding:var(--gap);text-align:center}
+.aud .wait .ring{width:56px;height:56px;border-radius:50%;border:4px solid var(--soft);border-top-color:var(--accent);animation:kp-spin 1.1s linear infinite}
+@keyframes kp-spin{to{transform:rotate(360deg)}}
+.aud .result{font:700 var(--step-2)/1.1 var(--font-display)}
+.aud .result.ok{color:var(--ok)} .aud .result.no{color:var(--bad)} .aud .result.poll{color:var(--accent)}
+.aud .mylb{display:grid;gap:6px}
+.aud .mylb div{display:flex;justify-content:space-between;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.aud .mylb div.me{border-color:var(--accent);font-weight:700}
+
+/* live leaderboard widget (presenter): rail on laptops, one-line strip on phones/tablets.
+   --rail-w / --lb-h are set by the page app; both are 0 while the widget is hidden. */
+:root{--rail-w:0px;--lb-h:0px;--fnav-w:0px}
+.lbw{display:none}
+.lbw-k{margin-bottom:.6em}
+.lbw-ico{display:none}
+.lbw-list{list-style:none;margin:0;padding:0}
+.lbw-list li{display:grid;grid-template-columns:1.6rem 1fr auto;gap:8px;align-items:baseline;padding:6px 0;border-top:1px solid var(--line);animation:kp-rise var(--dur-3) var(--ease-soft) both}
+.lbw-list li:first-child{border-top:0}
+.lbw-list .rk{font:700 .85rem/1.2 var(--font-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.lbw-list .nm{font-weight:700;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lbw-list .pt{font:700 .95rem/1.2 var(--font-mono);color:var(--accent);font-variant-numeric:tabular-nums}
+@media (min-width:1024px){
+  .lbw:not([hidden]){display:block;position:fixed;z-index:44;width:14rem;
+    right:calc(var(--sar) + max(12px,var(--fnav-w)));top:calc(var(--deck-top,80px) + 12px);
+    max-height:calc(100dvh - var(--deck-top,80px) - var(--deck-bottom,73px) - 24px);overflow-y:auto;
+    padding:14px 16px;box-shadow:var(--shadow-2)}
+}
+@media (max-width:1023px){
+  .lbw:not([hidden]){display:flex;align-items:center;gap:8px;position:fixed;z-index:51;inset:0 0 auto 0;
+    border:0;border-bottom:1px solid var(--line);border-radius:0;
+    padding:calc(var(--sat) + 6px) calc(var(--sar) + var(--pad)) 6px calc(var(--sal) + var(--pad));
+    overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;white-space:nowrap;font-size:.85rem}
+  .lbw-k{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0}
+  .lbw-ico{display:inline;flex:none}
+  .lbw-list{display:flex;align-items:center;gap:0;flex:none}
+  .lbw-list li{display:inline-flex;gap:6px;padding:0;border:0}
+  .lbw-list li+li::before{content:"·";color:var(--muted);margin:0 8px}
+  .lbw-list .nm{max-width:12ch}
+  html.lb-strip .nav{top:var(--lb-h);padding-top:8px}
+}
+.js .deck:not(.is-all) .slide{padding-left:calc(var(--sal) + max(var(--pad),var(--fnav-w)));
+  padding-right:calc(var(--sar) + max(var(--pad),var(--fnav-w)) + var(--rail-w))}
+.deck-dock [data-lbw-toggle]{flex:none}
+.deck-dock [data-lbw-toggle][aria-pressed="false"]{opacity:.6}
+@media (max-width:379px){.deck-dock{gap:6px}}
+
+/* floating previous / next (touch or narrow screens, presenter only) */
+.fnav{display:none}
+@media (pointer:coarse),(max-width:1023px){
+  :root{--fnav-w:68px}
+  .fnav:not([hidden]){display:grid;place-items:center;position:fixed;z-index:46;top:calc(50% - 28px);
+    width:56px;height:56px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--fg);
+    box-shadow:var(--shadow-2);font:700 1.4rem/1 var(--font-body);cursor:pointer;padding:0;
+    transition:transform var(--dur-1) var(--ease-out),opacity var(--dur-1) var(--ease-out)}
+  .fnav-prev{left:calc(var(--sal) + 6px)}
+  .fnav-next{right:calc(var(--sar) + 6px)}
+  .fnav:active{transform:scale(.94)}
+  .fnav:disabled{opacity:.4;cursor:default;transform:none}
+}
+@media (hover:hover){.fnav:not(:disabled):hover{border-color:var(--accent)}}
+body.aud-mode .fnav,body.aud-mode .lbw{display:none !important}
+@media print{.lbw,.fnav{display:none !important}}
+
+/* ===== 6. REDUCED MOTION — always last ===== */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;transition-delay:0s !important;scroll-behavior:auto !important}
+  .js [data-reveal]{opacity:1 !important;transform:none !important}
+  .aud .wait .ring{border-top-color:var(--soft)}
+}
+</style>
+</head>
+<body data-ambient>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- NAV: exact snippet from KP's saved preferences + icon-only theme toggle. Only change the [context] text. -->
+<nav class="nav"><div class="nav-brand"><img class="nav-logo" src="KP_Singh.png" alt="K.P. Singh"/><div><div class="nav-name">K.P. Singh</div><div class="nav-sub">SGT University · PhD coursework · RPE</div></div></div><!-- NAV-EXTRA --><button class="theme-toggle" type="button" id="themeToggle" aria-label="Switch to dark theme">🌙</button><a class="nav-cta" href="https://kpsingh.in" target="_blank">kpsingh.in ↗</a></nav>
+
+<!-- ===== AUDIENCE MODE (phones open this same file with ?join) ===== -->
+<section class="aud" id="aud" aria-label="Audience response">
+  <div class="screen card" id="a-join">
+    <p class="kicker">The Machine That Writes Papers · live session</p>
+    <h2>Join the game</h2>
+    <p>One name per phone. If two people share a name, add an initial.</p>
+    <label for="a-name">Your name</label>
+    <input id="a-name" type="text" autocomplete="off" maxlength="24" enterkeyhint="go" placeholder="e.g. Priya S">
+    <p id="a-msg" role="status" class="status"></p>
+    <button class="btn btn-primary" type="button" id="a-go">Join</button>
+  </div>
+  <div class="screen card" id="a-wait" hidden>
+    <h2 id="a-hello">You're in</h2>
+    <div class="wait"><div class="ring" aria-hidden="true"></div><p>Watch the screen. Questions appear here the moment K.P. opens them.</p></div>
+    <p class="status" id="a-wait-status"></p>
+  </div>
+  <div class="screen card" id="a-q" hidden aria-labelledby="a-qtext">
+    <p class="status" id="a-qkind"></p>
+    <p class="q" id="a-qtext"></p>
+    <fieldset class="opts" id="a-opts"><legend class="sr-only">Options</legend></fieldset>
+    <button class="btn btn-primary" type="button" id="a-submit" disabled>Submit</button>
+  </div>
+  <div class="screen card" id="a-done" hidden>
+    <h2>Locked in</h2>
+    <p id="a-done-text">Your answer is recorded. Wait for the reveal on screen.</p>
+    <p class="result" id="a-result" hidden></p>
+    <p class="status" id="a-done-status"></p>
+  </div>
+  <div class="screen card" id="a-final" hidden>
+    <h2>Final standings</h2>
+    <div class="mylb" id="a-lb"></div>
+    <p class="status">Thank you for playing. Rule one: disclose the tool. Rule two: never let it make data. Rule three: you sign, you answer.</p>
+  </div>
+</section>
+
+<main id="main" class="deck" data-deck tabindex="-1">
+
+  <!-- 1 TITLE -->
+  <section class="slide" id="s1" data-min="0.5" data-notes="Good morning. My topic today is the newest research-integrity problem in the syllabus: papers written, or partly written, by machines. Paper mills, tortured phrases and generative AI. You will need your phone for the next thirty minutes, and yes, that is allowed today. Transition: let's get everyone connected first.">
+    <div class="slide-inner">
+      <p class="kicker" data-reveal>PhD coursework · Research and Publication Ethics (RS-9003)</p>
+      <h1 data-reveal>The Machine That <em>Writes Papers</em></h1>
+      <p class="sub" data-reveal>Paper mills, tortured phrases and generative AI: research integrity's newest problem</p>
+      <p class="byline" data-reveal>K.P. Singh · Panjab University, Chandigarh · Tuesday, 29 September 2026</p>
+    </div>
+  </section>
+
+  <!-- 2 JOIN -->
+  <section class="slide" id="s2" data-min="1.5" data-notes="Scan the code or type the address. Enter your name once. Your phone becomes your buzzer: eight questions, some scored, some opinion polls, and a leaderboard at the end. Give it sixty seconds; the counter tells me when we are ready. Presenter: if the counter says offline, the deck falls back to hand-raise tallies on each question. Transition: first question, and it is not a warm-up.">
+    <div class="slide-inner">
+      <h2 data-reveal>Scan to join: your phone is your buzzer for the next 30 minutes</h2>
+      <div class="join" data-reveal>
+        <div class="qr" id="qrBox" aria-label="QR code to join"><p class="qr-placeholder">QR appears once the page is served from a web address</p></div>
+        <div>
+          <p class="tag">Or type this address</p>
+          <p class="join-url" id="joinUrl">…</p>
+          <p class="tag">Joined so far</p>
+          <p class="joined num" id="joinedCount" aria-live="polite">0</p>
+          <p><span class="pill" id="livePill">checking connection…</span></p>
+          <div class="setup" id="setupBox">
+            <label for="pinInput" class="small">Presenter PIN (matches PRESENTER_PIN in Code.gs)</label>
+            <input id="pinInput" type="password" autocomplete="off" placeholder="PIN">
+            <div class="live-ctl" style="margin-left:0"><button class="btn" type="button" id="pinSave">Use PIN</button><button class="btn" type="button" id="resetBtn">Reset session</button></div>
+            <p class="small" id="setupMsg" role="status"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 Q1 -->
+  <section class="slide" id="s3" data-min="2" data-q="q1" data-kind="quiz" data-notes="Read the question. Open it, give thirty seconds, close it, then reveal. The phrase is real: it appears in published papers. Most people guess a heart or chest condition. The answer is breast cancer. Why would anyone write that? Hold the thought. Transition: because a machine wrote it, to hide something.">
+    <div class="slide-inner">
+      <p class="kicker" data-reveal>Question 1 · scored</p>
+      <h2 data-reveal>A published paper studies patients with <em>"bosom peril"</em>. What did the authors mean?</h2>
+      <ol class="choices" data-ans="2" data-reveal>
+        <li>A chest infection</li><li>Heart disease</li><li>Breast cancer</li><li>Anxiety</li>
+      </ol>
+      <div class="live" data-live data-reveal></div>
+      <p class="src" data-reveal>Phrase source: Cabanac, Labbé &amp; Magazinov, "Tortured phrases", 2021 (arXiv 2107.06751).</p>
+    </div>
+  </section>
+
+  <!-- 4 TORTURED PHRASES -->
+  <section class="slide" id="s4" data-min="1.5" data-notes="These are called tortured phrases. In 2021 three researchers, Cabanac, Labbé and Magazinov, noticed that some papers used bizarre synonyms for standard terms. The cause: text was run through an automatic paraphrasing tool so that plagiarism software would not recognise the copied source. By January 2022 they had a list of 473 such phrases in more than three thousand articles. Transition: let me show you exactly how this trick works.">
+    <div class="slide-inner">
+      <h2 data-reveal>"Tortured phrases" are machine paraphrases made to slip past plagiarism software</h2>
+      <div class="facts" data-stagger>
+        <div class="fact" data-reveal><b class="num" data-count="473">473</b><span>distinct tortured phrases catalogued (Jan 2022)</span></div>
+        <div class="fact" data-reveal><b class="num" data-count="3191" data-group>3,191</b><span>peer-reviewed articles containing them</span></div>
+        <div class="fact" data-reveal><b>2021</b><span>first described by Cabanac, Labbé &amp; Magazinov</span></div>
+      </div>
+      <div class="table-wrap" data-reveal><table>
+        <caption class="sr-only">Tortured phrases and the standard terms they replace</caption>
+        <tr><th scope="col">What the paper says</th><th scope="col">What was meant</th></tr>
+        <tr><td><span class="tp">bosom peril</span></td><td><span class="hm">breast cancer</span></td></tr>
+        <tr><td><span class="tp">counterfeit consciousness</span></td><td><span class="hm">artificial intelligence</span></td></tr>
+        <tr><td><span class="tp">mean square blunder</span></td><td><span class="hm">mean square error</span></td></tr>
+        <tr><td><span class="tp">profound neural organization</span></td><td><span class="hm">deep neural network</span></td></tr>
+        <tr><td><span class="tp">flag to clamor</span></td><td><span class="hm">signal to noise</span></td></tr>
+      </table></div>
+      <p class="src" data-reveal>Source: Cabanac, Labbé &amp; Magazinov (2021), arXiv 2107.06751; counts as reported in Bulletin of the Atomic Scientists, 20 Jan 2022.</p>
+    </div>
+  </section>
+
+  <!-- 5 SYLLABUS -->
+  <section class="slide" id="s5" data-min="1" data-notes="Where does this sit in our course? Four points across three units: fabrication in Unit 2, the types and identification of publication misconduct in Unit 3, and the software tools and their limits in Unit 5. Near the end I also touch authorship from Unit 3, because that is where the question 'can an AI be an author' lives. Transition: the playground.">
+    <div class="slide-inner">
+      <h2 data-reveal>Today covers four syllabus points across Units 2, 3 and 5</h2>
+      <div class="units" data-stagger>
+        <div class="unit" data-reveal><span class="tag">Unit 2 · Scientific conduct</span><b>2.3 Fabrication</b>machine-made data, figures and references</div>
+        <div class="unit" data-reveal><span class="tag">Unit 3 · Publication ethics</span><b>3.4 Publication misconduct</b>types, and the problems that lead to it</div>
+        <div class="unit" data-reveal><span class="tag">Unit 3 · Publication ethics</span><b>3.6 Identifying misconduct</b>how sleuths and publishers catch it</div>
+        <div class="unit" data-reveal><span class="tag">Unit 5 · Publication misconduct</span><b>5B Software tools</b>what Turnitin, Urkund and AI detectors can and cannot see</div>
+        <div class="unit" data-reveal><span class="tag">Unit 3 · Publication ethics</span><b>3.5 Authorship</b>why a tool can help but cannot be an author</div>
+      </div>
+      <p class="src" data-reveal>Source: RS-9003 Research and Publication Ethics syllabus, Panjab University.</p>
+    </div>
+  </section>
+
+  <!-- 6 PLAYGROUND: SPIN -->
+  <section class="slide" id="s6" data-min="2.5" data-notes="This is a simulation, not real tool output. Here is a normal sentence. As I drag the slider, a paraphrasing tool swaps standard terms for synonyms. Watch the similarity score: it drops, so the plagiarism report looks clean. Watch the meaning: it drops too, and the sentence becomes nonsense. Ask the room: which of these two numbers does Turnitin measure? Only the first. The software counts word overlap. It has no idea what the sentence means. Transition: two more phrases to decode, for points.">
+    <div class="slide-inner">
+      <h2 data-reveal>Similarity software measures word overlap, not honesty</h2>
+      <div class="spin" data-reveal>
+        <div class="range">
+          <label for="spinRange"><strong>Paraphrase strength</strong> <span class="small">(drag: each step swaps one standard term)</span></label>
+          <input id="spinRange" type="range" min="0" max="5" value="0" step="1">
+        </div>
+        <p class="sentence" id="spinOut" aria-live="polite"></p>
+        <div class="meters">
+          <div class="mtr good"><div class="lbl"><span>Similarity score (what the software sees)</span><span id="simVal" class="num">100%</span></div><div class="meter" role="progressbar" aria-label="Similarity score" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="simMeter"><span style="--p:1"></span></div></div>
+          <div class="mtr bad"><div class="lbl"><span>Meaning kept (what a reader sees)</span><span id="meanVal" class="num">100%</span></div><div class="meter" role="progressbar" aria-label="Meaning kept" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="meanMeter"><span style="--p:1"></span></div></div>
+        </div>
+      </div>
+      <p class="src" data-reveal>Illustration: the swapped phrases are real tortured phrases from Cabanac et al. (2021); the percentages are a teaching simulation, not tool output.</p>
+    </div>
+  </section>
+
+  <!-- 7 Q2 -->
+  <section class="slide" id="s7" data-min="1.5" data-q="q2" data-kind="quiz" data-notes="Twenty seconds. The answer is deep neural network: 'deep' became 'profound', 'network' became 'organization'. Notice how a computer-science term turned into something that sounds like management. Transition: one more, and this one is harder.">
+    <div class="slide-inner">
+      <p class="kicker" data-reveal>Question 2 · scored</p>
+      <h2 data-reveal>"Profound neural organization" is a tortured version of…</h2>
+      <ol class="choices" data-ans="1" data-reveal>
+        <li>A complex company structure</li><li>Deep neural network</li><li>Brain surgery</li><li>Deep learning ethics</li>
+      </ol>
+      <div class="live" data-live data-reveal></div>
+      <p class="src" data-reveal>Phrase source: Cabanac, Labbé &amp; Magazinov (2021).</p>
+    </div>
+  </section>
+
+  <!-- 8 Q3 -->
+  <section class="slide" id="s8" data-min="1.5" data-q="q3" data-kind="quiz" data-notes="Signal to noise. 'Signal' became 'flag', 'noise' became 'clamor'. If you have ever used a thesaurus button in a writing tool, you have seen the same engine at work. The tool is not evil; hiding a copied source with it is. Transition: so who is doing this at scale? Paper mills.">
+    <div class="slide-inner">
+      <p class="kicker" data-reveal>Question 3 · scored</p>
+      <h2 data-reveal>"Flag to clamor" ratio is a tortured version of…</h2>
+      <ol class="choices" data-ans="3" data-reveal>
+        <li>A protest signal</li><li>A noise complaint</li><li>A warning sign</li><li>Signal to noise</li>
+      </ol>
+      <div class="live" data-live data-reveal></div>
+      <p class="src" data-reveal>Phrase source: Cabanac, Labbé &amp; Magazinov (2021).</p>
+    </div>
+  </section>
+
+  <!-- 9 PLAYGROUND: PIPELINE -->
+  <section class="slide" id="s9" data-min="2" data-notes="Every paper travels the same seven stages. Press 'Honest lab': every stage is done by people and recorded. Press 'Paper mill': the mill fabricates the data, templates the writing, sells the author slots and, in the worst cases, supplies the fake reviewers. COPE defines a paper mill as a profit-oriented, unofficial and potentially illegal organisation that produces and sells fraudulent manuscripts. Press 'Undisclosed AI': the person is real, but writing, figures and sometimes references are generated and nobody is told. Transition: how big is the mill problem? Bigger than most people think.">
+    <div class="slide-inner">
+      <h2 data-reveal>A paper mill sells the whole pipeline; an AI tool can quietly enter any stage</h2>
+      <div class="pipe" data-reveal>
+        <div class="modes" role="group" aria-label="Choose a scenario">
+          <button class="btn" type="button" data-mode="honest" aria-pressed="true">Honest lab</button>
+          <button class="btn" type="button" data-mode="mill" aria-pressed="false">Paper mill</button>
+          <button class="btn" type="button" data-mode="ai" aria-pressed="false">Undisclosed AI</button>
+        </div>
+        <div class="stages" id="stages">
+          <div class="stage" data-s="idea"><b>1 · Idea</b><span class="who">people</span><span class="why"></span></div>
+          <div class="stage" data-s="data"><b>2 · Data</b><span class="who">people</span><span class="why"></span></div>
+          <div class="stage" data-s="analysis"><b>3 · Analysis</b><span class="who">people</span><span class="why"></span></div>
+          <div class="stage" data-s="writing"><b>4 · Writing</b><span class="who">people</span><span class="why"></span></div>
+          <div class="stage" data-s="figures"><b>5 · Figures</b><span class="who">people</span><span class="why"></span></div>
+          <div class="stage" data-s="submit"><b>6 · Submission</b><span class="who">people</span><span class="why"></span></div>
+          <div class="stage" data-s="review"><b>7 · Peer review</b><span class="who">people</span><span class="why"></span></div>
+        </div>
+        <p class="legend"><span><i class="h"></i>done by people, recorded</span><span><i class="m"></i>generated by a tool, undisclosed</span><span><i class="f"></i>fabricated or sold</span></p>
+      </div>
+      <p class="src" data-reveal>Definition: COPE, "Paper mills" topic discussion (COPE &amp; STM paper mills research report, 2022).</p>
+    </div>
+  </section>
+
+  <!-- 10 PAPER MILLS NUMBERS -->
+  <section class="slide" id="s10" data-min="1.5" data-notes="In 2023 the number of retractions across all publishers passed ten thousand for the first time, a record, reported by Nature in December 2023. More than eight thousand of those came from one publisher, Hindawi, owned by Wiley, whose special issues had been taken over by paper mills. Wiley closed four journals and reported thirty-five to forty million dollars of lost revenue. Transition: could you spot a mill paper? Question four.">
+    <div class="slide-inner">
+      <h2 data-reveal>In 2023, paper mills forced the biggest clean-up publishing has ever seen</h2>
+      <div class="facts" data-stagger>
+        <div class="fact" data-reveal><b class="num"><span data-count="10000" data-group>10,000</span>+</b><span>retractions across all publishers in 2023, a record</span></div>
+        <div class="fact" data-reveal><b class="num"><span data-count="8000" data-group>8,000</span>+</b><span>from Hindawi (Wiley) alone, mostly paper-mill special issues</span></div>
+        <div class="fact" data-reveal><b class="num">$35–40 m</b><span>lost revenue reported by Wiley for the year</span></div>
+        <div class="fact" data-reveal><b class="num" data-count="4">4</b><span>journals closed as "overrun by paper mills"</span></div>
+      </div>
+      <p class="quote" data-reveal>"…profit oriented, unofficial and potentially illegal organisations that produce and sell fraudulent manuscripts that seem to resemble genuine research."<small>COPE's definition of a paper mill</small></p>
+      <p class="src" data-reveal>Sources: Van Noorden, Nature 624, 12 Dec 2023; Retraction Watch, 19 Dec 2023 (Hindawi/Wiley figures); COPE paper-mills topic page.</p>
+    </div>
+  </section>
+
+  <!-- 11 Q4 -->
+  <section class="slide" id="s11" data-min="1.5" data-q="q4" data-kind="quiz" data-notes="Which is the strongest sign? Six authors, open access and long reference lists are all normal. A tortured phrase in place of a standard term is the fingerprint: a human expert never writes 'flag to clamor'. Transition: from 2023 the machine got a lot better at writing, and it started leaving new fingerprints.">
+    <div class="slide-inner">
+      <p class="kicker" data-reveal>Question 4 · scored</p>
+      <h2 data-reveal>Which is the strongest sign that a paper came from a mill?</h2>
+      <ol class="choices" data-ans="1" data-reveal>
+        <li>It has six authors</li><li>A phrase like "flag to clamor" where a standard term belongs</li><li>It is open access</li><li>It has a very long reference list</li>
+      </ol>
+      <div class="live" data-live data-reveal></div>
+      <p class="src" data-reveal>Basis: tortured phrases as a screening signal, Cabanac et al. (2021); Problematic Paper Screener.</p>
+    </div>
+  </section>
+
+  <!-- 12 GENERATIVE AI FINGERPRINTS -->
+  <section class="slide" id="s12" data-min="1.5" data-notes="Three real, recent examples. One: a paper in an Elsevier journal, Surfaces and Interfaces, published February 2024, whose introduction began with the chatbot's own reply: 'Certainly, here is a possible introduction for your topic'. Retracted in May 2024 for undisclosed AI use. Two: by October 2023 sleuths had found more than thirty papers containing 'Regenerate response' or 'As an AI language model'. Three: a Frontiers journal published an AI-generated anatomical figure of a rat with nonsense labels in February 2024; it was retracted within days. Transition: can you tell machine writing from human writing? Let's test the room.">
+    <div class="slide-inner">
+      <h2 data-reveal>Since 2023 the machine has left fingerprints in published papers</h2>
+      <div class="units" data-stagger>
+        <div class="unit" data-reveal><span class="tag">Text · Feb 2024</span><b>"Certainly, here is a possible introduction for your topic:"</b>First line of the introduction in a paper in <i>Surfaces and Interfaces</i> (Elsevier). Retracted 31 May 2024 for undisclosed generative-AI use.</div>
+        <div class="unit" data-reveal><span class="tag">Text · Oct 2023</span><b>"Regenerate response" · "As an AI language model, I…"</b>Chatbot interface text and disclaimers found in 30+ published papers, flagged on PubPeer by Guillaume Cabanac and colleagues.</div>
+        <div class="unit" data-reveal><span class="tag">Figures · Feb 2024</span><b>An AI-drawn rat with nonsense labels</b>Published in <i>Frontiers in Cell and Developmental Biology</i> on 13 Feb 2024; retracted after the figures were shown to be AI-generated.</div>
+      </div>
+      <p class="src" data-reveal>Sources: Elsevier retraction notice, Surfaces and Interfaces, 2024; Retraction Watch, 6 Oct 2023; Frontiers statement, 16 Feb 2024.</p>
+    </div>
+  </section>
+
+  <!-- 13 Q5 HUMAN OR MACHINE -->
+  <section class="slide" id="s13" data-min="2" data-q="q5" data-kind="poll" data-notes="Two short passages on the same topic, handwritten Gurmukhi recognition. One is from my own published paper; the other was generated with a chatbot for this talk. Vote A or B for the machine. Reveal: B is the machine. Ask what gave it away, and expect 'nothing' from half the room. Transition: if humans cannot tell, can software?">
+    <div class="slide-inner">
+      <p class="kicker" data-reveal>Question 5 · opinion poll</p>
+      <h2 data-reveal>Which passage was written by a machine?</h2>
+      <div class="passages" data-reveal>
+        <div class="passage"><b>A</b><p>In this manuscript a recognition system for offline handwritten Gurmukhi characters and numerals using gradient information as mode of feature extraction technique is proposed. Two ways of extracting features using gradient information are explained in this paper. Both methods operate by accumulating gradient information from an image by dividing it into sub-images (blocks) and finally concatenating the obtained gradient features obtained from each block to form a vector of feature values with dimensionality 200.</p></div>
+        <div class="passage"><b>B</b><p>Handwritten character recognition for Indic scripts such as Gurmukhi has emerged as a pivotal area of research in pattern recognition. By leveraging robust gradient-based features, recognition systems can capture the nuanced structural characteristics of complex characters. However, several challenges remain, including variability in writing styles and the scarcity of large annotated datasets.</p></div>
+      </div>
+      <ol class="choices" data-reveal><li>Passage A</li><li>Passage B</li></ol>
+      <div class="live" data-live data-reveal></div>
+      <p class="src" data-reveal>Passage A: Aggarwal, Singh &amp; Singh, "Use of Gradient Technique for Extracting Features from Handwritten Gurmukhi Characters and Numerals", Procedia Computer Science 46 (2015) 1716–1723, abstract. Passage B was generated with a large language model for this talk and is shown as an example of machine text.</p>
+    </div>
+  </section>
+
+  <!-- 14 PLAYGROUND: DETECTOR -->
+  <section class="slide" id="s14" data-min="2.5" data-notes="Imagine a class of one hundred. Slide the share who really used a chatbot. Now apply the figures OpenAI published for its own detector: it caught 26 percent of AI text and wrongly flagged 9 percent of human text. Look at the flagged group: at realistic rates, a large share of flagged students are innocent. OpenAI withdrew that detector in July 2023 for low accuracy. Turnitin's detector claims under one percent false positives at document level but about four percent per sentence, and Turnitin itself says the score should start a conversation, not decide a case. Transition: so what do publishers actually require?">
+    <div class="slide-inner">
+      <h2 data-reveal>AI detectors cannot be the judge: the arithmetic of false alarms</h2>
+      <div class="det" data-reveal>
+        <div>
+          <div class="range">
+            <label for="baseRange"><strong>Share of the class that really used a chatbot</strong> <span class="num" id="baseVal">20%</span></label>
+            <input id="baseRange" type="range" min="0" max="100" value="20" step="5">
+          </div>
+          <div class="dots" id="dots" role="img" aria-label="One hundred students, coloured by AI use and by whether the detector flags them"></div>
+          <p class="dlegend"><span><i></i>did not use AI</span><span><i class="u"></i>used AI</span><span><i class="fu"></i>flagged, used AI</span><span><i class="fi"></i>flagged, innocent</span></p>
+        </div>
+        <div class="det-out">
+          <p class="tag">Using OpenAI's published figures for its own classifier: 26% of AI text caught, 9% of human text wrongly flagged</p>
+          <p class="big"><span id="innocentPct" class="num">…</span> of flagged students are innocent</p>
+          <p id="detText" class="small" aria-live="polite"></p>
+          <ul class="list small">
+            <li>OpenAI withdrew that classifier on 20 July 2023 "due to its low rate of accuracy".</li>
+            <li>Turnitin (May 2023): under 1% false positives at document level, about 4% per sentence; scores should "start a dialogue", not decide a case.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="src" data-reveal>Sources: OpenAI, "New AI classifier for indicating AI-written text" (Jan 2023, withdrawn 20 Jul 2023); Turnitin CPO blog, 23 May 2023.</p>
+    </div>
+  </section>
+
+  <!-- 15 Q6 CO-AUTHOR POLL -->
+  <section class="slide" id="s15" data-min="1" data-q="q6" data-kind="poll" data-notes="Quick opinion: can a chatbot be a co-author? Open, thirty seconds, close. Whatever the room says, the publishers have already answered. Transition: next slide.">
+    <div class="slide-inner">
+      <p class="kicker" data-reveal>Question 6 · opinion poll</p>
+      <h2 data-reveal>If a chatbot wrote half your paper, can it be a co-author?</h2>
+      <ol class="choices" data-reveal><li>Yes, credit where it is due</li><li>No, never</li><li>Only if the journal allows it</li></ol>
+      <div class="live" data-live data-reveal></div>
+    </div>
+  </section>
+
+  <!-- 16 RULES -->
+  <section class="slide" id="s16" data-min="1.5" data-notes="COPE, the Committee on Publication Ethics, said in February 2023: AI tools cannot be listed as authors, because they cannot take responsibility for the work. Authors must say in the Methods which tool they used and how. And authors remain fully responsible for every part, including the parts the tool produced. The ICMJE, the medical journal editors' body, adds: describe the use in the cover letter and the manuscript, and non-disclosure may be treated as misconduct. Transition: why 'responsibility' is the whole story: the authorship rules.">
+    <div class="slide-inner">
+      <h2 data-reveal>Publishers agree: an AI tool may help you write, but it cannot be an author</h2>
+      <div class="two" data-stagger>
+        <div class="unit" data-reveal><span class="tag">COPE position statement · Feb 2023</span>
+          <ul class="list"><li>"AI tools cannot be listed as an author of a paper" because they "cannot take responsibility for the submitted work".</li><li>Disclose in Methods (or similar) <em>which</em> tool and <em>how</em> it was used.</li><li>"Authors are fully responsible for the content of their manuscript, even those parts produced by an AI tool."</li></ul></div>
+        <div class="unit" data-reveal><span class="tag">ICMJE recommendations</span>
+          <ul class="list"><li>Chatbots "should not be listed as authors because they cannot be responsible for the accuracy, integrity, and originality of the work".</li><li>Describe the use in <em>both</em> the cover letter and the submitted work.</li><li>"Nondisclosure of AI use … may be construed as misconduct in some circumstances."</li></ul></div>
+      </div>
+      <p class="src" data-reveal>Sources: COPE, "Authorship and AI tools", position statement, 13 Feb 2023; ICMJE Recommendations, "AI use by authors" (current text).</p>
+    </div>
+  </section>
+
+  <!-- 17 AUTHORSHIP -->
+  <section class="slide" id="s17" data-min="1.5" data-notes="The ICMJE says an author must meet all four: substantial contribution, drafting or revising, final approval, and agreement to be accountable for the whole work. A machine can arguably do the first two. It cannot approve, and it cannot be accountable; you cannot email it a complaint. The same test catches the three classic abuses: gift authorship for a boss who did nothing, ghost authorship for the person who wrote it but is hidden, guest authorship for a famous name added for effect. Transition: try the rule on a case.">
+    <div class="slide-inner">
+      <h2 data-reveal>Authorship needs four things, and a machine can never supply the fourth</h2>
+      <div class="units" data-stagger>
+        <div class="unit" data-reveal><span class="tag">ICMJE 1</span><b>Substantial contribution</b>to the idea, design, data or analysis</div>
+        <div class="unit" data-reveal><span class="tag">ICMJE 2</span><b>Drafting or revising</b>the work critically</div>
+        <div class="unit" data-reveal><span class="tag">ICMJE 3</span><b>Final approval</b>of the version to be published</div>
+        <div class="unit" data-reveal><span class="tag">ICMJE 4</span><b>Accountability</b>for all parts of the work; answers any question about it</div>
+      </div>
+      <div class="table-wrap" data-reveal><table>
+        <caption class="sr-only">Three authorship abuses</caption>
+        <tr><th scope="col">Abuse</th><th scope="col">What it looks like</th></tr>
+        <tr><td><b>Gift</b></td><td>a name added for status or obligation, no real contribution</td></tr>
+        <tr><td><b>Ghost</b></td><td>a real contributor (a writer, a company, a tool) left off the list</td></tr>
+        <tr><td><b>Guest</b></td><td>a well-known name added to impress reviewers</td></tr>
+      </table></div>
+      <p class="src" data-reveal>Source: ICMJE Recommendations, "Defining the Role of Authors and Contributors"; syllabus Unit 3.5.</p>
+    </div>
+  </section>
+
+  <!-- 18 Q7 -->
+  <section class="slide" id="s18" data-min="2" data-q="q7" data-kind="quiz" data-notes="A real situation for many of you. Funding equipment is not one of the four criteria; approving a draft you never read is not either. Under ICMJE he is acknowledged, not an author. In practice this needs a conversation with your supervisor before the work starts, not after the paper is written. Transition: now the hardest question of the day, where is the line?">
+    <div class="slide-inner">
+      <p class="kicker" data-reveal>Question 7 · scored</p>
+      <h2 data-reveal>Your supervisor's friend funded the equipment but never read the paper. Under ICMJE he is…</h2>
+      <ol class="choices" data-ans="2" data-reveal>
+        <li>First author</li><li>Corresponding author</li><li>Not an author: thank him in the acknowledgements</li><li>An author, as long as he approves the final draft</li>
+      </ol>
+      <div class="live" data-live data-reveal></div>
+      <p class="src" data-reveal>Basis: ICMJE four authorship criteria (all four must be met).</p>
+    </div>
+  </section>
+
+  <!-- 19 Q8 DRAW THE LINE -->
+  <section class="slide" id="s19" data-min="2" data-q="q8" data-kind="poll" data-notes="Five ways people use a chatbot. Pick the FIRST one you would call misconduct. There is no single right answer for the poll; the point is to see where the room disagrees. Usually the split is between C and D. Transition: here is where the guidance draws it.">
+    <div class="slide-inner">
+      <p class="kicker" data-reveal>Question 8 · opinion poll</p>
+      <h2 data-reveal>Which is the <em>first</em> use of a chatbot you would call misconduct?</h2>
+      <ol class="choices" data-reveal>
+        <li>Fixing grammar and spelling</li><li>Summarising papers for your own notes</li><li>Writing the discussion section</li><li>Generating a figure</li><li>Generating the data</li>
+      </ol>
+      <div class="live" data-live data-reveal></div>
+    </div>
+  </section>
+
+  <!-- 20 THE LINE -->
+  <section class="slide" id="s20" data-min="1.5" data-notes="The guidance does not draw the line at 'used AI or not'. It draws it at three things: did you disclose, are you accountable, and did anything get fabricated. A and B are fine; disclose if the use was substantive. C is allowed by most publishers only with disclosure, and you carry responsibility for every claim. D: a figure is data; a generated figure presented as real is fabrication, Unit 2.3, exactly the Frontiers case. E is fabrication, full stop. And notice: Turnitin would score all five at zero percent similarity. The UGC's ten, forty, sixty percent levels never see any of this. Transition: so who catches it?">
+    <div class="slide-inner">
+      <h2 data-reveal>The line is not "used AI or not"; it is disclosure, accountability and fabrication</h2>
+      <div class="table-wrap" data-reveal><table>
+        <caption class="sr-only">Where guidance places each use of AI</caption>
+        <tr><th scope="col">Use</th><th scope="col">Where the guidance puts it</th></tr>
+        <tr><td>A · Grammar and spelling</td><td><span class="hm">fine</span>; disclose if a tool rewrote substantial text</td></tr>
+        <tr><td>B · Summaries for your own notes</td><td><span class="hm">fine</span>; verify before you cite anything from it</td></tr>
+        <tr><td>C · Writing the discussion</td><td><span class="tp">allowed only with disclosure</span>; you remain responsible for every claim (COPE, ICMJE)</td></tr>
+        <tr><td>D · Generating a figure</td><td><span class="tp">fabrication</span> unless clearly labelled as an illustration; a figure is data (the Frontiers case)</td></tr>
+        <tr><td>E · Generating the data</td><td><span class="tp">fabrication</span>, Unit 2.3; no disclosure repairs it</td></tr>
+      </table></div>
+      <p data-reveal><strong>Blind spot:</strong> plagiarism software would score all five at 0% similarity. The UGC 2018 levels (10%, 40%, 60%) never see any of this.</p>
+      <p class="src" data-reveal>Sources: COPE position statement (2023); ICMJE Recommendations; UGC (Promotion of Academic Integrity and Prevention of Plagiarism in HEIs) Regulations, 2018; Frontiers statement, 16 Feb 2024.</p>
+    </div>
+  </section>
+
+  <!-- 21 SLEUTHS + GROWTH -->
+  <section class="slide" id="s21" data-min="1.5" data-notes="Detection today is a community effort: volunteers post on PubPeer, the Problematic Paper Screener scans the literature for tortured phrases and chatbot text, and Retraction Watch keeps the public record. Meanwhile use is rising: a 2025 study in Nature Human Behaviour of 1.1 million papers estimated that by September 2024 up to 22 percent of computer-science abstracts had been modified by a language model. This is not going away; disclosure has to become normal. Transition: leaderboard time.">
+    <div class="slide-inner">
+      <h2 data-reveal>Detection is now a community sport, and use is rising fast</h2>
+      <div class="two" data-stagger>
+        <div class="unit" data-reveal><span class="tag">Who catches it</span>
+          <ul class="list"><li><b>PubPeer</b>: public post-publication comments, where most cases here were first flagged</li><li><b>Problematic Paper Screener</b> (Cabanac, Labbé, Magazinov): scans the literature for tortured phrases and chatbot text</li><li><b>Retraction Watch</b>: the public database of retractions</li></ul></div>
+        <div class="unit" data-reveal><span class="tag">Estimated share of abstracts modified by an LLM, by Sep 2024</span>
+          <div class="hbars">
+            <div class="hbar"><span>Computer science</span><div class="m"><i data-p="0.22"></i></div><span class="n">up to 22%</span></div>
+            <div class="hbar"><span>Mathematics</span><div class="m"><i data-p="0.09"></i></div><span class="n">up to 9%</span></div>
+            <div class="hbar"><span>Nature portfolio journals</span><div class="m"><i data-p="0.09"></i></div><span class="n">up to 9%</span></div>
+          </div>
+          <p class="small">1,121,912 papers, Jan 2020 to Sep 2024</p></div>
+      </div>
+      <p class="src" data-reveal>Sources: Liang et al., Nature Human Behaviour, 2025 (doi:10.1038/s41562-025-02273-8); Retraction Watch; PubPeer; Problematic Paper Screener.</p>
+    </div>
+  </section>
+
+  <!-- 22 LEADERBOARD -->
+  <section class="slide" id="s22" data-min="1.5" data-notes="Top of the board. Points: 100 for a correct answer plus a speed bonus, 10 for taking part in a poll. Applaud the top three. Presenter: if the room is offline, this slide shows the manual tallies instead. Transition: three rules to take home.">
+    <div class="slide-inner">
+      <h2 data-reveal>Leaderboard</h2>
+      <p class="small" data-reveal>100 points per correct answer, up to 50 more for speed, 10 for each poll answered.</p>
+      <div class="lb" id="lb" data-reveal><p class="lb-empty">Waiting for the scores…</p></div>
+      <div class="live-ctl" style="margin-left:0;margin-top:12px" data-reveal><button class="btn btn-primary" type="button" id="lbRefresh">Refresh</button><button class="btn" type="button" id="lbFinal">Send final standings to phones</button></div>
+    </div>
+  </section>
+
+  <!-- 23 TAKEAWAY -->
+  <section class="slide" id="s23" data-min="1" data-notes="Three rules you can apply tomorrow in any discipline. One: disclose the tool and what it did, in the Methods and the cover letter. Two: never let it produce data, figures or references; check every citation it suggests exists. Three: you sign, you answer: read every sentence as if a reviewer will ask you about it, because one will. Transition: references, then questions.">
+    <div class="slide-inner">
+      <h2 data-reveal>Three rules you can apply <em>tomorrow</em></h2>
+      <div class="rules" data-stagger>
+        <div class="rule" data-reveal><b>Disclose the tool and what it did</b><span>Name it in Methods and the cover letter. Silence is the misconduct, not the tool.</span></div>
+        <div class="rule" data-reveal><b>Never let it make data, figures or references</b><span>Generated data is fabrication. Check that every suggested citation exists.</span></div>
+        <div class="rule" data-reveal><b>You sign, you answer</b><span>Read every sentence as if a reviewer will ask you about it. One will.</span></div>
+      </div>
+      <p class="src" data-reveal>Based on COPE (2023) and ICMJE guidance; syllabus Units 2.3, 3.4, 3.5, 3.6 and 5B.</p>
+    </div>
+  </section>
+
+  <!-- 24 REFERENCES -->
+  <section class="slide" id="s24" data-min="0.5" data-notes="References, all public and checkable. Transition: questions.">
+    <div class="slide-inner">
+      <h2 data-reveal>References</h2>
+      <ol class="refs" data-reveal>
+        <li>Cabanac, G., Labbé, C., &amp; Magazinov, A. (2021). Tortured phrases: A dubious writing style emerging in science. <i>arXiv</i>, 2107.06751.</li>
+        <li>Bulletin of the Atomic Scientists (2022, 20 Jan). "Bosom peril" is not "breast cancer": How weird computer-generated phrases help researchers find scientific publishing fraud.</li>
+        <li>Committee on Publication Ethics (2023, 13 Feb). Authorship and AI tools: COPE position statement. publicationethics.org.</li>
+        <li>Committee on Publication Ethics. Paper mills (topic discussion); COPE &amp; STM (2022). Paper mills research report.</li>
+        <li>International Committee of Medical Journal Editors. Recommendations for the Conduct, Reporting, Editing, and Publication of Scholarly Work in Medical Journals: Defining the role of authors and contributors; AI use by authors. icmje.org.</li>
+        <li>Van Noorden, R. (2023, 12 Dec). More than 10,000 research papers were retracted in 2023: a new record. <i>Nature</i>, 624, 479–481.</li>
+        <li>Retraction Watch (2023, 19 Dec). Hindawi reveals process for retracting more than 8,000 paper mill articles.</li>
+        <li>Retraction Watch (2023, 6 Oct). Signs of undeclared ChatGPT use in papers mounting.</li>
+        <li>Zhang et al. (2024). <i>Surfaces and Interfaces</i>, Elsevier; published 17 Feb 2024, retracted 31 May 2024 (retraction notice cites undisclosed generative-AI use).</li>
+        <li>Frontiers (2024, 16 Feb). Statement concerning the article "Cellular functions of spermatogonial stem cells in relation to JAK/STAT signaling pathway" (retracted).</li>
+        <li>OpenAI (2023, 31 Jan; note added 20 Jul 2023). New AI classifier for indicating AI-written text.</li>
+        <li>Turnitin (2023, 23 May). AI writing detection update from Turnitin's Chief Product Officer.</li>
+        <li>Liang, W., Zhang, Y., et al. (2025). Quantifying large language model usage in scientific papers. <i>Nature Human Behaviour</i>. doi:10.1038/s41562-025-02273-8.</li>
+        <li>University Grants Commission (2018). UGC (Promotion of Academic Integrity and Prevention of Plagiarism in Higher Educational Institutions) Regulations, 2018.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 25 QUESTIONS -->
+  <section class="slide" id="s25" data-min="0" data-notes="Thank you. Questions. Likely ones: 'Is Grammarly AI use?' (minor editing; disclose if it rewrote substantial text), 'What about translation?' (disclose; you remain responsible), 'Can I use it for the literature review?' (to search and summarise for yourself, yes; verify everything; never paste its summary as your text without disclosure).">
+    <div class="slide-inner">
+      <p class="kicker" data-reveal>Thank you</p>
+      <p class="qa" data-reveal>Questions?</p>
+      <p class="byline" data-reveal>K.P. Singh · kamalpreet1010@gmail.com · kpsingh.in</p>
+    </div>
+  </section>
+
+</main>
+<div class="deck-progress" aria-hidden="true"><span></span></div>
+<aside class="deck-notes card" id="deckNotes" hidden aria-labelledby="deckNotesTitle"><h2 id="deckNotesTitle">Presenter notes</h2><p id="deckNotesBody"></p><p class="deck-time" id="deckNotesTime" aria-live="off"></p></aside>
+<aside class="lbw card" id="lbw" hidden aria-label="Live leaderboard"><p class="kicker lbw-k">Leaderboard · live</p><span class="lbw-ico" aria-hidden="true">🏆</span><ol class="lbw-list" id="lbwList"></ol></aside>
+<button class="fnav fnav-prev" type="button" data-fnav="prev" aria-label="Previous slide" hidden><span aria-hidden="true">←</span></button>
+<button class="fnav fnav-next" type="button" data-fnav="next" aria-label="Next slide" hidden><span aria-hidden="true">→</span></button>
+<div class="dock deck-dock" role="group" aria-label="Slide controls">
+  <button class="btn" type="button" data-deck-prev aria-label="Previous slide"><span aria-hidden="true">←</span><span class="lbl">&nbsp;Prev</span></button>
+  <span class="dock-status" data-deck-status aria-live="polite"></span>
+  <button class="btn" type="button" data-deck-notes aria-pressed="false" aria-controls="deckNotes" aria-label="Presenter notes (N)"><span aria-hidden="true">¶</span><span class="lbl">&nbsp;Notes</span></button>
+  <button class="btn" type="button" data-lbw-toggle aria-pressed="true" aria-controls="lbw" aria-label="Live leaderboard (L)"><span aria-hidden="true">🏆</span></button>
+  <button class="btn btn-primary" type="button" data-deck-next aria-label="Next slide"><span class="lbl">Next&nbsp;</span><span aria-hidden="true">→</span></button>
+</div>
+
+<script>
+/* QR Code Generator for JavaScript, Kazuhiko Arase, MIT licence (qrcode-generator 1.4.4, minified, inlined). */
+var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],f={},c=function(t,r){o=function(t){for(var r=new Array(t),e=0;e<t;e+=1){r[e]=new Array(t);for(var n=0;n<t;n+=1)r[e][n]=null}return r}(i=4*e+17),l(0,0),l(i-7,0),l(0,i-7),s(),h(),d(t,r),e>=7&&v(t),null==a&&(a=p(e,n,u)),w(a,r)},l=function(t,r){for(var e=-1;e<=7;e+=1)if(!(t+e<=-1||i<=t+e))for(var n=-1;n<=7;n+=1)r+n<=-1||i<=r+n||(o[t+e][r+n]=0<=e&&e<=6&&(0==n||6==n)||0<=n&&n<=6&&(0==e||6==e)||2<=e&&e<=4&&2<=n&&n<=4)},h=function(){for(var t=8;t<i-8;t+=1)null==o[t][6]&&(o[t][6]=t%2==0);for(var r=8;r<i-8;r+=1)null==o[6][r]&&(o[6][r]=r%2==0)},s=function(){for(var t=B.getPatternPosition(e),r=0;r<t.length;r+=1)for(var n=0;n<t.length;n+=1){var i=t[r],a=t[n];if(null==o[i][a])for(var u=-2;u<=2;u+=1)for(var f=-2;f<=2;f+=1)o[i+u][a+f]=-2==u||2==u||-2==f||2==f||0==u&&0==f}},v=function(t){for(var r=B.getBCHTypeNumber(e),n=0;n<18;n+=1){var a=!t&&1==(r>>n&1);o[Math.floor(n/3)][n%3+i-8-3]=a}for(n=0;n<18;n+=1){a=!t&&1==(r>>n&1);o[n%3+i-8-3][Math.floor(n/3)]=a}},d=function(t,r){for(var e=n<<3|r,a=B.getBCHTypeInfo(e),u=0;u<15;u+=1){var f=!t&&1==(a>>u&1);u<6?o[u][8]=f:u<8?o[u+1][8]=f:o[i-15+u][8]=f}for(u=0;u<15;u+=1){f=!t&&1==(a>>u&1);u<8?o[8][i-u-1]=f:u<9?o[8][15-u-1+1]=f:o[8][15-u-1]=f}o[i-8][8]=!t},w=function(t,r){for(var e=-1,n=i-1,a=7,u=0,f=B.getMaskFunction(r),c=i-1;c>0;c-=2)for(6==c&&(c-=1);;){for(var g=0;g<2;g+=1)if(null==o[n][c-g]){var l=!1;u<t.length&&(l=1==(t[u]>>>a&1)),f(n,c-g)&&(l=!l),o[n][c-g]=l,-1==(a-=1)&&(u+=1,a=7)}if((n+=e)<0||i<=n){n-=e,e=-e;break}}},p=function(t,r,e){for(var n=A.getRSBlocks(t,r),o=b(),i=0;i<e.length;i+=1){var a=e[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var u=0;for(i=0;i<n.length;i+=1)u+=n[i].dataCount;if(o.getLengthInBits()>8*u)throw"code length overflow. ("+o.getLengthInBits()+">"+8*u+")";for(o.getLengthInBits()+4<=8*u&&o.put(0,4);o.getLengthInBits()%8!=0;)o.putBit(!1);for(;!(o.getLengthInBits()>=8*u||(o.put(236,8),o.getLengthInBits()>=8*u));)o.put(17,8);return function(t,r){for(var e=0,n=0,o=0,i=new Array(r.length),a=new Array(r.length),u=0;u<r.length;u+=1){var f=r[u].dataCount,c=r[u].totalCount-f;n=Math.max(n,f),o=Math.max(o,c),i[u]=new Array(f);for(var g=0;g<i[u].length;g+=1)i[u][g]=255&t.getBuffer()[g+e];e+=f;var l=B.getErrorCorrectPolynomial(c),h=k(i[u],l.getLength()-1).mod(l);for(a[u]=new Array(l.getLength()-1),g=0;g<a[u].length;g+=1){var s=g+h.getLength()-a[u].length;a[u][g]=s>=0?h.getAt(s):0}}var v=0;for(g=0;g<r.length;g+=1)v+=r[g].totalCount;var d=new Array(v),w=0;for(g=0;g<n;g+=1)for(u=0;u<r.length;u+=1)g<i[u].length&&(d[w]=i[u][g],w+=1);for(g=0;g<o;g+=1)for(u=0;u<r.length;u+=1)g<a[u].length&&(d[w]=a[u][g],w+=1);return d}(o,n)};f.addData=function(t,r){var e=null;switch(r=r||"Byte"){case"Numeric":e=M(t);break;case"Alphanumeric":e=x(t);break;case"Byte":e=m(t);break;case"Kanji":e=L(t);break;default:throw"mode:"+r}u.push(e),a=null},f.isDark=function(t,r){if(t<0||i<=t||r<0||i<=r)throw t+","+r;return o[t][r]},f.getModuleCount=function(){return i},f.make=function(){if(e<1){for(var t=1;t<40;t++){for(var r=A.getRSBlocks(t,n),o=b(),i=0;i<u.length;i++){var a=u[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var g=0;for(i=0;i<r.length;i++)g+=r[i].dataCount;if(o.getLengthInBits()<=8*g)break}e=t}c(!1,function(){for(var t=0,r=0,e=0;e<8;e+=1){c(!0,e);var n=B.getLostPoint(f);(0==e||t>n)&&(t=n,r=e)}return r}())},f.createTableTag=function(t,r){t=t||2;var e="";e+='<table style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: "+(r=void 0===r?4*t:r)+"px;",e+='">',e+="<tbody>";for(var n=0;n<f.getModuleCount();n+=1){e+="<tr>";for(var o=0;o<f.getModuleCount();o+=1)e+='<td style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: 0px;",e+=" width: "+t+"px;",e+=" height: "+t+"px;",e+=" background-color: ",e+=f.isDark(n,o)?"#000000":"#ffffff",e+=";",e+='"/>';e+="</tr>"}return e+="</tbody>",e+="</table>"},f.createSvgTag=function(t,r,e,n){var o={};"object"==typeof arguments[0]&&(t=(o=arguments[0]).cellSize,r=o.margin,e=o.alt,n=o.title),t=t||2,r=void 0===r?4*t:r,(e="string"==typeof e?{text:e}:e||{}).text=e.text||null,e.id=e.text?e.id||"qrcode-description":null,(n="string"==typeof n?{text:n}:n||{}).text=n.text||null,n.id=n.text?n.id||"qrcode-title":null;var i,a,u,c,g=f.getModuleCount()*t+2*r,l="";for(c="l"+t+",0 0,"+t+" -"+t+",0 0,-"+t+"z ",l+='<svg version="1.1" xmlns="http://www.w3.org/2000/svg"',l+=o.scalable?"":' width="'+g+'px" height="'+g+'px"',l+=' viewBox="0 0 '+g+" "+g+'" ',l+=' preserveAspectRatio="xMinYMin meet"',l+=n.text||e.text?' role="img" aria-labelledby="'+y([n.id,e.id].join(" ").trim())+'"':"",l+=">",l+=n.text?'<title id="'+y(n.id)+'">'+y(n.text)+"</title>":"",l+=e.text?'<description id="'+y(e.id)+'">'+y(e.text)+"</description>":"",l+='<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>',l+='<path d="',a=0;a<f.getModuleCount();a+=1)for(u=a*t+r,i=0;i<f.getModuleCount();i+=1)f.isDark(a,i)&&(l+="M"+(i*t+r)+","+u+c);return l+='" stroke="transparent" fill="black"/>',l+="</svg>"},f.createDataURL=function(t,r){t=t||2,r=void 0===r?4*t:r;var e=f.getModuleCount()*t+2*r,n=r,o=e-r;return I(e,e,(function(r,e){if(n<=r&&r<o&&n<=e&&e<o){var i=Math.floor((r-n)/t),a=Math.floor((e-n)/t);return f.isDark(a,i)?0:1}return 1}))},f.createImgTag=function(t,r,e){t=t||2,r=void 0===r?4*t:r;var n=f.getModuleCount()*t+2*r,o="";return o+="<img",o+=' src="',o+=f.createDataURL(t,r),o+='"',o+=' width="',o+=n,o+='"',o+=' height="',o+=n,o+='"',e&&(o+=' alt="',o+=y(e),o+='"'),o+="/>"};var y=function(t){for(var r="",e=0;e<t.length;e+=1){var n=t.charAt(e);switch(n){case"<":r+="&lt;";break;case">":r+="&gt;";break;case"&":r+="&amp;";break;case'"':r+="&quot;";break;default:r+=n}}return r};return f.createASCII=function(t,r){if((t=t||1)<2)return function(t){t=void 0===t?2:t;var r,e,n,o,i,a=1*f.getModuleCount()+2*t,u=t,c=a-t,g={"██":"█","█ ":"▀"," █":"▄","  ":" "},l={"██":"▀","█ ":"▀"," █":" ","  ":" "},h="";for(r=0;r<a;r+=2){for(n=Math.floor((r-u)/1),o=Math.floor((r+1-u)/1),e=0;e<a;e+=1)i="█",u<=e&&e<c&&u<=r&&r<c&&f.isDark(n,Math.floor((e-u)/1))&&(i=" "),u<=e&&e<c&&u<=r+1&&r+1<c&&f.isDark(o,Math.floor((e-u)/1))?i+=" ":i+="█",h+=t<1&&r+1>=c?l[i]:g[i];h+="\n"}return a%2&&t>0?h.substring(0,h.length-a-1)+Array(a+1).join("▀"):h.substring(0,h.length-1)}(r);t-=1,r=void 0===r?2*t:r;var e,n,o,i,a=f.getModuleCount()*t+2*r,u=r,c=a-r,g=Array(t+1).join("██"),l=Array(t+1).join("  "),h="",s="";for(e=0;e<a;e+=1){for(o=Math.floor((e-u)/t),s="",n=0;n<a;n+=1)i=1,u<=n&&n<c&&u<=e&&e<c&&f.isDark(o,Math.floor((n-u)/t))&&(i=0),s+=i?g:l;for(o=0;o<t;o+=1)h+=s+"\n"}return h.substring(0,h.length-1)},f.renderTo2dContext=function(t,r){r=r||2;for(var e=f.getModuleCount(),n=0;n<e;n++)for(var o=0;o<e;o++)t.fillStyle=f.isDark(n,o)?"black":"white",t.fillRect(n*r,o*r,r,r)},f};t.stringToBytes=(t.stringToBytesFuncs={default:function(t){for(var r=[],e=0;e<t.length;e+=1){var n=t.charCodeAt(e);r.push(255&n)}return r}}).default,t.createStringToBytes=function(t,r){var e=function(){for(var e=S(t),n=function(){var t=e.read();if(-1==t)throw"eof";return t},o=0,i={};;){var a=e.read();if(-1==a)break;var u=n(),f=n()<<8|n();i[String.fromCharCode(a<<8|u)]=f,o+=1}if(o!=r)throw o+" != "+r;return i}(),n="?".charCodeAt(0);return function(t){for(var r=[],o=0;o<t.length;o+=1){var i=t.charCodeAt(o);if(i<128)r.push(i);else{var a=e[t.charAt(o)];"number"==typeof a?(255&a)==a?r.push(a):(r.push(a>>>8),r.push(255&a)):r.push(n)}}return r}};var r,e,n,o,i,a=1,u=2,f=4,c=8,g={L:1,M:0,Q:3,H:2},l=0,h=1,s=2,v=3,d=4,w=5,p=6,y=7,B=(r=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],e=1335,n=7973,i=function(t){for(var r=0;0!=t;)r+=1,t>>>=1;return r},(o={}).getBCHTypeInfo=function(t){for(var r=t<<10;i(r)-i(e)>=0;)r^=e<<i(r)-i(e);return 21522^(t<<10|r)},o.getBCHTypeNumber=function(t){for(var r=t<<12;i(r)-i(n)>=0;)r^=n<<i(r)-i(n);return t<<12|r},o.getPatternPosition=function(t){return r[t-1]},o.getMaskFunction=function(t){switch(t){case l:return function(t,r){return(t+r)%2==0};case h:return function(t,r){return t%2==0};case s:return function(t,r){return r%3==0};case v:return function(t,r){return(t+r)%3==0};case d:return function(t,r){return(Math.floor(t/2)+Math.floor(r/3))%2==0};case w:return function(t,r){return t*r%2+t*r%3==0};case p:return function(t,r){return(t*r%2+t*r%3)%2==0};case y:return function(t,r){return(t*r%3+(t+r)%2)%2==0};default:throw"bad maskPattern:"+t}},o.getErrorCorrectPolynomial=function(t){for(var r=k([1],0),e=0;e<t;e+=1)r=r.multiply(k([1,C.gexp(e)],0));return r},o.getLengthInBits=function(t,r){if(1<=r&&r<10)switch(t){case a:return 10;case u:return 9;case f:case c:return 8;default:throw"mode:"+t}else if(r<27)switch(t){case a:return 12;case u:return 11;case f:return 16;case c:return 10;default:throw"mode:"+t}else{if(!(r<41))throw"type:"+r;switch(t){case a:return 14;case u:return 13;case f:return 16;case c:return 12;default:throw"mode:"+t}}},o.getLostPoint=function(t){for(var r=t.getModuleCount(),e=0,n=0;n<r;n+=1)for(var o=0;o<r;o+=1){for(var i=0,a=t.isDark(n,o),u=-1;u<=1;u+=1)if(!(n+u<0||r<=n+u))for(var f=-1;f<=1;f+=1)o+f<0||r<=o+f||0==u&&0==f||a==t.isDark(n+u,o+f)&&(i+=1);i>5&&(e+=3+i-5)}for(n=0;n<r-1;n+=1)for(o=0;o<r-1;o+=1){var c=0;t.isDark(n,o)&&(c+=1),t.isDark(n+1,o)&&(c+=1),t.isDark(n,o+1)&&(c+=1),t.isDark(n+1,o+1)&&(c+=1),0!=c&&4!=c||(e+=3)}for(n=0;n<r;n+=1)for(o=0;o<r-6;o+=1)t.isDark(n,o)&&!t.isDark(n,o+1)&&t.isDark(n,o+2)&&t.isDark(n,o+3)&&t.isDark(n,o+4)&&!t.isDark(n,o+5)&&t.isDark(n,o+6)&&(e+=40);for(o=0;o<r;o+=1)for(n=0;n<r-6;n+=1)t.isDark(n,o)&&!t.isDark(n+1,o)&&t.isDark(n+2,o)&&t.isDark(n+3,o)&&t.isDark(n+4,o)&&!t.isDark(n+5,o)&&t.isDark(n+6,o)&&(e+=40);var g=0;for(o=0;o<r;o+=1)for(n=0;n<r;n+=1)t.isDark(n,o)&&(g+=1);return e+=Math.abs(100*g/r/r-50)/5*10},o),C=function(){for(var t=new Array(256),r=new Array(256),e=0;e<8;e+=1)t[e]=1<<e;for(e=8;e<256;e+=1)t[e]=t[e-4]^t[e-5]^t[e-6]^t[e-8];for(e=0;e<255;e+=1)r[t[e]]=e;var n={glog:function(t){if(t<1)throw"glog("+t+")";return r[t]},gexp:function(r){for(;r<0;)r+=255;for(;r>=256;)r-=255;return t[r]}};return n}();function k(t,r){if(void 0===t.length)throw t.length+"/"+r;var e=function(){for(var e=0;e<t.length&&0==t[e];)e+=1;for(var n=new Array(t.length-e+r),o=0;o<t.length-e;o+=1)n[o]=t[o+e];return n}(),n={getAt:function(t){return e[t]},getLength:function(){return e.length},multiply:function(t){for(var r=new Array(n.getLength()+t.getLength()-1),e=0;e<n.getLength();e+=1)for(var o=0;o<t.getLength();o+=1)r[e+o]^=C.gexp(C.glog(n.getAt(e))+C.glog(t.getAt(o)));return k(r,0)},mod:function(t){if(n.getLength()-t.getLength()<0)return n;for(var r=C.glog(n.getAt(0))-C.glog(t.getAt(0)),e=new Array(n.getLength()),o=0;o<n.getLength();o+=1)e[o]=n.getAt(o);for(o=0;o<t.getLength();o+=1)e[o]^=C.gexp(C.glog(t.getAt(o))+r);return k(e,0).mod(t)}};return n}var A=function(){var t=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12,7,37,13],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],r=function(t,r){var e={};return e.totalCount=t,e.dataCount=r,e},e={};return e.getRSBlocks=function(e,n){var o=function(r,e){switch(e){case g.L:return t[4*(r-1)+0];case g.M:return t[4*(r-1)+1];case g.Q:return t[4*(r-1)+2];case g.H:return t[4*(r-1)+3];default:return}}(e,n);if(void 0===o)throw"bad rs block @ typeNumber:"+e+"/errorCorrectionLevel:"+n;for(var i=o.length/3,a=[],u=0;u<i;u+=1)for(var f=o[3*u+0],c=o[3*u+1],l=o[3*u+2],h=0;h<f;h+=1)a.push(r(c,l));return a},e}(),b=function(){var t=[],r=0,e={getBuffer:function(){return t},getAt:function(r){var e=Math.floor(r/8);return 1==(t[e]>>>7-r%8&1)},put:function(t,r){for(var n=0;n<r;n+=1)e.putBit(1==(t>>>r-n-1&1))},getLengthInBits:function(){return r},putBit:function(e){var n=Math.floor(r/8);t.length<=n&&t.push(0),e&&(t[n]|=128>>>r%8),r+=1}};return e},M=function(t){var r=a,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+2<r.length;)t.put(o(r.substring(n,n+3)),10),n+=3;n<r.length&&(r.length-n==1?t.put(o(r.substring(n,n+1)),4):r.length-n==2&&t.put(o(r.substring(n,n+2)),7))}},o=function(t){for(var r=0,e=0;e<t.length;e+=1)r=10*r+i(t.charAt(e));return r},i=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);throw"illegal char :"+t};return n},x=function(t){var r=u,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+1<r.length;)t.put(45*o(r.charAt(n))+o(r.charAt(n+1)),11),n+=2;n<r.length&&t.put(o(r.charAt(n)),6)}},o=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);if("A"<=t&&t<="Z")return t.charCodeAt(0)-"A".charCodeAt(0)+10;switch(t){case" ":return 36;case"$":return 37;case"%":return 38;case"*":return 39;case"+":return 40;case"-":return 41;case".":return 42;case"/":return 43;case":":return 44;default:throw"illegal char :"+t}};return n},m=function(r){var e=f,n=t.stringToBytes(r),o={getMode:function(){return e},getLength:function(t){return n.length},write:function(t){for(var r=0;r<n.length;r+=1)t.put(n[r],8)}};return o},L=function(r){var e=c,n=t.stringToBytesFuncs.SJIS;if(!n)throw"sjis not supported.";!function(t,r){var e=n("友");if(2!=e.length||38726!=(e[0]<<8|e[1]))throw"sjis not supported."}();var o=n(r),i={getMode:function(){return e},getLength:function(t){return~~(o.length/2)},write:function(t){for(var r=o,e=0;e+1<r.length;){var n=(255&r[e])<<8|255&r[e+1];if(33088<=n&&n<=40956)n-=33088;else{if(!(57408<=n&&n<=60351))throw"illegal char at "+(e+1)+"/"+n;n-=49472}n=192*(n>>>8&255)+(255&n),t.put(n,13),e+=2}if(e<r.length)throw"illegal char at "+(e+1)}};return i},D=function(){var t=[],r={writeByte:function(r){t.push(255&r)},writeShort:function(t){r.writeByte(t),r.writeByte(t>>>8)},writeBytes:function(t,e,n){e=e||0,n=n||t.length;for(var o=0;o<n;o+=1)r.writeByte(t[o+e])},writeString:function(t){for(var e=0;e<t.length;e+=1)r.writeByte(t.charCodeAt(e))},toByteArray:function(){return t},toString:function(){var r="";r+="[";for(var e=0;e<t.length;e+=1)e>0&&(r+=","),r+=t[e];return r+="]"}};return r},S=function(t){var r=t,e=0,n=0,o=0,i={read:function(){for(;o<8;){if(e>=r.length){if(0==o)return-1;throw"unexpected end of file./"+o}var t=r.charAt(e);if(e+=1,"="==t)return o=0,-1;t.match(/^\s$/)||(n=n<<6|a(t.charCodeAt(0)),o+=6)}var i=n>>>o-8&255;return o-=8,i}},a=function(t){if(65<=t&&t<=90)return t-65;if(97<=t&&t<=122)return t-97+26;if(48<=t&&t<=57)return t-48+52;if(43==t)return 62;if(47==t)return 63;throw"c:"+t};return i},I=function(t,r,e){for(var n=function(t,r){var e=t,n=r,o=new Array(t*r),i={setPixel:function(t,r,n){o[r*e+t]=n},write:function(t){t.writeString("GIF87a"),t.writeShort(e),t.writeShort(n),t.writeByte(128),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(255),t.writeByte(255),t.writeByte(255),t.writeString(","),t.writeShort(0),t.writeShort(0),t.writeShort(e),t.writeShort(n),t.writeByte(0);var r=a(2);t.writeByte(2);for(var o=0;r.length-o>255;)t.writeByte(255),t.writeBytes(r,o,255),o+=255;t.writeByte(r.length-o),t.writeBytes(r,o,r.length-o),t.writeByte(0),t.writeString(";")}},a=function(t){for(var r=1<<t,e=1+(1<<t),n=t+1,i=u(),a=0;a<r;a+=1)i.add(String.fromCharCode(a));i.add(String.fromCharCode(r)),i.add(String.fromCharCode(e));var f,c,g,l=D(),h=(f=l,c=0,g=0,{write:function(t,r){if(t>>>r!=0)throw"length over";for(;c+r>=8;)f.writeByte(255&(t<<c|g)),r-=8-c,t>>>=8-c,g=0,c=0;g|=t<<c,c+=r},flush:function(){c>0&&f.writeByte(g)}});h.write(r,n);var s=0,v=String.fromCharCode(o[s]);for(s+=1;s<o.length;){var d=String.fromCharCode(o[s]);s+=1,i.contains(v+d)?v+=d:(h.write(i.indexOf(v),n),i.size()<4095&&(i.size()==1<<n&&(n+=1),i.add(v+d)),v=d)}return h.write(i.indexOf(v),n),h.write(e,n),h.flush(),l.toByteArray()},u=function(){var t={},r=0,e={add:function(n){if(e.contains(n))throw"dup key:"+n;t[n]=r,r+=1},size:function(){return r},indexOf:function(r){return t[r]},contains:function(r){return void 0!==t[r]}};return e};return i}(t,r),o=0;o<r;o+=1)for(var i=0;i<t;i+=1)n.setPixel(i,o,e(i,o));var a=D();n.write(a);for(var u=function(){var t=0,r=0,e=0,n="",o={},i=function(t){n+=String.fromCharCode(a(63&t))},a=function(t){if(t<0);else{if(t<26)return 65+t;if(t<52)return t-26+97;if(t<62)return t-52+48;if(62==t)return 43;if(63==t)return 47}throw"n:"+t};return o.writeByte=function(n){for(t=t<<8|255&n,r+=8,e+=1;r>=6;)i(t>>>r-6),r-=6},o.flush=function(){if(r>0&&(i(t<<6-r),t=0,r=0),e%3!=0)for(var o=3-e%3,a=0;a<o;a+=1)n+="="},o.toString=function(){return n},o}(),f=a.toByteArray(),c=0;c<f.length;c+=1)u.writeByte(f[c]);return u.flush(),"data:image/gif;base64,"+u};return t}();qrcode.stringToBytesFuncs["UTF-8"]=function(t){return function(t){for(var r=[],e=0;e<t.length;e++){var n=t.charCodeAt(e);n<128?r.push(n):n<2048?r.push(192|n>>6,128|63&n):n<55296||n>=57344?r.push(224|n>>12,128|n>>6&63,128|63&n):(e++,n=65536+((1023&n)<<10|1023&t.charCodeAt(e)),r.push(240|n>>18,128|n>>12&63,128|n>>6&63,128|63&n))}return r}(t)},function(t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports&&(module.exports=t())}((function(){return qrcode}));
+</script>
+<script>
+/* ===== KP BASE JS ===== */
+(function(){
+  'use strict';
+  var root=document.documentElement;
+  var KP=window.KP=window.KP||{};
+  var RM=matchMedia('(prefers-reduced-motion: reduce)');
+  KP.reduced=function(){return RM.matches;};
+  var $$=function(s,c){return [].slice.call((c||document).querySelectorAll(s));};
+  var AUD=/[?&]join\b/.test(location.search);
+
+  /* -- MODULE: STORE (PERSIST SWAP — lab / notes / lecture / deck pages ONLY, never quizzes).
+        Persistent but safe: falls back to memory when storage is blocked (private mode, in-app browsers).
+        Only theme + checkpoint ticks are stored. No names, roll numbers, answers or scores. -- */
+  var mem={};
+  var pk=function(k,g){return 'kp:'+(g?'':root.dataset.page+':')+k;};
+  KP.store={
+    get:function(k,g){
+      try{var v=localStorage.getItem(pk(k,g));if(v!==null)return v;}catch(e){}
+      return Object.prototype.hasOwnProperty.call(mem,pk(k,g))?mem[pk(k,g)]:null;
+    },
+    set:function(k,v,g){mem[pk(k,g)]=String(v);try{localStorage.setItem(pk(k,g),String(v));}catch(e){}},
+    remove:function(k,g){delete mem[pk(k,g)];try{localStorage.removeItem(pk(k,g));}catch(e){}}
+  };
+
+  /* -- MODULE: CHECKPOINTS (lab manual / notes). Markup:
+        <label class="cp"><input type="checkbox" data-cp="cp1"> Checkpoint 1 …</label>
+        <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Checkpoint progress" data-cp-meter><span></span></div>
+        <p data-cp-label></p>  <button class="btn" type="button" data-cp-reset>Reset progress</button>   -- */
+  KP.checkpoints=function(){
+    var boxes=[].slice.call(document.querySelectorAll('input[data-cp]'));if(!boxes.length)return;
+    var meter=document.querySelector('[data-cp-meter]'),label=document.querySelector('[data-cp-label]'),reset=document.querySelector('[data-cp-reset]');
+    function paint(){
+      var done=boxes.filter(function(b){return b.checked;}).length,pct=Math.round(done/boxes.length*100);
+      if(meter){meter.setAttribute('aria-valuenow',pct);if(meter.firstElementChild)meter.firstElementChild.style.setProperty('--p',pct/100);}
+      if(label)label.textContent=done+' of '+boxes.length+' checkpoints done';
+    }
+    boxes.forEach(function(b){
+      b.checked=KP.store.get('cp:'+b.dataset.cp)==='1';
+      b.addEventListener('change',function(){KP.store.set('cp:'+b.dataset.cp,b.checked?'1':'0');paint();});
+    });
+    if(reset)reset.addEventListener('click',function(){boxes.forEach(function(b){b.checked=false;KP.store.set('cp:'+b.dataset.cp,'0');});paint();});
+    paint();
+  };
+  setTimeout(function(){KP.checkpoints();},0);
+
+  /* -- MODULE: THEME TOGGLE (three-layer pattern; icon-only) -- */
+  var btn=document.getElementById('themeToggle');
+  var mq=matchMedia('(prefers-color-scheme: dark)');
+  function isDark(){return root.dataset.theme?root.dataset.theme==='dark':mq.matches;}
+  function paintToggle(){
+    var d=isDark();
+    if(btn){btn.textContent=d?'☀️':'🌙';btn.setAttribute('aria-label',d?'Switch to light theme':'Switch to dark theme');}
+    var m=document.getElementById('themeColor'),bg=getComputedStyle(root).getPropertyValue('--bg').trim();
+    if(m&&bg)m.setAttribute('content',bg);
+  }
+  var saved=KP.store.get('theme',true);
+  if(saved==='light'||saved==='dark')root.dataset.theme=saved;
+  if(btn)btn.addEventListener('click',function(){
+    var next=isDark()?'light':'dark';root.dataset.theme=next;KP.store.set('theme',next,true);paintToggle();
+  });
+  if(mq.addEventListener)mq.addEventListener('change',paintToggle);
+  paintToggle();
+
+  /* -- MODULE: COUNT-UP — 0 -> N (tabular digits). Auto: <b data-count="85" data-suffix="%" data-decimals="0">85%</b>
+        data-group → Indian digit grouping (10,00,000); data-locale="en-US" for 1,000,000.
+        The element's own text is the final value, so JS-off / reduced-motion readers see the truth. -- */
+  KP.countUp=function(el,to,o){
+    o=o||{};var ms=o.ms||900,dec=o.decimals||0,suf=o.suffix||'',pre=o.prefix||'',from=+o.from||0;   // o.from: start value (default 0)
+    var fmt=function(v){return pre+(o.group?v.toLocaleString(o.locale||'en-IN',{minimumFractionDigits:dec,maximumFractionDigits:dec}):v.toFixed(dec))+suf;};
+    if(KP.reduced()){el.textContent=fmt(to);return;}
+    var t0=performance.now();
+    (function step(now){
+      var p=Math.min((now-t0)/ms,1),e=1-Math.pow(1-p,3);
+      el.textContent=fmt(from+(to-from)*e);
+      if(p<1)requestAnimationFrame(step);
+    })(t0);
+    setTimeout(function(){el.textContent=fmt(to);},ms+80);      // background-tab safety: always land on the true value
+  };
+  KP.runCount=function(el){
+    var to=parseFloat(el.dataset.count);if(isNaN(to))return;
+    KP.countUp(el,to,{group:el.hasAttribute('data-group'),locale:el.dataset.locale,decimals:+(el.dataset.decimals||0),suffix:el.dataset.suffix||'',prefix:el.dataset.prefix||'',ms:+(el.dataset.ms||900)});
+  };
+
+  /* -- MODULE: REPLAY — restart a CSS animation every time (reflow trick). <span class="stamp" data-replay="kp-slam">ACCEPTED</span> -- */
+  KP.replay=function(el,cls){
+    cls=cls||el.dataset.replay||'kp-slam';
+    try{el.classList.remove(cls);void el.offsetWidth;el.classList.add(cls);}catch(e){}
+  };
+
+  /* -- MODULE: REVEAL (scroll-in, IntersectionObserver, capped stagger; deck slides are handled by the deck kit) -- */
+  var items=$$('[data-reveal]').filter(function(el){return !el.closest('[data-deck]');});
+  $$('[data-stagger]').forEach(function(box){
+    $$('[data-reveal]',box).forEach(function(el,i){el.style.setProperty('--d',Math.min(i,8)*70+'ms');el.dataset.staggered='1';});
+  });
+  var counts=$$('[data-count]').filter(function(el){return !el.closest('[data-deck]');});
+  function showAll(){items.forEach(function(el){el.classList.add('is-in');});}
+  if(RM.matches||!('IntersectionObserver' in window)){showAll();}
+  else{
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(!e.isIntersecting)return;var t=e.target;io.unobserve(t);
+      if(t.hasAttribute('data-reveal'))t.classList.add('is-in');
+      if(t.hasAttribute('data-count'))KP.runCount(t);
+      if(t.hasAttribute('data-replay'))KP.replay(t);
+    });},{rootMargin:'0px 0px -10% 0px',threshold:0.15});
+    items.forEach(function(el,i){if(!el.dataset.staggered)el.style.setProperty('--d',Math.min(i%6,5)*70+'ms');io.observe(el);});
+    counts.forEach(function(el){io.observe(el);});
+    $$('[data-replay]').filter(function(el){return !el.closest('[data-deck]');}).forEach(function(el){io.observe(el);});
+  }
+
+  /* -- MODULE: SCROLL PROGRESS — <div class="scroll-progress" data-scroll-progress aria-hidden="true"><span></span></div> -- */
+  var sp=document.querySelector('[data-scroll-progress]>span');
+  if(sp){
+    var ticking=false;
+    var paintSP=function(){ticking=false;var h=document.documentElement.scrollHeight-innerHeight;sp.style.setProperty('--p',h>0?Math.min(1,scrollY/h):0);};
+    addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(paintSP);}},{passive:true});
+    addEventListener('resize',paintSP);paintSP();
+  }
+
+  /* -- MODULE: SCROLL-SPY — <nav data-spy aria-label="Contents"><a href="#sec1">…</a></nav>; marks the section being read -- */
+  $$('[data-spy]').forEach(function(nav){
+    if(!('IntersectionObserver' in window))return;
+    var links=$$('a[href^="#"]',nav),map={};
+    links.forEach(function(a){var t=document.getElementById(decodeURIComponent(a.hash.slice(1)));if(t)map[t.id]=a;});
+    var sio=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(!e.isIntersecting||!map[e.target.id])return;
+      links.forEach(function(a){a.removeAttribute('aria-current');});map[e.target.id].setAttribute('aria-current','true');
+    });},{rootMargin:'-35% 0px -55% 0px'});
+    Object.keys(map).forEach(function(id){sio.observe(document.getElementById(id));});
+  });
+
+  /* -- MODULE: PAUSE MOTION — <button class="btn" type="button" data-pause-motion aria-pressed="false">⏸ Pause motion</button>
+        Required whenever anything loops > 5 s (motes, pulse, marquee). -- */
+  $$('[data-pause-motion]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var paused=root.dataset.motion==='paused';
+      if(paused)delete root.dataset.motion;else root.dataset.motion='paused';
+      $$('[data-pause-motion]').forEach(function(x){x.setAttribute('aria-pressed',String(!paused));x.textContent=paused?'⏸ Pause motion':'▶ Play motion';});
+    });
+  });
+
+  /* -- MODULE: PERF GUARD (weak phones: flag so heavy effects can switch off) -- */
+  (function(){
+    var last=performance.now(),slow=0,n=0;
+    (function tick(t){
+      var dt=t-last;last=t;
+      if(dt>34&&++slow>12)root.dataset.perf='low';
+      if(++n<240&&!root.dataset.perf)requestAnimationFrame(tick);   // sample ~4s, then stop
+    })(last);
+  })();
+
+
+  /* -- KIT: SWAP — animated screen change; instant when unsupported or reduced-motion -- */
+  KP.swap=function(render){
+    if(!document.startViewTransition||KP.reduced()){render();return;}
+    try{document.startViewTransition(render);}catch(e){render();}
+  };
+  /* -- KIT: CONFETTI — one-shot, capped at 90 pieces, ~1.6 s, self-removing; silent under reduced-motion / low perf / paused -- */
+  KP.confetti=function(o){
+    o=o||{};
+    if(KP.reduced()||root.dataset.perf==='low'||root.dataset.motion==='paused')return;
+    var n=Math.min(o.count||80,90),W=innerWidth,H=innerHeight,dpr=Math.min(devicePixelRatio||1,2);
+    var cv=document.createElement('canvas');
+    cv.setAttribute('aria-hidden','true');
+    cv.style.cssText='position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:90';
+    cv.width=W*dpr;cv.height=H*dpr;document.body.appendChild(cv);
+    var cx=cv.getContext('2d');cx.scale(dpr,dpr);
+    var cs=getComputedStyle(root);
+    var cols=[cs.getPropertyValue('--accent'),cs.getPropertyValue('--accent-2'),'#ffc93c','#3ddc97'].map(function(c){return c.trim()||'#888';});
+    var ps=[];for(var i=0;i<n;i++)ps.push({x:W/2+(Math.random()-.5)*W*.3,y:H*.35,vx:(Math.random()-.5)*10,vy:-Math.random()*10-3,
+      s:4+Math.random()*5,r:Math.random()*6,vr:(Math.random()-.5)*.3,c:cols[(Math.random()*cols.length)|0]});
+    var f=0,max=o.frames||100,raf;
+    function end(){cancelAnimationFrame(raf);cv.remove();removeEventListener('pagehide',end);}
+    (function loop(){
+      if(document.hidden){end();return;}
+      cx.clearRect(0,0,W,H);
+      ps.forEach(function(p){p.vy+=.28;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;
+        cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);cx.restore();});
+      if(++f<max)raf=requestAnimationFrame(loop);else end();
+    })();
+    addEventListener('pagehide',end);
+  };
+  /* ===== KIT: DECK / STAGE (kp-html-base 1.5.0) =====
+     Markup: <main id="main" class="deck" data-deck tabindex="-1"> <section class="slide" id="s1" data-notes="…"><div class="slide-inner">…</div></section> … </main>
+     Keys: → / PageDown / Space next · ← / PageUp previous · Home / End · N notes · Esc closes notes.
+     Timing (talks): optional data-min="1.5" per slide. The notes panel shows elapsed time (clock starts when you leave slide 1),
+     this slide's target and the planned running total, so the presenter can see if they are ahead or behind.
+     Deep link: page.html#s4 opens slide 4 (no storage needed). page.html?all shows every slide stacked.
+     Hook for page code: document.addEventListener('kp:slide', e => e.detail.index / e.detail.slide / e.detail.total).
+     On each activation: [data-reveal] re-stagger in, [data-count] counters run, [data-replay] animations restart. -- */
+  if(!AUD)(function(){
+    var deck=document.querySelector('[data-deck]');if(!deck)return;
+    var slides=$$('.slide',deck).filter(function(s){return s.parentElement===deck;});
+    var N=slides.length;if(!N)return;
+    slides.forEach(function(s,i){
+      if(!s.id)s.id='s'+(i+1);
+      s.setAttribute('role','group');s.setAttribute('aria-roledescription','slide');s.setAttribute('aria-label',(i+1)+' of '+N);
+      s.tabIndex=-1;
+      $$('[data-reveal]',s).forEach(function(el,k){if(!el.dataset.staggered)el.style.setProperty('--d',Math.min(k,8)*70+'ms');});
+    });
+    var dock=document.querySelector('.deck-dock');
+    if(/[?&]all\b/.test(location.search)){
+      deck.classList.add('is-all');if(dock)dock.hidden=true;
+      var pb=document.querySelector('.deck-progress');if(pb)pb.hidden=true;
+      $$('[data-reveal]',deck).forEach(function(el){el.classList.add('is-in');});
+      return;
+    }
+    document.body.classList.add('has-dock');
+    var prog=document.querySelector('.deck-progress>span'),status=document.querySelector('[data-deck-status]');
+    var prevB=document.querySelector('[data-deck-prev]'),nextB=document.querySelector('[data-deck-next]'),notesB=document.querySelector('[data-deck-notes]');
+    var notesBox=document.getElementById('deckNotes'),notesBody=document.getElementById('deckNotesBody');
+    var idx=-1,navEl=document.querySelector('nav.nav'),t0=0,tick=null,timeEl=document.getElementById('deckNotesTime');
+    var mins=slides.map(function(s){var m=parseFloat(s.dataset.min);return isNaN(m)?0:m;}),hasPlan=mins.some(function(m){return m>0;});
+    function mmss(ms){var t=Math.max(0,Math.round(ms/1000));return Math.floor(t/60)+':'+('0'+t%60).slice(-2);}
+    function paintTime(){
+      if(!timeEl)return;var parts=[];
+      parts.push(t0?'⏱ '+mmss(Date.now()-t0)+' elapsed':'⏱ clock starts when you leave slide 1');
+      if(hasPlan&&idx>=0){var run=0;for(var i=0;i<=idx;i++)run+=mins[i];
+        if(mins[idx])parts.push('this slide ~'+mins[idx]+' min');parts.push('planned by end of slide: '+(Math.round(run*10)/10)+' min');}
+      timeEl.textContent=parts.join(' · ');
+    }
+    function fit(){                 /* measure the real nav/dock so a slide never runs underneath them */
+      var nb=navEl?navEl.getBoundingClientRect().bottom:0,db=dock?dock.getBoundingClientRect().height:0;
+      root.style.setProperty('--deck-bar',Math.round(nb)+'px');
+      root.style.setProperty('--deck-top',Math.round(nb+3)+'px');
+      if(db)root.style.setProperty('--deck-bottom',Math.ceil(db)+'px');
+    }
+    fit();addEventListener('resize',fit);
+    if(window.ResizeObserver){var ro=new ResizeObserver(fit);if(navEl)ro.observe(navEl);if(dock)ro.observe(dock);}
+    function go(n,focus){
+      n=Math.max(0,Math.min(N-1,n));if(n===idx)return;
+      var old=slides[idx];idx=n;var cur=slides[n];
+      slides.forEach(function(s,i){s.classList.toggle('is-active',i===n);});
+      if(old)$$('[data-reveal]',old).forEach(function(el){el.classList.remove('is-in');});
+      cur.scrollTop=0;
+      var rev=$$('[data-reveal]',cur);
+      if(KP.reduced())rev.forEach(function(el){el.classList.add('is-in');});
+      else requestAnimationFrame(function(){requestAnimationFrame(function(){rev.forEach(function(el){el.classList.add('is-in');});});});
+      $$('[data-count]',cur).forEach(KP.runCount);
+      $$('[data-replay]',cur).forEach(function(el){KP.replay(el);});
+      if(prog)prog.style.setProperty('--p',(n+1)/N);
+      if(status)status.textContent=(n+1)+' / '+N;
+      if(prevB)prevB.disabled=n===0;
+      if(nextB)nextB.disabled=n===N-1;
+      if(notesBody)notesBody.textContent=cur.dataset.notes||'No presenter notes for this slide.';
+      if(n>0&&!t0)t0=Date.now();
+      paintTime();
+      try{history.replaceState(null,'','#'+cur.id);}catch(e){}
+      if(focus)try{cur.focus({preventScroll:true});}catch(e){}
+      try{document.dispatchEvent(new CustomEvent('kp:slide',{detail:{index:n,slide:cur,total:N}}));}catch(e){}
+    }
+    function toggleNotes(force){
+      if(!notesBox)return;var open=typeof force==='boolean'?force:notesBox.hidden;
+      notesBox.hidden=!open;if(notesB)notesB.setAttribute('aria-pressed',String(open));
+      clearInterval(tick);if(open){paintTime();tick=setInterval(paintTime,1000);}
+    }
+    KP.deck={go:function(n){go(n,true);},next:function(){go(idx+1,true);},prev:function(){go(idx-1,true);},
+      index:function(){return idx;},total:N,notes:toggleNotes};
+    if(prevB)prevB.addEventListener('click',function(){go(idx-1,false);});
+    if(nextB)nextB.addEventListener('click',function(){go(idx+1,false);});
+    if(notesB)notesB.addEventListener('click',function(){toggleNotes();});
+    addEventListener('keydown',function(e){
+      if(e.defaultPrevented||e.altKey||e.ctrlKey||e.metaKey)return;
+      var t=e.target;if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))return;
+      var k=e.key;
+      if(k==='ArrowRight'||k==='PageDown'||(k===' '&&!(t&&/^(BUTTON|A|SUMMARY)$/.test(t.tagName)))){e.preventDefault();go(idx+1,true);}
+      else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();go(idx-1,true);}
+      else if(k==='Home'){e.preventDefault();go(0,true);}
+      else if(k==='End'){e.preventDefault();go(N-1,true);}
+      else if(k==='n'||k==='N'){toggleNotes();}
+      else if(k==='Escape'){toggleNotes(false);}
+    });
+    function fromHash(){
+      var id=decodeURIComponent((location.hash||'').slice(1));if(!id)return -1;
+      for(var i=0;i<N;i++){if(slides[i].id===id)return i;}
+      var inner=document.getElementById(id);
+      if(inner)for(var j=0;j<N;j++){if(slides[j].contains(inner))return j;}
+      return -1;
+    }
+    addEventListener('hashchange',function(){var h=fromHash();if(h>=0)go(h,true);});
+    var start=fromHash();go(start>=0?start:0,false);
+  })();
+
+  /* ===== PAGE APP ===== */
+
+  /* ============================================================================================
+     LIVE SESSION CONFIG — the only lines you edit after deploying Code.gs
+     api     : the Apps Script web-app URL ending in /exec  (leave '' to run the deck offline)
+     joinUrl : optional short link that redirects to  <this page>?join  (leave '' to use this page's own address)
+     Presenter PIN: type it on slide 2, or open the deck with ?pin=YOURPIN. It is kept in memory only.
+     ============================================================================================ */
+  var LIVE={api:'https://script.google.com/macros/s/AKfycbyZAEu4bYu_dGYbwAhw-bsx6jFy2925eWRjU1GNgPdDSTQHUggb48heMHHlSIwah4n83Q/exec', joinUrl:''};
+
+  var AUD=/[?&]join\b/.test(location.search);
+  var $=function(id){return document.getElementById(id);};
+  var qp=new URLSearchParams(location.search);
+  var PIN=qp.get('pin')||'';
+  if(PIN){try{history.replaceState(null,'',location.pathname+location.search.replace(/([?&])pin=[^&]*&?/,'$1').replace(/[?&]$/,'')+location.hash);}catch(e){}}
+
+  /* -- questions are read from the slides themselves (single source of truth) -- */
+  var QS={},QORDER=[];
+  $$('.slide[data-q]').forEach(function(s){
+    var ol=s.querySelector('ol.choices');if(!ol)return;
+    var q={id:s.dataset.q,kind:s.dataset.kind||'poll',slide:s,text:(s.querySelector('h2')||{}).textContent||'',
+      opts:$$('li',ol).map(function(li){return li.textContent;}),ans:ol.hasAttribute('data-ans')?+ol.dataset.ans:-1};
+    QS[q.id]=q;QORDER.push(q.id);
+  });
+
+  /* -- tiny fetch client for the Apps Script backend (GET for reads, text/plain POST for writes: no preflight) -- */
+  function withTimeout(p,ms){return new Promise(function(res,rej){var t=setTimeout(function(){rej(new Error('timeout'));},ms);p.then(function(v){clearTimeout(t);res(v);},function(e){clearTimeout(t);rej(e);});});}
+  function apiGet(action){
+    if(!LIVE.api)return Promise.reject(new Error('offline'));
+    return withTimeout(fetch(LIVE.api+'?action='+encodeURIComponent(action)+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}),9000);
+  }
+  function apiPost(body){
+    if(!LIVE.api)return Promise.reject(new Error('offline'));
+    return withTimeout(fetch(LIVE.api,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)}).then(function(r){return r.json();}),12000);
+  }
+  function hash(s){var h=5381;for(var i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return ('00000000'+(h>>>0).toString(16)).slice(-8);}
+  function letter(i){return String.fromCharCode(65+i);}
+
+  /* ============================== AUDIENCE MODE (?join) ============================== */
+  if(AUD){
+    document.body.classList.add('aud-mode');
+    var me={id:'',name:''},answered={},lastOpen='',session=0,tick=null,showing='';
+    var screens=['a-join','a-wait','a-q','a-done','a-final'];
+    function show(id){if(showing===id)return;showing=id;KP.swap(function(){screens.forEach(function(s){$(s).hidden=s!==id;});});}
+    var nameIn=$('a-name');
+    $('a-go').addEventListener('click',join);
+    nameIn.addEventListener('keydown',function(e){if(e.key==='Enter')join();});
+    function join(){
+      var n=nameIn.value.replace(/[<>]/g,'').trim().slice(0,24);
+      if(n.length<2){$('a-msg').textContent='Type your name (at least 2 letters).';return;}
+      if(!LIVE.api){$('a-msg').textContent='The live session is not connected yet. Follow along on the screen.';return;}
+      $('a-msg').textContent='Joining…';$('a-go').disabled=true;
+      apiPost({action:'join',name:n,id:hash(n.toLowerCase())}).then(function(j){
+        if(!j.ok)throw new Error(j.error||'join failed');
+        me={id:j.id,name:j.name};$('a-hello').textContent='You’re in, '+me.name;show('a-wait');
+        clearInterval(tick);tick=setInterval(poll,2500);poll();
+      }).catch(function(){$('a-msg').textContent='Could not reach the session. Check your signal and tap Join again.';$('a-go').disabled=false;});
+    }
+    function poll(){
+      apiGet('state').then(function(st){
+        if(!st.ok)return;
+        if(st.session!==session){session=st.session;answered={};lastOpen='';}
+        $('a-wait-status').textContent=st.joined+' joined';
+        if(st.open==='final'){showFinal();return;}
+        if(st.open&&QS[st.open]){
+          if(answered[st.open]){show('a-done');$('a-done-status').textContent='Waiting for the reveal…';}
+          else{if(lastOpen!==st.open)renderQ(QS[st.open]);show('a-q');}
+          lastOpen=st.open;return;
+        }
+        // nothing open
+        if(lastOpen&&QS[lastOpen]){
+          var q=QS[lastOpen];
+          if(st.reveal){showResult(q);show('a-done');}
+          else if(answered[lastOpen]){show('a-done');$('a-done-status').textContent='Question closed. Waiting for the reveal…';}
+          else{show('a-wait');}
+        }else show('a-wait');
+      }).catch(function(){$('a-wait-status').textContent='Reconnecting…';});
+    }
+    var choice=-1;
+    function renderQ(q){
+      choice=-1;$('a-submit').disabled=true;$('a-result').hidden=true;$('a-done-status').textContent='';
+      $('a-qkind').textContent=(q.kind==='quiz'?'Scored question':'Opinion poll')+' · '+letter(QORDER.indexOf(q.id));
+      $('a-qkind').textContent=q.kind==='quiz'?'Scored question · faster is better':'Opinion poll · 10 points for taking part';
+      $('a-qtext').textContent=q.text;
+      var box=$('a-opts');$$('.opt',box).forEach(function(e){e.remove();});
+      q.opts.forEach(function(t,k){
+        var l=document.createElement('label');l.className='opt';
+        var r=document.createElement('input');r.type='radio';r.name='q';r.value=k;
+        r.addEventListener('change',function(){choice=k;$('a-submit').disabled=false;});
+        var m=document.createElement('span');m.className='opt-mark';m.textContent=letter(k);
+        var x=document.createElement('span');x.className='opt-text';x.textContent=t;
+        l.appendChild(r);l.appendChild(m);l.appendChild(x);box.appendChild(l);
+      });
+    }
+    $('a-submit').addEventListener('click',function(){
+      var q=QS[lastOpen];if(!q||choice<0)return;
+      $('a-submit').disabled=true;
+      apiPost({action:'answer',id:me.id,name:me.name,q:q.id,choice:choice}).then(function(j){
+        answered[q.id]=choice;
+        $('a-done-text').textContent=j.accepted?'Your answer ('+letter(choice)+') is recorded. Wait for the reveal on screen.':
+          (j.reason==='closed'?'Too late: the question closed before your answer arrived.':'You had already answered this one.');
+        $('a-result').hidden=true;show('a-done');
+      }).catch(function(){$('a-submit').disabled=false;$('a-qkind').textContent='Could not send. Tap Submit again.';});
+    });
+    function showResult(q){
+      var r=$('a-result');r.hidden=false;r.className='result';
+      var mine=answered[q.id];
+      if(q.kind==='quiz'){
+        if(mine===undefined){r.textContent='Answer: '+letter(q.ans)+'. You did not answer this one.';r.classList.add('poll');}
+        else if(mine===q.ans){r.textContent='Correct: '+letter(q.ans);r.classList.add('ok');}
+        else{r.textContent='Not this time. Answer: '+letter(q.ans);r.classList.add('no');}
+      }else{r.textContent='Poll closed. Look at the screen for the result.';r.classList.add('poll');}
+      $('a-done-text').textContent=q.text;$('a-done-status').textContent='';
+    }
+    function showFinal(){
+      if(showing==='a-final')return;
+      apiGet('leaderboard').then(function(j){
+        var box=$('a-lb');box.textContent='';
+        (j.top||[]).forEach(function(p,i){var d=document.createElement('div');if(p.name===me.name)d.classList.add('me');
+          var a=document.createElement('span');a.textContent=(i+1)+'. '+p.name;var b=document.createElement('span');b.textContent=p.pts+' pts';d.appendChild(a);d.appendChild(b);box.appendChild(d);});
+        show('a-final');
+      }).catch(function(){});
+    }
+    return; /* audience mode never runs the presenter code below */
+  }
+
+  /* ============================== PRESENTER: LIVE PANELS ============================== */
+  var deckEl=document.querySelector('.deck');
+  var state={open:'',reveal:false,counts:{},joined:0,session:0,online:false,lbTop:[]};   // lbTop: last leaderboard, cached for the live widget
+  var manual={};      // offline tallies: manual[qid][k]
+  var revealed={};    // local reveal flag per question (works offline too)
+
+  function setOnline(on){
+    state.online=on;deckEl.classList.toggle('offline',!on);
+    var pill=$('livePill');
+    if(pill){pill.className='pill '+(on?'on':'off');pill.textContent=on?'live · connected'+(PIN?' · PIN set':' · enter PIN to control'):(LIVE.api?'offline · cannot reach the sheet':'offline · no backend URL set');}
+  }
+  function control(cmd,q){
+    if(!state.online)return Promise.reject(new Error('offline'));
+    if(!PIN){flash('Enter the presenter PIN on slide 2 first.');return Promise.reject(new Error('nopin'));}
+    return apiPost({action:'control',pin:PIN,cmd:cmd,q:q||''}).then(function(j){if(!j.ok){flash(j.error==='bad pin'?'Wrong PIN.':'Control failed: '+j.error);throw new Error(j.error);}refresh();return j;});
+  }
+  var flashT=null;
+  function flash(msg){var el=$('setupMsg');if(el){el.textContent=msg;clearTimeout(flashT);flashT=setTimeout(function(){el.textContent='';},4000);}var s=document.querySelector('.slide.is-active .live-status');if(s){s.textContent=msg;}}
+
+  /* build a panel under each question */
+  Object.keys(QS).forEach(function(id){
+    var q=QS[id],box=q.slide.querySelector('[data-live]');if(!box)return;
+    var head=document.createElement('div');head.className='live-head';
+    var st=document.createElement('span');st.className='pill live-status';st.textContent='ready';
+    var ctl=document.createElement('div');ctl.className='live-ctl';
+    var bOpen=mk('Open (O)','btn btn-primary'),bClose=mk('Close (C)','btn'),bRev=mk(q.kind==='quiz'?'Reveal (R)':'Show result (R)','btn');
+    bOpen.addEventListener('click',function(){control('open',id);});
+    bClose.addEventListener('click',function(){control('close',id);});
+    bRev.addEventListener('click',function(){reveal(id);});
+    ctl.appendChild(bOpen);ctl.appendChild(bClose);ctl.appendChild(bRev);
+    head.appendChild(st);head.appendChild(ctl);
+    var bars=document.createElement('div');bars.className='bars';
+    manual[id]=q.opts.map(function(){return 0;});
+    q.opts.forEach(function(t,k){
+      var row=document.createElement('div');row.className='bar';row.dataset.k=k;
+      var key=document.createElement('span');key.className='k';key.textContent=letter(k);
+      var tx=document.createElement('div');tx.className='t';var lab=document.createElement('span');lab.textContent=t;var m=document.createElement('div');m.className='m';var i=document.createElement('i');m.appendChild(i);tx.appendChild(lab);tx.appendChild(m);
+      var n=document.createElement('span');n.className='n num';n.textContent='0';
+      var tally=document.createElement('div');tally.className='tally';
+      var plus=mk('+1','btn'),minus=mk('−1','btn');plus.setAttribute('aria-label','Add one to option '+letter(k));minus.setAttribute('aria-label','Remove one from option '+letter(k));
+      plus.addEventListener('click',function(){manual[id][k]++;paint(id);});minus.addEventListener('click',function(){manual[id][k]=Math.max(0,manual[id][k]-1);paint(id);});
+      tally.appendChild(plus);tally.appendChild(minus);
+      row.appendChild(key);row.appendChild(tx);row.appendChild(n);row.appendChild(tally);bars.appendChild(row);
+    });
+    var ans=document.createElement('div');ans.className='answer';
+    if(q.kind==='quiz'){var stamp=document.createElement('span');stamp.className='stamp';stamp.dataset.replay='kp-slam';stamp.textContent='ANSWER: '+letter(q.ans);ans.appendChild(stamp);}
+    box.appendChild(head);box.appendChild(bars);box.appendChild(ans);
+    q.ui={st:st,bars:bars,ans:ans,bOpen:bOpen,bClose:bClose,bRev:bRev};
+    q.slide.querySelector('ol.choices').hidden=true;   // the bars now carry the options (still in the DOM for print / JS-off)
+  });
+  function mk(t,c){var b=document.createElement('button');b.type='button';b.className=c;b.textContent=t;return b;}
+
+  function getCounts(id){
+    var q=QS[id];
+    if(state.online){var c=state.counts[id]||{};return q.opts.map(function(_,k){return +c[String(k)]||0;});}
+    return manual[id];
+  }
+  function paint(id){
+    var q=QS[id],ui=q.ui;if(!ui)return;
+    var c=getCounts(id),tot=c.reduce(function(a,b){return a+b;},0),max=Math.max.apply(null,c.concat([1]));
+    $$('.bar',ui.bars).forEach(function(row,k){
+      row.querySelector('.m>i').style.setProperty('--p',c[k]/max);
+      row.querySelector('.n').textContent=c[k]+(tot?' · '+Math.round(c[k]/tot*100)+'%':'');
+      row.classList.toggle('correct',!!revealed[id]&&q.kind==='quiz'&&k===q.ans);
+    });
+    var isOpen=state.online&&state.open===id;
+    if(!state.online)ui.st.textContent=revealed[id]?'revealed · '+tot+' tallied':'offline · tap +1 as hands go up';
+    else ui.st.textContent=isOpen?'OPEN · '+tot+' answered · '+state.joined+' joined':(revealed[id]?'revealed · '+tot+' answered':(tot?'closed · '+tot+' answered':'ready · '+state.joined+' joined'));
+    ui.st.classList.toggle('on',isOpen);
+    ui.bOpen.disabled=!state.online||isOpen;ui.bClose.disabled=!state.online||!isOpen;
+    ui.ans.classList.toggle('show',!!revealed[id]);
+  }
+  function reveal(id){
+    revealed[id]=true;
+    var run=function(){paint(id);var s=QS[id].ui.ans.querySelector('[data-replay]');if(s)KP.replay(s);};
+    if(state.online&&state.open===id)control('reveal',id).then(run,run);
+    else if(state.online)control('reveal',id).then(run,run);else run();
+  }
+
+  /* -- polling: only while a question, the join slide or the leaderboard is on screen -- */
+  var cur=null,pollT=null;
+  function refresh(){
+    if(!LIVE.api){setOnline(false);return Promise.resolve();}
+    return apiGet('state').then(function(st){
+      if(!st.ok)throw new Error(st.error);
+      var wasOnline=state.online;
+      state.open=st.open||'';state.reveal=!!st.reveal;state.counts=st.counts||{};state.joined=st.joined||0;
+      if(st.session!==state.session){state.session=st.session;}
+      setOnline(true);if(!wasOnline){Object.keys(QS).forEach(paint);setTimeout(lbTick,0);}   // first contact: fill the live widget now, not on the next 5 s tick
+      var jc=$('joinedCount');if(jc)jc.textContent=String(state.joined);
+      if(cur&&QS[cur.dataset.q])paint(cur.dataset.q);
+    }).catch(function(){setOnline(false);if(cur&&QS[cur.dataset.q])paint(cur.dataset.q);});
+  }
+  function schedule(){
+    clearInterval(pollT);
+    var want=cur&&(cur.dataset.q||cur.id==='s2'||cur.id==='s22');
+    if(want&&LIVE.api){refresh();pollT=setInterval(refresh,2000);}
+  }
+  function onSlide(slide){
+    cur=slide;schedule();paintLbw();
+    if(cur.dataset.q)paint(cur.dataset.q);
+    if(cur.id==='s22')loadLeaderboard();
+    if(cur.id==='s21')$$('.hbar i[data-p]',cur).forEach(function(i){i.style.setProperty('--p',0);requestAnimationFrame(function(){requestAnimationFrame(function(){i.style.setProperty('--p',i.dataset.p);});});});
+  }
+  document.addEventListener('kp:slide',function(e){onSlide(e.detail.slide);});
+  setOnline(false);Object.keys(QS).forEach(paint);if(LIVE.api)refresh();
+  var first=document.querySelector('.slide.is-active');if(first)setTimeout(function(){onSlide(first);},0);   // the deck fired its first kp:slide before this listener existed
+
+  /* presenter hot keys on a question slide */
+  addEventListener('keydown',function(e){
+    if(e.altKey||e.ctrlKey||e.metaKey||!cur||!cur.dataset.q)return;
+    var t=e.target;if(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))return;
+    var k=e.key.toLowerCase(),id=cur.dataset.q;
+    if(k==='o')control('open',id).catch(function(){});
+    else if(k==='c')control('close',id).catch(function(){});
+    else if(k==='r')reveal(id);
+  });
+
+  /* -- slide 2: QR, join URL, PIN, reset -- */
+  (function(){
+    var url=LIVE.joinUrl||((/^https?:/.test(location.protocol))?location.origin+location.pathname+'?join':'');
+    var ju=$('joinUrl');if(ju)ju.textContent=url||'(host this file on a web address, e.g. kpsingh.in, to get a link and QR)';
+    var box=$('qrBox');
+    if(url&&box&&window.qrcode){
+      try{var q=qrcode(0,'M');q.addData(url);q.make();box.innerHTML=q.createSvgTag({cellSize:4,margin:0,scalable:true});
+        var svg=box.querySelector('svg');if(svg){svg.setAttribute('role','img');svg.setAttribute('aria-label','QR code for '+url);}}catch(e){}
+    }
+    var pinIn=$('pinInput');
+    if(pinIn&&PIN)pinIn.value=PIN;
+    var save=$('pinSave');if(save)save.addEventListener('click',function(){PIN=pinIn.value.trim();flash(PIN?'PIN set for this session.':'PIN cleared.');setOnline(state.online);});
+    var rst=$('resetBtn');if(rst)rst.addEventListener('click',function(){
+      if(!state.online){flash('Not connected.');return;}
+      control('reset').then(function(){revealed={};Object.keys(QS).forEach(paint);flash('Session reset: players and answers cleared.');},function(){});
+    });
+  })();
+
+  /* -- slide 22: leaderboard -- */
+  var lbShown=false;
+  function loadLeaderboard(){
+    var box=$('lb');if(!box)return;
+    if(!state.online&&!LIVE.api){box.innerHTML='';var p=document.createElement('p');p.className='lb-empty';p.textContent='Offline: no live scores. Use the hand-raise tallies on each question slide.';box.appendChild(p);return;}
+    apiGet('leaderboard').then(function(j){
+      var top=j.top||[];box.textContent='';
+      if(!top.length){var p=document.createElement('p');p.className='lb-empty';p.textContent='No scores yet.';box.appendChild(p);return;}
+      top.slice(0,10).forEach(function(p,i){
+        var row=document.createElement('div');row.className='lb-row'+(i<3?' top':'');row.style.animationDelay=(i*70)+'ms';
+        var rk=document.createElement('span');rk.className='rk';rk.textContent=i+1;
+        var nm=document.createElement('span');nm.className='nm';nm.textContent=p.name;
+        var pt=document.createElement('span');pt.className='pt num';pt.textContent=p.pts;
+        row.appendChild(rk);row.appendChild(nm);row.appendChild(pt);box.appendChild(row);
+        KP.countUp(pt,p.pts,{ms:900});
+      });
+      if(!lbShown){lbShown=true;setTimeout(function(){KP.confetti();},600);}
+    }).catch(function(){box.textContent='';var p=document.createElement('p');p.className='lb-empty';p.textContent='Could not load the scores. Tap Refresh.';box.appendChild(p);});
+  }
+  var lr=$('lbRefresh');if(lr)lr.addEventListener('click',loadLeaderboard);
+  var lf=$('lbFinal');if(lf)lf.addEventListener('click',function(){control('final').then(function(){flash('Final standings sent to phones.');},function(){});});
+
+  /* -- live leaderboard widget: rail (>=1024px) or top strip (<1024px). Data is fetched by lbTick into state.lbTop;
+        paintLbw only renders what is cached. Hidden on s1 and s22, in ?all, offline, or before any score exists. -- */
+  var isAll=deckEl.classList.contains('is-all');
+  var lbwEl=$('lbw'),lbwList=$('lbwList'),lbwBtn=document.querySelector('[data-lbw-toggle]'),lbwUser=true;
+  var wide=matchMedia('(min-width: 1024px)');
+  function measureLb(){
+    var h=(lbwEl&&!lbwEl.hidden&&!wide.matches)?Math.ceil(lbwEl.getBoundingClientRect().height):0;
+    if(root.style.getPropertyValue('--lb-h')!==h+'px'){root.style.setProperty('--lb-h',h+'px');dispatchEvent(new Event('resize'));}   // resize → the deck kit's fit() re-measures the nav
+  }
+  function paintLbw(){
+    if(!lbwEl)return;
+    try{
+      var top=state.lbTop||[],show=!isAll&&lbwUser&&state.online&&top.length>0&&!!cur&&cur.id!=='s1'&&cur.id!=='s22';
+      if(show){
+        var rows=top.slice(0,state.joined>15?3:1),lis=lbwList.children;
+        while(lis.length>rows.length)lbwList.removeChild(lbwList.lastChild);
+        rows.forEach(function(p,i){
+          var li=lis[i];
+          if(!li){li=document.createElement('li');['rk','nm','pt num'].forEach(function(c){var s=document.createElement('span');s.className=c;li.appendChild(s);});lbwList.appendChild(li);}
+          var s=li.children,pts=+p.pts||0,had=li.dataset.pts!==undefined,old=had?+li.dataset.pts:0;
+          s[0].textContent=(i+1)+'.';s[1].textContent=String(p.name||'');s[1].title=String(p.name||'');
+          if(!had||old!==pts){li.dataset.pts=pts;KP.countUp(s[2],pts,{from:old,ms:700});}
+        });
+      }
+      lbwEl.hidden=!show;
+      root.classList.toggle('lb-strip',show&&!wide.matches);
+      root.style.setProperty('--rail-w',show&&wide.matches?'calc(14rem + 24px)':'0px');
+      measureLb();
+    }catch(e){}
+  }
+  function setLbwUser(on){lbwUser=on;if(lbwBtn)lbwBtn.setAttribute('aria-pressed',String(on));paintLbw();}
+  if(lbwBtn){if(isAll)lbwBtn.hidden=true;lbwBtn.addEventListener('click',function(){setLbwUser(!lbwUser);});}
+  addEventListener('keydown',function(e){
+    if(isAll||e.altKey||e.ctrlKey||e.metaKey||e.defaultPrevented)return;
+    var t=e.target;if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))return;
+    if(e.key==='l'||e.key==='L')setLbwUser(!lbwUser);
+  });
+  try{if(wide.addEventListener)wide.addEventListener('change',paintLbw);if(window.ResizeObserver&&lbwEl)new ResizeObserver(measureLb).observe(lbwEl);}catch(e){}
+  function lbTick(){
+    if(!LIVE.api||isAll)return;
+    var fast=cur&&(cur.dataset.q||cur.id==='s2'||cur.id==='s22');   // those slides already poll state every 2 s
+    (fast?Promise.resolve():refresh()).then(function(){
+      if(!state.online){paintLbw();return;}
+      return apiGet('leaderboard').then(function(j){if(j&&j.ok){state.lbTop=j.top||[];}paintLbw();});
+    }).catch(function(){paintLbw();});
+  }
+  if(LIVE.api&&!isAll)setInterval(lbTick,5000);
+
+  /* -- floating previous / next + swipe (touch or narrow screens; CSS decides visibility) -- */
+  (function(){
+    if(isAll||!KP.deck)return;
+    var fp=document.querySelector('[data-fnav="prev"]'),fn=document.querySelector('[data-fnav="next"]');
+    function paintF(){var i=KP.deck.index();if(fp)fp.disabled=i<=0;if(fn)fn.disabled=i>=KP.deck.total-1;}
+    if(fp){fp.hidden=false;fp.addEventListener('click',function(){KP.deck.prev();});}
+    if(fn){fn.hidden=false;fn.addEventListener('click',function(){KP.deck.next();});}
+    document.addEventListener('kp:slide',paintF);paintF();
+    var sx=null,sy=0,SKIP='input[type=range],.opt,.bar,.modes,button,a,.table-wrap';
+    deckEl.addEventListener('touchstart',function(e){
+      sx=null;if(e.touches.length!==1)return;
+      var t=e.target;if(t&&t.closest&&t.closest(SKIP))return;
+      sx=e.touches[0].clientX;sy=e.touches[0].clientY;
+    },{passive:true});
+    deckEl.addEventListener('touchend',function(e){
+      if(sx===null)return;var t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;sx=null;
+      if(Math.abs(dx)>=60&&Math.abs(dx)>Math.abs(dy)*1.5){if(dx<0)KP.deck.next();else KP.deck.prev();}
+    },{passive:true});
+    deckEl.addEventListener('touchcancel',function(){sx=null;},{passive:true});
+  })();
+
+  /* ============================== PLAYGROUNDS ============================== */
+  /* 1. Paraphrase slider (slide 6) */
+  (function(){
+    var out=$('spinOut'),rng=$('spinRange');if(!out||!rng)return;
+    var parts=[{t:'Artificial intelligence',s:'Counterfeit consciousness'},' lowered the ',{t:'mean square error',s:'mean square blunder'},' and raised the ',{t:'signal to noise',s:'flag to clamor'},' ratio of the ',{t:'deep neural network',s:'profound neural organization'},' used for ',{t:'breast cancer',s:'bosom peril'},' screening.'];
+    var spans=[];out.textContent='';
+    parts.forEach(function(p){
+      if(typeof p==='string'){out.appendChild(document.createTextNode(p));return;}
+      var w=document.createElement('span');w.className='w';w.textContent=p.t;w.dataset.t=p.t;w.dataset.s=p.s;out.appendChild(w);spans.push(w);
+    });
+    function paintSpin(){
+      var k=+rng.value;
+      spans.forEach(function(w,i){var on=i<k;if(on!==w.classList.contains('spun')){w.classList.toggle('spun',on);w.textContent=on?w.dataset.s:w.dataset.t;}});
+      var sim=100-k*19,mean=100-k*18;
+      $('simVal').textContent=sim+'%';$('meanVal').textContent=mean+'%';
+      $('simMeter').setAttribute('aria-valuenow',sim);$('simMeter').firstElementChild.style.setProperty('--p',sim/100);
+      $('meanMeter').setAttribute('aria-valuenow',mean);$('meanMeter').firstElementChild.style.setProperty('--p',mean/100);
+    }
+    rng.addEventListener('input',paintSpin);paintSpin();
+  })();
+
+  /* 2. Pipeline scenarios (slide 9) */
+  (function(){
+    var box=$('stages');if(!box)return;
+    var M={
+      honest:{idea:['people','asked by the team, written in the proposal'],data:['people','collected and kept in a lab notebook'],analysis:['people','recorded; code and data available'],writing:['people','drafted and revised by the authors'],figures:['people','made from the real data'],submit:['people','authors listed as they contributed'],review:['people','independent reviewers chosen by the editor']},
+      mill:{idea:['templated','a stock topic reused across many "papers"'],data:['fabricated','numbers invented or recycled'],analysis:['fabricated','results written to fit the story'],writing:['paraphrased','spun text: tortured phrases appear here'],figures:['recycled','images reused across unrelated papers'],submit:['sold','author slots sold to buyers'],review:['fake','fake reviewer accounts or a compromised special issue']},
+      ai:{idea:['people','a real researcher with a real question'],data:['people','real data, or none (a review)'],analysis:['people','real analysis'],writing:['generated','chatbot text pasted in, not disclosed'],figures:['generated','an image tool draws the "results"'],submit:['people','no disclosure in cover letter or Methods'],review:['people','reviewers may or may not notice']}
+    };
+    var kind={people:'human',templated:'fake',fabricated:'fake',paraphrased:'machine',recycled:'fake',sold:'fake',fake:'fake',generated:'machine'};
+    function apply(mode){
+      $$('.modes .btn').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.mode===mode));});
+      $$('.stage',box).forEach(function(s,i){
+        var d=M[mode][s.dataset.s];s.classList.remove('show');
+        setTimeout(function(){s.dataset.state=kind[d[0]];s.querySelector('.who').textContent=d[0];s.querySelector('.why').textContent=d[1];s.classList.add('show');},KP.reduced()?0:i*90);
+      });
+    }
+    $$('.modes .btn').forEach(function(b){b.addEventListener('click',function(){apply(b.dataset.mode);});});
+    apply('honest');
+  })();
+
+  /* 3. Detector base-rate simulator (slide 14): OpenAI's own published figures, TPR 26%, FPR 9% */
+  (function(){
+    var box=$('dots'),rng=$('baseRange');if(!box||!rng)return;
+    var TPR=0.26,FPR=0.09,dots=[];
+    for(var i=0;i<100;i++){var d=document.createElement('span');d.className='dot';box.appendChild(d);dots.push(d);}
+    function paintDet(){
+      var used=+rng.value,inn=100-used,fu=Math.round(TPR*used),fi=Math.round(FPR*inn),flagged=fu+fi;
+      $('baseVal').textContent=used+'%';
+      dots.forEach(function(d,i){
+        var isUsed=i<used,flag=isUsed?(i<fu):(i-used<fi);
+        d.classList.toggle('used',isUsed);d.classList.toggle('flag',flag);
+      });
+      $('innocentPct').textContent=flagged?Math.round(fi/flagged*100)+'%':'—';
+      $('detText').textContent='Of 100 students, '+used+' used AI. The detector flags '+fu+' of them and wrongly flags '+fi+' who did not. '+(100-used-fi)+' honest students pass; '+(used-fu)+' users slip through.';
+    }
+    rng.addEventListener('input',paintDet);paintDet();
+  })();
+
+})();
+</script>
+</body>
+</html>

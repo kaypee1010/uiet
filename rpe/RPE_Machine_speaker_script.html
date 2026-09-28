@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en" data-base="1.5.0" data-persist="on" data-page="rpe-machine-script" data-profile="notes">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f6f7fb" id="themeColor">
+<meta name="description" content="Speaker script, timing plan, skip plan, likely questions and references for the RPE coursework talk on paper mills, tortured phrases and generative AI.">
+<title>The Machine That Writes Papers · Speaker script</title>
+<script>document.documentElement.classList.add('js')</script>
+<script>try{var r=document.documentElement,t=localStorage.getItem('kp:theme');if(t==='light'||t==='dark')r.dataset.theme=t}catch(e){}</script>
+<style>
+/* DESIGN: Same integrity ledger as the slides: navy ink, seal-red accent; plain and scannable for use while presenting. */
+/* ===== 1. TOKENS — names are fixed by kp-html-base; VALUES are the page's own design choice ===== */
+:root{
+  --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+  --sal:env(safe-area-inset-left,0px); --sar:env(safe-area-inset-right,0px);
+  --pad:clamp(16px,4vw,32px); --gap:clamp(12px,3vw,24px);
+  --r:16px; --r-lg:24px; --r-pill:999px;
+  --nav-h:65px; --dock-h:73px; --measure:68ch;
+  --dur-1:140ms; --dur-2:260ms; --dur-3:460ms;
+  --ease-out:cubic-bezier(.22,.61,.36,1); --ease-in:cubic-bezier(.55,.06,.68,.19);
+  --ease-soft:cubic-bezier(.2,.8,.2,1); --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --step--1:clamp(.84rem,.82rem + .1vw,.9rem);
+  --step-0:clamp(1rem,.95rem + .25vw,1.12rem);
+  --step-1:clamp(1.2rem,1.1rem + .5vw,1.45rem);
+  --step-2:clamp(1.6rem,1.32rem + 1.4vw,2.4rem);
+  --step-3:clamp(2.1rem,1.6rem + 2.5vw,3.4rem);
+  --font-body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-display:var(--font-body);
+  --font-mono:ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,monospace;
+  /* light palette (placeholder — override freely, keep the token names) */
+  --bg:#f6f7fb; --card:#ffffff; --soft:#e9ecf5; --fg:#15171f; --muted:#555b6e;
+  --line:#c9cfdf; --accent:#3a4fd7; --accent-fg:#ffffff; --accent-2:#d7359a;
+  --nav-bg:rgba(246,247,251,.82);
+  --shadow-1:0 1px 2px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+  --shadow-2:0 6px 18px rgba(0,0,0,.08),0 1px 3px rgba(0,0,0,.05);
+  --shadow-3:0 18px 48px rgba(0,0,0,.14);
+  --ambient-glow:rgba(58,79,215,.07); --ambient-rule:rgba(21,23,31,.035);
+  --glass:rgba(255,255,255,.74); --code-bg:#1e1e2e; --code-fg:#f2f2f0;
+  --ok:#1d7a4f; --warn:#8a5a00; --bad:#b3261e;
+}
+/* dark palette — layer 2 (system preference, unless the user forced light) */
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1117; --card:#181b25; --soft:#252a38; --fg:#eef0f6; --muted:#a3a9bd;
+    --line:#3a4157; --accent:#8fa0ff; --accent-fg:#0f1117; --accent-2:#ff7ac6;
+    --nav-bg:rgba(15,17,23,.82);
+    --shadow-1:0 1px 2px rgba(0,0,0,.4); --shadow-2:0 8px 22px rgba(0,0,0,.45); --shadow-3:0 22px 56px rgba(0,0,0,.6);
+    --ambient-glow:rgba(143,160,255,.07); --ambient-rule:rgba(238,240,246,.03);
+    --glass:rgba(24,27,37,.74); --code-bg:#11121a; --code-fg:#f2f2f0;
+    --ok:#6fd3a0; --warn:#f0c05a; --bad:#ff8a80;
+  }
+}
+/* dark palette — layer 3 (explicit toggle). KEEP IDENTICAL to layer 2 values. */
+:root[data-theme="dark"]{
+  --bg:#0f1117; --card:#181b25; --soft:#252a38; --fg:#eef0f6; --muted:#a3a9bd;
+  --line:#3a4157; --accent:#8fa0ff; --accent-fg:#0f1117; --accent-2:#ff7ac6;
+  --nav-bg:rgba(15,17,23,.82);
+  --shadow-1:0 1px 2px rgba(0,0,0,.4); --shadow-2:0 8px 22px rgba(0,0,0,.45); --shadow-3:0 22px 56px rgba(0,0,0,.6);
+  --ambient-glow:rgba(143,160,255,.07); --ambient-rule:rgba(238,240,246,.03);
+  --glass:rgba(24,27,37,.74); --code-bg:#11121a; --code-fg:#f2f2f0;
+  --ok:#6fd3a0; --warn:#f0c05a; --bad:#ff8a80;
+}
+
+/* ===== 2. RESET / BASE ===== */
+*,*::before,*::after{box-sizing:border-box}
+html{color-scheme:light dark;-webkit-text-size-adjust:100%;text-size-adjust:100%;
+  scroll-padding-top:calc(var(--nav-h) + var(--sat) + 12px);scroll-behavior:smooth}
+:root[data-theme="light"]{color-scheme:light}
+:root[data-theme="dark"]{color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:400 var(--step-0)/1.55 var(--font-body);
+  overflow-x:clip;-webkit-tap-highlight-color:transparent;text-rendering:optimizeLegibility;
+  padding-top:calc(var(--nav-h) + var(--sat) + var(--gap));
+  padding-bottom:calc(var(--sab) + var(--gap));
+  padding-left:calc(var(--sal) + var(--pad)); padding-right:calc(var(--sar) + var(--pad))}
+img,video,canvas,svg{max-width:100%;display:block;height:auto}
+h1,h2,h3{font-family:var(--font-display)}
+h1{font-size:var(--step-3);line-height:1.08;margin:.2em 0 .4em;text-wrap:balance}
+h2{font-size:var(--step-2);line-height:1.15;margin:1.2em 0 .4em;text-wrap:balance}
+h3{font-size:var(--step-1);line-height:1.25;margin:1em 0 .35em}
+p{text-wrap:pretty}
+code,kbd,pre{font-family:var(--font-mono)}
+/* iOS zooms the whole page when a focused input is < 16px — never go below 16px */
+button,input,select,textarea{font:inherit;color:inherit}
+input:not([type=checkbox]):not([type=radio]):not([type=range]),select,textarea{font-size:max(16px,1em);min-height:48px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);max-width:100%}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-9999px}
+.skip:focus{display:inline-flex;align-items:center;min-height:48px;left:12px;top:calc(var(--sat) + 8px);z-index:100;background:var(--card);color:var(--fg);padding:12px 16px;border-radius:10px;border:1px solid var(--line)}
+
+/* ===== 3. NAV (kp-html-base — edit HERE ONLY, every skill inherits) ===== */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;gap:8px;
+  padding:calc(var(--sat) + 8px) calc(var(--sar) + var(--pad)) 8px calc(var(--sal) + var(--pad));
+  background:var(--nav-bg);border-bottom:1px solid var(--line);
+  -webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.nav{background:var(--card)}}
+.nav-brand{display:flex;align-items:center;gap:10px;min-width:0;margin-right:auto}
+.nav-brand>div{min-width:0}
+.nav-logo{width:40px;height:40px;flex:none;border-radius:50%;object-fit:contain;background:transparent}
+.nav-name{font-weight:700;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-sub{font-size:.75rem;line-height:1.2;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-cta{display:inline-flex;align-items:center;min-height:48px;padding:0 14px;flex:none;
+  border-radius:var(--r-pill);background:var(--accent);color:var(--accent-fg);
+  font-size:.85rem;font-weight:600;text-decoration:none;white-space:nowrap}
+.theme-toggle{flex:none;width:48px;height:48px;border:0;border-radius:50%;background:transparent;
+  font-size:1.25rem;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+@media (hover:hover){.theme-toggle:hover{background:var(--soft)}}
+.nav-roll{cursor:default;background:var(--soft);color:var(--fg);border:1px solid var(--line);font-variant-numeric:tabular-nums;max-width:44vw;overflow:hidden}
+@media (max-width:379px){.nav-sub{display:none}.nav-cta{padding:0 10px;font-size:.78rem}.nav-roll-label{display:none}}
+@media (max-width:479px){.nav-roll-label{display:none}.nav-roll{padding:0 12px}}
+
+/* ===== 4. LAYOUT / COMPONENTS ===== */
+.wrap{max-width:72rem;margin-inline:auto}
+.measure{max-width:var(--measure)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:var(--gap)}
+.btn{min-height:48px;min-width:48px;padding:12px 20px;border-radius:var(--r-pill);cursor:pointer;
+  border:1px solid var(--line);background:var(--card);
+  transition:transform var(--dur-1) var(--ease-out),border-color var(--dur-1) var(--ease-out)}
+.btn:active{transform:scale(.96)}
+.btn:disabled{opacity:.45;cursor:default;transform:none}
+.btn-primary{background:var(--accent);color:var(--accent-fg);border-color:transparent}
+@media (hover:hover){.btn:not(:disabled):hover{border-color:var(--accent)}}
+.num{font-variant-numeric:tabular-nums}
+.meter{height:8px;border-radius:var(--r-pill);background:var(--soft);overflow:hidden}
+.meter>span{display:block;height:100%;border-radius:inherit;background:var(--accent);transform-origin:0 50%;transform:scaleX(var(--p,0));transition:transform var(--dur-3) var(--ease-out)}
+.cp{display:flex;align-items:center;gap:12px;min-height:48px;cursor:pointer}
+.cp input{width:24px;height:24px;flex:none;accent-color:var(--accent)}
+/* bottom action dock (quiz attempt screen, deck controls): clears the iPhone home bar; add class "has-dock" to <body> */
+body.has-dock{padding-bottom:calc(var(--dock-h) + var(--sab) + var(--gap))}
+.dock{position:fixed;inset:auto 0 0 0;z-index:40;display:flex;gap:12px;align-items:center;
+  padding:12px calc(var(--sar) + var(--pad)) calc(var(--sab) + 12px) calc(var(--sal) + var(--pad));
+  background:var(--nav-bg);border-top:1px solid var(--line);
+  -webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.dock{background:var(--card)}}
+.dock .btn{flex:1;padding-block:0;line-height:1.2}
+.dock-status{flex:none;font-variant-numeric:tabular-nums;color:var(--muted);font-size:.9rem;min-width:4.5em;text-align:center}
+/* long pages: reading-progress hairline + scroll-spy contents */
+.scroll-progress{position:fixed;left:0;right:0;top:var(--sat);height:3px;z-index:60;pointer-events:none}
+.scroll-progress>span{display:block;height:100%;background:var(--accent);transform-origin:0 50%;transform:scaleX(var(--p,0))}
+[data-spy] a[aria-current="true"]{color:var(--accent);font-weight:700}
+
+/* ===== 5. MOTION (library — use what the page needs; every piece degrades to static) ===== */
+.js [data-reveal]{opacity:0;transform:translate3d(0,20px,0);
+  transition:opacity var(--dur-3) var(--ease-soft) var(--d,0ms),transform var(--dur-3) var(--ease-soft) var(--d,0ms)}
+.js [data-reveal].is-in{opacity:1;transform:none}
+@keyframes kp-rise{from{opacity:0;transform:translate3d(0,24px,0)}to{opacity:1;transform:none}}
+@keyframes kp-slam{0%{opacity:0;transform:rotate(var(--tilt,-6deg)) scale(2.4)}62%{opacity:1;transform:rotate(var(--tilt,-6deg)) scale(.94)}100%{opacity:1;transform:rotate(var(--tilt,-6deg)) scale(1)}}
+@keyframes kp-pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}
+@keyframes kp-drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(40px,-70px,0)}}
+.kp-rise{animation:kp-rise var(--dur-3) var(--ease-soft) both}
+.kp-slam{display:inline-block;animation:kp-slam .55s var(--ease-spring) both}
+.kp-pop{animation:kp-pop var(--dur-3) var(--ease-spring) both}
+/* ambient texture (static, cheap): <body data-ambient> — soft glow + faint ruled lines */
+body[data-ambient]::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(1100px 650px at 75% -10%,var(--ambient-glow),transparent 60%),
+    repeating-linear-gradient(0deg,transparent 0 46px,var(--ambient-rule) 46px 47px)}
+/* drifting motes: LOOPING decoration → page must also carry a data-pause-motion button */
+.mote{position:fixed;z-index:-1;border-radius:50%;background:var(--fg);opacity:.05;pointer-events:none;
+  animation:kp-drift 26s ease-in-out infinite alternate}
+[data-motion="paused"] *,[data-motion="paused"] *::before,[data-motion="paused"] *::after{animation-play-state:paused !important}
+@media print{
+  .nav,.dock,.scroll-progress,.theme-toggle,[data-pause-motion],.mote{display:none !important}
+  body{padding:0;background:#fff;color:#000}
+  .js [data-reveal]{opacity:1 !important;transform:none !important}
+}
+
+/* ===== KIT: DOCS / REFERENCE PAGE (kp-html-base 1.5.0) — lab manuals + lecture notes =====
+   Layout: left course resources · centre content · right "On this page" (scroll-spy).
+   ≥1100px three columns · 860–1099px content + right column (course list folds above content) · <860px one column,
+   "On this page" becomes a sticky fold-out bar under the nav. Every panel stays reachable — never display:none. */
+.docs{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap);max-width:88rem;margin-inline:auto;align-items:start}
+.docs-main{min-width:0;width:100%;max-width:50rem;margin-inline:auto}
+.docs-left{order:-2}.docs-right{order:-1}
+.docs-panel{border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+.docs-panel>summary{display:flex;align-items:center;gap:8px;min-height:48px;padding:0 16px;cursor:pointer;list-style:none;
+  font:700 .74rem/1.2 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.docs-panel>summary::-webkit-details-marker{display:none}
+.docs-panel>summary::after{content:"▾";margin-left:auto;transition:transform var(--dur-2) var(--ease-out)}
+.docs-panel[open]>summary::after{transform:rotate(180deg)}
+.docs-panel nav{display:grid;gap:2px;padding:0 8px 10px}
+.docs-panel nav a{display:flex;align-items:center;min-height:44px;padding:6px 10px;border-radius:10px;color:var(--fg);
+  text-decoration:none;font-size:.92rem;line-height:1.3}
+@media (pointer:coarse){.docs-panel nav a{min-height:48px}}
+.docs-panel nav a[aria-current]{color:var(--accent);background:var(--soft);font-weight:700}
+@media (hover:hover){.docs-panel nav a:hover{background:var(--soft)}}
+@media (max-width:859px){
+  html{scroll-padding-top:calc(var(--nav-h) + var(--sat) + 72px)}
+  .docs-right{position:sticky;top:calc(var(--nav-h) + var(--sat) + 6px);z-index:30}
+  .docs-right .docs-panel{box-shadow:var(--shadow-2)}
+  .docs-right nav{max-height:55dvh;overflow:auto}
+}
+@media (min-width:860px){
+  .docs{grid-template-columns:minmax(0,1fr) 13.5rem}
+  .docs-left{grid-column:1;grid-row:1}
+  .docs-main{grid-column:1;grid-row:2}
+  .docs-right{grid-column:2;grid-row:1 / span 2;position:sticky;top:calc(var(--nav-h) + var(--sat) + var(--gap))}
+  .docs-right nav{max-height:calc(100dvh - var(--nav-h) - var(--sat) - 7rem);overflow:auto}
+  .docs-right .docs-panel>summary{pointer-events:none}
+  .docs-right .docs-panel>summary::after{display:none}
+}
+@media (min-width:1100px){
+  .docs{grid-template-columns:13rem minmax(0,1fr) 13.5rem}
+  .docs-left{grid-column:1;grid-row:1;position:sticky;top:calc(var(--nav-h) + var(--sat) + var(--gap))}
+  .docs-main{grid-column:2;grid-row:1}
+  .docs-right{grid-column:3;grid-row:1}
+  .docs-left nav{max-height:calc(100dvh - var(--nav-h) - var(--sat) - 7rem);overflow:auto}
+  .docs-left .docs-panel>summary{pointer-events:none}
+  .docs-left .docs-panel>summary::after{display:none}
+}
+.docs-main>section{padding-top:.5rem}
+.docs-main>section+section{margin-top:clamp(1.5rem,4vw,2.75rem)}
+
+/* ---- surfaces ---- */
+.glass{background:var(--glass);border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--gap);box-shadow:var(--shadow-2)}
+@media (min-width:768px) and (hover:hover){html:not([data-perf="low"]) .glass{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}}
+.kicker{font:700 .74rem/1.3 var(--font-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0}
+.sub{color:var(--muted);font-size:var(--step-1);margin-top:0}
+.plain{border-left:4px solid var(--accent-2);background:var(--soft);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:1rem 0}
+.plain>b:first-child{color:var(--fg)}
+.callout{display:flex;gap:12px;align-items:flex-start;background:var(--soft);border-radius:var(--r);padding:12px 16px;margin:1rem 0}
+.callout-face{font-size:1.6rem;line-height:1;flex:none}
+.mixup{border:1px dashed var(--warn);border-radius:var(--r);padding:12px 16px;margin:1rem 0}
+.mixup>b:first-child{color:var(--warn)}
+.takeaway{font:italic 600 var(--step-1)/1.4 var(--font-display);border-left:4px solid var(--accent);padding:6px 0 6px 16px;margin:1.2rem 0}
+.formula{display:inline-block;font:600 1.02rem/1.4 var(--font-mono);color:var(--accent);background:var(--soft);border-radius:10px;padding:6px 12px;overflow-wrap:anywhere;max-width:100%}
+.grid-cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));margin:1rem 0}
+.plan{list-style:none;counter-reset:plan;padding:0;margin:1rem 0;display:grid;gap:10px}
+.plan>li{counter-increment:plan;display:flex;gap:12px;align-items:flex-start}
+.plan>li::before{content:counter(plan);flex:none;display:grid;place-items:center;width:2rem;height:2rem;border-radius:50%;
+  background:var(--accent);color:var(--accent-fg);font-weight:700}
+.slips{list-style:none;padding:0;display:grid;gap:10px}
+.slips>li{display:flex;gap:10px;background:var(--soft);border-radius:var(--r);padding:12px 14px}
+.slips>li::before{content:"⚠️";flex:none}
+.recap{border-top:2px solid var(--accent);padding-top:.5rem}
+.next-up{display:flex;gap:12px;align-items:flex-start;background:var(--soft);border-radius:var(--r);padding:14px 18px}
+.table-wrap{overflow-x:auto;margin:1rem 0;border:1px solid var(--line);border-radius:var(--r)}
+.table-wrap table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;background:var(--card)}
+.table-wrap th,.table-wrap td{padding:10px 14px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.table-wrap th{background:var(--soft);font-size:.85rem}
+.table-wrap tr:last-child td{border-bottom:0}
+
+/* ---- code blocks: solid, never glassy (readability 7:1) ---- */
+.code{position:relative;margin:1rem 0}
+.code pre{margin:0;background:var(--code-bg);color:var(--code-fg);border-radius:var(--r);padding:16px 18px;overflow-x:auto;
+  font:500 .9rem/1.6 var(--font-mono);tab-size:2}
+.code .copy{position:absolute;top:6px;right:6px;min-height:40px;min-width:64px;border-radius:10px;border:1px solid rgba(242,242,240,.35);
+  background:var(--code-bg);color:var(--code-fg);font:600 .75rem/1 var(--font-mono);cursor:pointer}
+@media (pointer:coarse){.code .copy{min-height:48px}}
+code{font-size:.92em}
+p code,li code,td code{background:var(--soft);padding:.1em .35em;border-radius:6px}
+
+/* ---- reveal / predict / exam-angle (native <details>: works with JS off) ---- */
+.reveal{border:1px solid var(--line);border-radius:var(--r);background:var(--card);margin:1rem 0}
+.reveal>summary{display:flex;align-items:center;min-height:48px;padding:0 16px;cursor:pointer;font-weight:600;list-style:none}
+.reveal>summary::-webkit-details-marker{display:none}
+.reveal>summary::before{content:"▸";margin-right:10px;transition:transform var(--dur-2) var(--ease-out)}
+.reveal[open]>summary::before{transform:rotate(90deg)}
+.reveal>div{padding:0 16px 14px}
+.reveal[open]>div{animation:kp-rise var(--dur-3) var(--ease-soft) both}
+
+/* ---- flip cards: <button class="flip" type="button" aria-pressed="false"><span class="flip-front">…</span><span class="flip-back">…</span></button> ---- */
+.flip{display:grid;gap:8px;width:100%;min-height:9rem;padding:0;border:0;background:transparent;text-align:left;cursor:pointer;font:inherit;color:inherit}
+.flip>span{display:grid;align-content:center;gap:6px;padding:16px;border-radius:var(--r);border:1px solid var(--line)}
+.flip-front{background:var(--card);box-shadow:var(--shadow-1)}
+.flip-back{background:var(--soft);border-color:var(--accent)}
+.flip-hint{font:600 .72rem/1 var(--font-mono);letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.js .flip{perspective:900px}
+.js .flip>span{grid-area:1/1;-webkit-backface-visibility:hidden;backface-visibility:hidden;transition:transform var(--dur-3) var(--ease-soft)}
+.js .flip-back{transform:rotateY(180deg)}
+.js .flip[aria-pressed="true"] .flip-front{transform:rotateY(-180deg)}
+.js .flip[aria-pressed="true"] .flip-back{transform:rotateY(0)}
+.flip:focus-visible{outline:none}
+.flip:focus-visible>span{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ---- step-through widget: [data-stepper] ---- */
+.stepper{margin:1rem 0}
+.stepper-steps{margin:0 0 12px;padding-left:1.4rem;display:grid;gap:8px}
+.stepper-steps>li{padding:8px 12px;border-radius:10px}
+.js .stepper-steps>li{display:none}
+.js .stepper-steps>li.is-shown{display:list-item;color:var(--muted)}
+.js .stepper-steps>li.is-current{color:var(--fg);background:var(--soft);box-shadow:inset 3px 0 0 var(--accent);animation:kp-rise var(--dur-2) var(--ease-soft) both}
+.stepper-ctl{display:none;gap:10px;align-items:center;flex-wrap:wrap}
+.js .stepper-ctl{display:flex}
+.stepper-ctl [data-step-status]{flex:1;min-width:8rem;color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}
+
+/* ---- practice quiz: [data-quiz] (never graded — graded quizzes use ai-faculty-quiz-generator) ---- */
+.quiz{display:grid;gap:14px;margin:1rem 0}
+.quiz-score{font:700 1rem/1.3 var(--font-mono);color:var(--accent);margin:0}
+.q{border:1px solid var(--line);border-radius:var(--r);padding:12px 16px 14px;margin:0;background:var(--card);display:grid;gap:8px}
+.q>legend{font-weight:700;padding:0 6px}
+.q-opt{min-height:48px;text-align:left;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--soft);cursor:pointer;
+  transition:border-color var(--dur-1) var(--ease-out),transform var(--dur-1) var(--ease-out)}
+.q-opt:active{transform:scale(.99)}
+.q-opt[aria-pressed="true"].is-right,.q-opt.is-answer{border-color:var(--ok)}
+.q-opt[aria-pressed="true"].is-wrong{border-color:var(--bad)}
+.q-fb{margin:0;min-height:1.2em}
+.q-fb.ok{color:var(--ok)}.q-fb.no{color:var(--bad)}
+@media (hover:hover){.q-opt:not(:disabled):hover{border-color:var(--accent)}}
+.q-opt:disabled{cursor:default}
+.no-js-only{display:block}.js .no-js-only{display:none}
+
+/* ---- locked solution: <details class="reveal" data-lock="3"> or data-lock-key="…" (a deterrent, not security) ---- */
+.lock-form{display:none;gap:8px;align-items:center;flex-wrap:wrap;margin:-6px 0 12px}
+.lock-form.is-open{display:flex}
+.lock-form input{flex:1;min-width:10rem}
+.lock-msg{font-size:.85rem;color:var(--muted);margin:0;flex-basis:100%}
+
+@media print{
+  .docs{display:block}.docs-left,.docs-right,.stepper-ctl,.code .copy,.lock-form{display:none !important}
+  .js .stepper-steps>li{display:list-item !important}
+  .js .flip>span{transform:none !important;grid-area:auto}
+  details.reveal>div{display:block}
+  .code pre{white-space:pre-wrap;border:1px solid #999;background:#fff;color:#000}
+  section,.q,.glass{break-inside:avoid}
+}
+.h-sm{font-size:var(--step-1);margin:0 0 .4em}
+/* ===== PAGE DESIGN (this page's own look) ===== */
+/* Evidence desk (same palette as the deck): paper white, ink navy, verdigris accent; serif display, mono evidence lines. */
+:root{
+  --bg:#f7f6f1; --card:#fffefb; --soft:#ece9df; --fg:#17202c; --muted:#4e5665;
+  --line:#cdc8ba; --accent:#0f6f78; --accent-fg:#fffefb; --accent-2:#b4600b;
+  --nav-bg:rgba(247,246,241,.88);
+  --font-display:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#10141b; --card:#181e28; --soft:#242c39; --fg:#ecebe5; --muted:#a9b0bc;
+  --line:#3a4354; --accent:#6fd0d8; --accent-fg:#10141b; --accent-2:#f0b35d; --nav-bg:rgba(16,20,27,.88);}}
+:root[data-theme="dark"]{
+  --bg:#10141b; --card:#181e28; --soft:#242c39; --fg:#ecebe5; --muted:#a9b0bc;
+  --line:#3a4354; --accent:#6fd0d8; --accent-fg:#10141b; --accent-2:#f0b35d; --nav-bg:rgba(16,20,27,.88);}
+.kicker{font:700 .74rem/1.3 var(--font-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0}
+.list{margin:.4em 0 1em;padding-left:1.2em;display:grid;gap:.5em}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);margin-top:var(--gap)}
+.table-wrap table{border-collapse:collapse;width:100%;background:var(--card)}
+.table-wrap th,.table-wrap td{padding:8px 14px;border-bottom:1px solid var(--line);text-align:left}
+.table-wrap th{background:var(--soft);font-size:.85rem}
+
+/* ===== 6. REDUCED MOTION — always last ===== */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;transition-delay:0s !important;scroll-behavior:auto !important}
+  .js [data-reveal]{opacity:1 !important;transform:none !important}
+  .mote{display:none !important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- NAV: exact snippet from KP's saved preferences + icon-only theme toggle. Only change the [context] text.
+     Page-specific extra links go in the NAV-EXTRA slot, only when KP asked for them.
+     Quiz/event pages: once the roll is confirmed, KP.setRoll(roll) swaps the kpsingh.in link for a non-clickable roll badge. -->
+<nav class="nav"><div class="nav-brand"><img class="nav-logo" src="KP_Singh.png" alt="K.P. Singh"/><div><div class="nav-name">K.P. Singh</div><div class="nav-sub">SGT University · PhD coursework · RPE</div></div></div><!-- NAV-EXTRA --><button class="theme-toggle" type="button" id="themeToggle" aria-label="Switch to dark theme">🌙</button><a class="nav-cta" href="https://kpsingh.in" target="_blank">kpsingh.in ↗</a></nav>
+
+<div class="docs">
+  <aside class="docs-left" aria-label="Presentation">
+    <details class="docs-panel" open><summary>This talk</summary>
+      <nav aria-label="Presentation files"><a href="RPE_Machine_slides.html">Open the slides</a><a href="RPE_Machine_slides.html?join">Audience view (phone)</a><a href="#top" aria-current="page">Speaker script</a></nav>
+    </details>
+  </aside>
+  <main id="main" class="docs-main" tabindex="-1">
+    <section id="top">
+      <p class="kicker">Speaker script · 25 slides · 30 min + 5 min Q&amp;A</p>
+      <h1>The Machine That Writes Papers</h1>
+      <p class="callout"><span class="callout-face" aria-hidden="true">⏱</span><span>Press <b>N</b> on the slides for notes and the timer. On a question slide: <b>O</b> opens it on the phones, <b>C</b> closes, <b>R</b> reveals. Each block below matches a slide: <code>#p3</code> here ↔ <code>RPE_Machine_slides.html#s3</code>.</span></p>
+      <h2>Before you walk in (10 minutes)</h2>
+      <ol class="list">
+        <li>Deploy <code>Code.gs</code> once (instructions at the top of the file). Paste the <code>/exec</code> URL into <code>LIVE.api</code> in the slides file. Put <code>KP_Singh.png</code> beside it and host both on kpsingh.in (or any https address). The QR code is generated from the page's own address.</li>
+        <li>Open the deck with <code>?pin=YOURPIN</code> (or type the PIN on slide 2). Press <b>Reset session</b> on slide 2 so yesterday's test answers are gone.</li>
+        <li>Open the audience view on your own phone once (<code>?join</code>) to confirm the room's Wi-Fi reaches the sheet. If it does not, the deck says "offline" and every question falls back to hand-raise tallies (+1 buttons); the talk still works.</li>
+        <li>Full screen (F11), press <b>N</b> once so the timer is ready, then back to slide 1.</li>
+      </ol>
+      <div class="table-wrap"><table>
+        <caption class="sr-only">Timing plan</caption>
+        <tr><th scope="col">Slide</th><th scope="col">Minutes</th><th scope="col">Running total</th></tr>
+        <tr><td>1 Title</td><td>0.5</td><td>0.5</td></tr>
+        <tr><td>2 Join (QR)</td><td>1.5</td><td>2</td></tr>
+        <tr><td>3 Q1 bosom peril</td><td>2</td><td>4</td></tr>
+        <tr><td>4 Tortured phrases</td><td>1.5</td><td>5.5</td></tr>
+        <tr><td>5 Syllabus map</td><td>1</td><td>6.5</td></tr>
+        <tr><td>6 Playground: paraphrase slider</td><td>2.5</td><td>9</td></tr>
+        <tr><td>7 Q2 profound neural organization</td><td>1.5</td><td>10.5</td></tr>
+        <tr><td>8 Q3 flag to clamor</td><td>1.5</td><td>12</td></tr>
+        <tr><td>9 Playground: pipeline</td><td>2</td><td>14</td></tr>
+        <tr><td>10 Paper-mill numbers</td><td>1.5</td><td>15.5</td></tr>
+        <tr><td>11 Q4 spot the mill</td><td>1.5</td><td>17</td></tr>
+        <tr><td>12 AI fingerprints</td><td>1.5</td><td>18.5</td></tr>
+        <tr><td>13 Q5 human or machine</td><td>2</td><td>20.5</td></tr>
+        <tr><td>14 Playground: detector arithmetic</td><td>2.5</td><td>23</td></tr>
+        <tr><td>15 Q6 co-author poll</td><td>1</td><td>24</td></tr>
+        <tr><td>16 COPE and ICMJE</td><td>1.5</td><td>25.5</td></tr>
+        <tr><td>17 Four authorship criteria</td><td>1.5</td><td>27</td></tr>
+        <tr><td>18 Q7 who is an author</td><td>2</td><td>29</td></tr>
+        <tr><td>19 Q8 draw the line</td><td>2</td><td>31</td></tr>
+        <tr><td>20 Where the line is</td><td>1.5</td><td>32.5</td></tr>
+        <tr><td>21 Sleuths and growth</td><td>1.5</td><td>34</td></tr>
+        <tr><td>22 Leaderboard</td><td>1.5</td><td>35.5</td></tr>
+        <tr><td>23 Three rules</td><td>1</td><td>36.5</td></tr>
+        <tr><td>24 References</td><td>0.5</td><td>37</td></tr>
+        <tr><td>25 Questions</td><td>Q&amp;A</td><td>37 + Q&amp;A</td></tr>
+      </table></div>
+      <p class="mixup"><b>Running short?</b> The plan above is 37 minutes of talk if you take every interaction slowly; at a brisk pace it is 30. For a strict 30: skip slides 8, 11 and 18 (say the answer in one line each) and give the playground on slide 14 ninety seconds. For a 20-minute version: also skip slides 9, 17 and 21, and run only Q1, Q5, Q6 and Q8 on the phones.</p>
+    </section>
+
+    <section id="p1"><h2>Slide 1 · Title</h2>
+      <p>Greet the class and the teacher. One sentence on the topic: "papers that are written, or partly written, by machines, and what the ethics of that looks like". Say that phones are needed and allowed. <b>Transition:</b> "Let's get everyone connected first."</p></section>
+
+    <section id="p2"><h2>Slide 2 · Join</h2>
+      <p>Point to the QR code and read the address once. "Type your name once; your phone becomes your buzzer. Eight questions, some scored, some opinion, and a leaderboard at the end." Watch the counter climb; when it stops moving for ten seconds, go on. If the pill says offline, say so plainly: "the sheet is not reachable on this Wi-Fi, so I'll count hands", and carry on. <b>Transition:</b> "First question, and it is not a warm-up."</p></section>
+
+    <section id="p3"><h2>Slide 3 · Q1 "bosom peril" (scored)</h2>
+      <p>Read the question. Press <b>O</b>. Give thirty seconds and narrate the count rising. Press <b>C</b>, then ask two people why they chose what they chose. Press <b>R</b>: breast cancer. "Why would a paper say that? Hold the thought." <b>Transition:</b> "Because a machine wrote it, to hide something."</p></section>
+
+    <section id="p4"><h2>Slide 4 · Tortured phrases</h2>
+      <p>These are called tortured phrases. In 2021 Guillaume Cabanac, Cyril Labbé and Alexander Magazinov noticed papers using bizarre synonyms for standard terms. The mechanism: copied text is pushed through an automatic paraphrasing tool so that plagiarism software no longer matches the source. The tool replaces "artificial intelligence" with "counterfeit consciousness" because a thesaurus does not know the phrase is a fixed term. By January 2022 their list had 473 phrases in 3,191 peer-reviewed articles. Walk the table quickly; the room enjoys "mean square blunder". <b>Transition:</b> "Where does this sit in our syllabus?"</p></section>
+
+    <section id="p5"><h2>Slide 5 · Syllabus map</h2>
+      <p>Read the five cards in one breath: fabrication (2.3), the types and causes of publication misconduct (3.4), identification (3.6), software tools and their limits (5B), and authorship (3.5) near the end. Say that everything today is anchored to these. <b>Transition:</b> "Let me show you the trick working."</p></section>
+
+    <section id="p6"><h2>Slide 6 · Playground: paraphrase slider</h2>
+      <p>Say clearly: "This is a simulation I built for teaching; the phrases are real, the percentages are illustrative." Drag the slider one step at a time. At each step ask: "Would Turnitin flag this?" The similarity bar falls; the meaning bar falls with it. At step five the sentence is nonsense and the report is clean. Ask the room which of the two bars the software measures. Only the first. "Similarity software counts overlapping words. It has no idea what the sentence means." <b>Transition:</b> "Two more to decode, for points."</p></section>
+
+    <section id="p7"><h2>Slide 7 · Q2 "profound neural organization" (scored)</h2>
+      <p>Twenty seconds. Answer: deep neural network. Point out how a computer-science term turned into something that sounds like management studies, which is exactly why a reviewer from another field might not notice. <b>Transition:</b> "One more, harder."</p></section>
+
+    <section id="p8"><h2>Slide 8 · Q3 "flag to clamor" (scored)</h2>
+      <p>Answer: signal to noise. "If you have ever pressed a 'rephrase' button in a writing tool, you have used the same engine. The tool is not the offence; hiding a copied source with it is." <b>Transition:</b> "So who does this at scale? Paper mills."</p></section>
+
+    <section id="p9"><h2>Slide 9 · Playground: the pipeline</h2>
+      <p>Press <b>Honest lab</b>: seven stages, all done by people and recorded. Press <b>Paper mill</b>: read COPE's definition from the source line, then walk the stages: data and analysis fabricated, writing spun (this is where tortured phrases come from), figures recycled, author slots sold, and in the worst cases fake reviewer accounts or a compromised special issue. Press <b>Undisclosed AI</b>: a real researcher and real data, but the writing and figures are generated and nobody is told. Make the contrast explicit: the mill is fraud from start to finish; the AI case is one honest person crossing a line in two places. <b>Transition:</b> "How big is the mill problem?"</p></section>
+
+    <section id="p10"><h2>Slide 10 · Paper-mill numbers</h2>
+      <p>Let the counters run. In 2023 retractions across all publishers passed ten thousand, a record (Nature, December 2023). More than eight thousand came from one publisher, Hindawi, owned by Wiley, whose special issues had been taken over by mills. Wiley closed four journals and reported 35 to 40 million dollars of lost revenue. Read the COPE definition slowly. <b>Transition:</b> "Could you spot one?"</p></section>
+
+    <section id="p11"><h2>Slide 11 · Q4 spot the mill (scored)</h2>
+      <p>Answer: the tortured phrase. Six authors, open access and long reference lists are all normal. "A human expert never writes 'flag to clamor'. That is the fingerprint." <b>Transition:</b> "From 2023 the machine got much better at writing, and it started leaving new fingerprints."</p></section>
+
+    <section id="p12"><h2>Slide 12 · AI fingerprints</h2>
+      <p>Three real cases, all public. One: a paper in Elsevier's <i>Surfaces and Interfaces</i>, published 17 February 2024, whose introduction began "Certainly, here is a possible introduction for your topic:". Retracted on 31 May 2024 for undisclosed generative-AI use. Two: by October 2023 Cabanac and colleagues had flagged more than thirty papers on PubPeer containing "Regenerate response" or "As an AI language model". Three: a Frontiers journal published AI-generated anatomical figures of a rat with nonsense labels on 13 February 2024 and retracted the paper within days. Do not show the rat image; describe it. <b>Transition:</b> "Can you tell machine writing from human writing? Let's test the room."</p></section>
+
+    <section id="p13"><h2>Slide 13 · Q5 human or machine (poll)</h2>
+      <p>"Two passages on handwritten Gurmukhi recognition. One is from my own published paper; the other was generated with a chatbot for this talk. Vote A or B for the machine." Open, thirty seconds, close, reveal: B is the machine. Ask what gave it away. Expect "pivotal", "leveraging", "nuanced", the tidy three-sentence shape; passage A is from Aggarwal, Singh &amp; Singh, Procedia Computer Science, 2015. Then say: "Half of you guessed. If humans cannot tell, can software?" <b>Transition:</b> next slide.</p></section>
+
+    <section id="p14"><h2>Slide 14 · Playground: detector arithmetic</h2>
+      <p>"Imagine a class of one hundred. Slide the share who really used a chatbot." Start at 20 percent. "Now apply the figures OpenAI published for its own detector: it caught 26 percent of AI text and wrongly flagged 9 percent of human text." Read the sentence under the number: five users caught, seven innocent students flagged. "More than half of the flagged students did nothing wrong." Slide to 5 percent and the share of innocent among flagged climbs further. Then the two bullets: OpenAI withdrew that detector on 20 July 2023 for low accuracy; Turnitin claims under one percent false positives per document but about four percent per sentence, and says the score should start a conversation, not decide a case. Close: "A detector score is a reason to talk to a student, never a verdict." <b>Transition:</b> "So what do publishers actually require?"</p></section>
+
+    <section id="p15"><h2>Slide 15 · Q6 co-author poll</h2>
+      <p>Quick opinion, thirty seconds, no reveal needed beyond the bars. Whatever the split, say: "The publishers have already answered this one." <b>Transition:</b> next slide.</p></section>
+
+    <section id="p16"><h2>Slide 16 · COPE and ICMJE</h2>
+      <p>COPE, the Committee on Publication Ethics, in February 2023: AI tools cannot be listed as authors, because they cannot take responsibility for the work; disclose in the Methods which tool and how; and authors remain fully responsible for every part, including the parts the tool produced. The ICMJE, the medical editors' body, adds: describe the use in the cover letter and in the manuscript, and non-disclosure may be treated as misconduct. Point at the word "responsible" in both columns. <b>Transition:</b> "Responsibility is the whole story, and here is why."</p></section>
+
+    <section id="p17"><h2>Slide 17 · Four authorship criteria</h2>
+      <p>ICMJE: an author meets all four: substantial contribution; drafting or critical revision; final approval; and agreement to be accountable for the whole work. A machine can arguably do the first two. It cannot approve and it cannot be accountable: you cannot email it a complaint. Then the three abuses in one line each: gift (a boss who did nothing), ghost (a real contributor hidden, which is what an undisclosed tool is), guest (a famous name for effect). <b>Transition:</b> "Try the rule on a case you will meet."</p></section>
+
+    <section id="p18"><h2>Slide 18 · Q7 who is an author (scored)</h2>
+      <p>Answer: not an author, acknowledge him. Funding equipment is not one of the four criteria, and approving a draft you never read is not either. Practical advice: agree authorship in writing before the work starts. <b>Transition:</b> "Now the hardest question of the day."</p></section>
+
+    <section id="p19"><h2>Slide 19 · Q8 draw the line (poll)</h2>
+      <p>"Five ways people use a chatbot. Pick the first one you would call misconduct." Open for forty seconds; this one deserves the time. The split is usually between C and D. Ask one person from each side for their reason. <b>Transition:</b> "Here is where the guidance draws it."</p></section>
+
+    <section id="p20"><h2>Slide 20 · Where the line is</h2>
+      <p>The guidance does not draw the line at "used AI or not". It draws it at three things: disclosure, accountability and fabrication. A and B are fine; disclose if the tool rewrote substantial text. C is allowed by most publishers only with disclosure, and you carry every claim. D: a figure is data; a generated figure presented as a result is fabrication, Unit 2.3, exactly the Frontiers case. E is fabrication, full stop; no disclosure repairs it. Then the blind spot: Turnitin would score all five at zero percent similarity; the UGC's 10-40-60 levels never see any of this. <b>Transition:</b> "So who catches it?"</p></section>
+
+    <section id="p21"><h2>Slide 21 · Sleuths and growth</h2>
+      <p>Detection today is a community effort: volunteers on PubPeer, the Problematic Paper Screener scanning for tortured phrases and chatbot text, Retraction Watch keeping the public record. Meanwhile use is rising: a 2025 study in <i>Nature Human Behaviour</i> of 1.1 million papers estimated that by September 2024 up to 22 percent of computer-science abstracts had been modified by a language model, and up to 9 percent in mathematics and in Nature-portfolio journals. "This is not going away. Disclosure has to become the normal thing to do." <b>Transition:</b> "Leaderboard."</p></section>
+
+    <section id="p22"><h2>Slide 22 · Leaderboard</h2>
+      <p>Let the rows animate. Read the top three names and applaud. Press <b>Send final standings to phones</b> so everyone sees their own rank. If the session was offline, this slide says so; instead, name the option that won each hand-raise. <b>Transition:</b> "Three rules to take home."</p></section>
+
+    <section id="p23"><h2>Slide 23 · Three rules</h2>
+      <p>Say them slowly, one breath each. Disclose the tool and what it did, in Methods and the cover letter. Never let it make data, figures or references; check that every citation it suggests exists. You sign, you answer: read every sentence as if a reviewer will ask you about it, because one will. Add, if the teacher's discipline is non-technical: "None of this is a computer-science problem. The Elsevier paper was about batteries; the Frontiers paper was biology; the Hindawi special issues were everything." <b>Transition:</b> "References, then questions."</p></section>
+
+    <section id="p24"><h2>Slide 24 · References</h2>
+      <p>One line: every case today is public and checkable; the list is in the deck and in this script. Thank the class and the teacher.</p></section>
+
+    <section id="p25"><h2>Slide 25 · Questions</h2>
+      <p>Invite questions. If the room is quiet, ask the teacher one: "Would you accept a Methods line that says 'grammar corrected with an AI tool'?"</p></section>
+
+    <section id="qa"><h2>Likely questions</h2>
+      <details class="reveal"><summary>Is Grammarly or a spell-checker "AI use" that must be disclosed?</summary><div><p>COPE and ICMJE target substantive use: text generation, rewriting, summarising, analysis. Basic grammar and spelling correction does not normally need disclosure. If a tool rewrote whole paragraphs, disclose it.</p></div></details>
+      <details class="reveal"><summary>Can I use a chatbot to translate my paper into English?</summary><div><p>Most publishers treat that as a disclosable writing aid: say so in Methods or the cover letter, and you remain responsible for the accuracy of every sentence in the translation.</p></div></details>
+      <details class="reveal"><summary>Can I use it for the literature review?</summary><div><p>To search, sort and summarise for yourself, yes, with two rules: verify every claim and every citation against the original source (these tools invent references), and never paste its summary into your text as if you wrote it, without disclosure.</p></div></details>
+      <details class="reveal"><summary>Does UGC have a rule on AI-generated text?</summary><div><p>The UGC 2018 plagiarism regulations define similarity levels; they say nothing about generated text, which scores zero similarity. Individual universities and funders have started issuing AI policies; check yours and your target journal's. Do not claim a national rule that does not exist.</p></div></details>
+      <details class="reveal"><summary>Where do the 26% and 9% figures come from?</summary><div><p>From OpenAI's own page for its AI text classifier, January 2023: it identified 26 percent of AI-written text as "likely AI-written" and mislabelled 9 percent of human text. The page carries the note that the classifier was withdrawn on 20 July 2023 for low accuracy. The simulator applies those two rates to a class of 100; it is arithmetic, not a study of any real class.</p></div></details>
+      <details class="reveal"><summary>Are the retraction figures certain?</summary><div><p>The "more than 10,000 in 2023" figure is from Nature's news analysis of 12 December 2023, based on Retraction Watch data; "more than 8,000" from Hindawi is Wiley's own figure reported by Retraction Watch on 19 December 2023. Both are counts at that date and have since grown.</p></div></details>
+      <details class="reveal"><summary>What is the Problematic Paper Screener?</summary><div><p>A public tool built by Cabanac, Labbé and Magazinov that scans the published literature for signals such as tortured phrases and chatbot text, and lists flagged papers for human checking. It flags; people judge.</p></div></details>
+      <details class="reveal"><summary>How do I disclose AI use in practice?</summary><div><p>One or two sentences in Methods or Acknowledgements: which tool, which version, what it was used for (for example, "language editing of the Introduction"), and a statement that the authors reviewed and take responsibility for the content. Repeat it in the cover letter if the journal follows ICMJE.</p></div></details>
+    </section>
+
+    <section id="refs"><h2>References</h2>
+      <ul class="recap">
+        <li>Cabanac, G., Labbé, C., &amp; Magazinov, A. (2021). Tortured phrases: A dubious writing style emerging in science. arXiv:2107.06751.</li>
+        <li>Bulletin of the Atomic Scientists (2022, 20 January). "Bosom peril" is not "breast cancer": How weird computer-generated phrases help researchers find scientific publishing fraud.</li>
+        <li>Committee on Publication Ethics (2023, 13 February). Authorship and AI tools: COPE position statement.</li>
+        <li>Committee on Publication Ethics. Paper mills (topic discussion); COPE &amp; STM (2022). Paper mills research report.</li>
+        <li>International Committee of Medical Journal Editors. Recommendations: Defining the role of authors and contributors; Artificial intelligence: AI use by authors.</li>
+        <li>Van Noorden, R. (2023, 12 December). More than 10,000 research papers were retracted in 2023: a new record. Nature, 624, 479–481.</li>
+        <li>Retraction Watch (2023, 19 December). Hindawi reveals process for retracting more than 8,000 paper mill articles.</li>
+        <li>Retraction Watch (2023, 6 October). Signs of undeclared ChatGPT use in papers mounting.</li>
+        <li>Zhang et al. (2024). Surfaces and Interfaces (Elsevier); published 17 February 2024; retracted 31 May 2024 (retraction notice cites undisclosed generative-AI use).</li>
+        <li>Frontiers (2024, 16 February). Statement concerning the article "Cellular functions of spermatogonial stem cells in relation to JAK/STAT signaling pathway".</li>
+        <li>OpenAI (2023, 31 January; note added 20 July 2023). New AI classifier for indicating AI-written text.</li>
+        <li>Turnitin (2023, 23 May). AI writing detection update from Turnitin's Chief Product Officer.</li>
+        <li>Liang, W., Zhang, Y., et al. (2025). Quantifying large language model usage in scientific papers. Nature Human Behaviour. doi:10.1038/s41562-025-02273-8.</li>
+        <li>University Grants Commission (2018). UGC (Promotion of Academic Integrity and Prevention of Plagiarism in Higher Educational Institutions) Regulations, 2018.</li>
+        <li>Panjab University. RS-9003 Research and Publication Ethics: syllabus.</li>
+      </ul></section>
+  </main>
+  <aside class="docs-right" aria-label="On this page">
+    <details class="docs-panel" open><summary>On this page</summary>
+      <nav data-spy aria-label="On this page"><a href="#top">Plan and timing</a><a href="#p1">1 Title</a><a href="#p2">2 Join</a><a href="#p3">3 Q1</a><a href="#p4">4 Tortured phrases</a><a href="#p5">5 Syllabus</a><a href="#p6">6 Slider</a><a href="#p7">7 Q2</a><a href="#p8">8 Q3</a><a href="#p9">9 Pipeline</a><a href="#p10">10 Numbers</a><a href="#p11">11 Q4</a><a href="#p12">12 Fingerprints</a><a href="#p13">13 Q5</a><a href="#p14">14 Detector</a><a href="#p15">15 Q6</a><a href="#p16">16 COPE/ICMJE</a><a href="#p17">17 Authorship</a><a href="#p18">18 Q7</a><a href="#p19">19 Q8</a><a href="#p20">20 The line</a><a href="#p21">21 Sleuths</a><a href="#p22">22 Leaderboard</a><a href="#p23">23 Rules</a><a href="#p24">24 References</a><a href="#p25">25 Questions</a><a href="#qa">Likely questions</a><a href="#refs">References</a></nav>
+    </details>
+  </aside>
+</div>
+<script>
+/* ===== KP BASE JS ===== */
+(function(){
+  'use strict';
+  var root=document.documentElement;
+  var KP=window.KP=window.KP||{};
+  var RM=matchMedia('(prefers-reduced-motion: reduce)');
+  KP.reduced=function(){return RM.matches;};
+  var $$=function(s,c){return [].slice.call((c||document).querySelectorAll(s));};
+
+  /* -- MODULE: STORE (PERSIST SWAP — lab / notes / lecture / deck pages ONLY, never quizzes).
+        Persistent but safe: falls back to memory when storage is blocked (private mode, in-app browsers).
+        Only theme + checkpoint ticks are stored. No names, roll numbers, answers or scores. -- */
+  var mem={};
+  var pk=function(k,g){return 'kp:'+(g?'':root.dataset.page+':')+k;};
+  KP.store={
+    get:function(k,g){
+      try{var v=localStorage.getItem(pk(k,g));if(v!==null)return v;}catch(e){}
+      return Object.prototype.hasOwnProperty.call(mem,pk(k,g))?mem[pk(k,g)]:null;
+    },
+    set:function(k,v,g){mem[pk(k,g)]=String(v);try{localStorage.setItem(pk(k,g),String(v));}catch(e){}},
+    remove:function(k,g){delete mem[pk(k,g)];try{localStorage.removeItem(pk(k,g));}catch(e){}}
+  };
+
+  /* -- MODULE: CHECKPOINTS (lab manual / notes). Markup:
+        <label class="cp"><input type="checkbox" data-cp="cp1"> Checkpoint 1 …</label>
+        <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Checkpoint progress" data-cp-meter><span></span></div>
+        <p data-cp-label></p>  <button class="btn" type="button" data-cp-reset>Reset progress</button>   -- */
+  KP.checkpoints=function(){
+    var boxes=[].slice.call(document.querySelectorAll('input[data-cp]'));if(!boxes.length)return;
+    var meter=document.querySelector('[data-cp-meter]'),label=document.querySelector('[data-cp-label]'),reset=document.querySelector('[data-cp-reset]');
+    function paint(){
+      var done=boxes.filter(function(b){return b.checked;}).length,pct=Math.round(done/boxes.length*100);
+      if(meter){meter.setAttribute('aria-valuenow',pct);if(meter.firstElementChild)meter.firstElementChild.style.setProperty('--p',pct/100);}
+      if(label)label.textContent=done+' of '+boxes.length+' checkpoints done';
+    }
+    boxes.forEach(function(b){
+      b.checked=KP.store.get('cp:'+b.dataset.cp)==='1';
+      b.addEventListener('change',function(){KP.store.set('cp:'+b.dataset.cp,b.checked?'1':'0');paint();});
+    });
+    if(reset)reset.addEventListener('click',function(){boxes.forEach(function(b){b.checked=false;KP.store.set('cp:'+b.dataset.cp,'0');});paint();});
+    paint();
+  };
+  setTimeout(function(){KP.checkpoints();},0);
+
+  /* -- MODULE: THEME TOGGLE (three-layer pattern; icon-only) -- */
+  var btn=document.getElementById('themeToggle');
+  var mq=matchMedia('(prefers-color-scheme: dark)');
+  function isDark(){return root.dataset.theme?root.dataset.theme==='dark':mq.matches;}
+  function paintToggle(){
+    var d=isDark();
+    if(btn){btn.textContent=d?'☀️':'🌙';btn.setAttribute('aria-label',d?'Switch to light theme':'Switch to dark theme');}
+    var m=document.getElementById('themeColor'),bg=getComputedStyle(root).getPropertyValue('--bg').trim();
+    if(m&&bg)m.setAttribute('content',bg);
+  }
+  var saved=KP.store.get('theme',true);
+  if(saved==='light'||saved==='dark')root.dataset.theme=saved;
+  if(btn)btn.addEventListener('click',function(){
+    var next=isDark()?'light':'dark';root.dataset.theme=next;KP.store.set('theme',next,true);paintToggle();
+  });
+  if(mq.addEventListener)mq.addEventListener('change',paintToggle);
+  paintToggle();
+
+  /* -- MODULE: COUNT-UP — 0 -> N (tabular digits). Auto: <b data-count="85" data-suffix="%" data-decimals="0">85%</b>
+        data-group → Indian digit grouping (10,00,000); data-locale="en-US" for 1,000,000.
+        The element's own text is the final value, so JS-off / reduced-motion readers see the truth. -- */
+  KP.countUp=function(el,to,o){
+    o=o||{};var ms=o.ms||900,dec=o.decimals||0,suf=o.suffix||'',pre=o.prefix||'';
+    var fmt=function(v){return pre+(o.group?v.toLocaleString(o.locale||'en-IN',{minimumFractionDigits:dec,maximumFractionDigits:dec}):v.toFixed(dec))+suf;};
+    if(KP.reduced()){el.textContent=fmt(to);return;}
+    var t0=performance.now();
+    (function step(now){
+      var p=Math.min((now-t0)/ms,1),e=1-Math.pow(1-p,3);
+      el.textContent=fmt(to*e);
+      if(p<1)requestAnimationFrame(step);
+    })(t0);
+    setTimeout(function(){el.textContent=fmt(to);},ms+80);      // background-tab safety: always land on the true value
+  };
+  KP.runCount=function(el){
+    var to=parseFloat(el.dataset.count);if(isNaN(to))return;
+    KP.countUp(el,to,{group:el.hasAttribute('data-group'),locale:el.dataset.locale,decimals:+(el.dataset.decimals||0),suffix:el.dataset.suffix||'',prefix:el.dataset.prefix||'',ms:+(el.dataset.ms||900)});
+  };
+
+  /* -- MODULE: REPLAY — restart a CSS animation every time (reflow trick). <span class="stamp" data-replay="kp-slam">ACCEPTED</span> -- */
+  KP.replay=function(el,cls){
+    cls=cls||el.dataset.replay||'kp-slam';
+    try{el.classList.remove(cls);void el.offsetWidth;el.classList.add(cls);}catch(e){}
+  };
+
+  /* -- MODULE: REVEAL (scroll-in, IntersectionObserver, capped stagger; deck slides are handled by the deck kit) -- */
+  var items=$$('[data-reveal]').filter(function(el){return !el.closest('[data-deck]');});
+  $$('[data-stagger]').forEach(function(box){
+    $$('[data-reveal]',box).forEach(function(el,i){el.style.setProperty('--d',Math.min(i,8)*70+'ms');el.dataset.staggered='1';});
+  });
+  var counts=$$('[data-count]').filter(function(el){return !el.closest('[data-deck]');});
+  function showAll(){items.forEach(function(el){el.classList.add('is-in');});}
+  if(RM.matches||!('IntersectionObserver' in window)){showAll();}
+  else{
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(!e.isIntersecting)return;var t=e.target;io.unobserve(t);
+      if(t.hasAttribute('data-reveal'))t.classList.add('is-in');
+      if(t.hasAttribute('data-count'))KP.runCount(t);
+      if(t.hasAttribute('data-replay'))KP.replay(t);
+    });},{rootMargin:'0px 0px -10% 0px',threshold:0.15});
+    items.forEach(function(el,i){if(!el.dataset.staggered)el.style.setProperty('--d',Math.min(i%6,5)*70+'ms');io.observe(el);});
+    counts.forEach(function(el){io.observe(el);});
+    $$('[data-replay]').filter(function(el){return !el.closest('[data-deck]');}).forEach(function(el){io.observe(el);});
+  }
+
+  /* -- MODULE: SCROLL PROGRESS — <div class="scroll-progress" data-scroll-progress aria-hidden="true"><span></span></div> -- */
+  var sp=document.querySelector('[data-scroll-progress]>span');
+  if(sp){
+    var ticking=false;
+    var paintSP=function(){ticking=false;var h=document.documentElement.scrollHeight-innerHeight;sp.style.setProperty('--p',h>0?Math.min(1,scrollY/h):0);};
+    addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(paintSP);}},{passive:true});
+    addEventListener('resize',paintSP);paintSP();
+  }
+
+  /* -- MODULE: SCROLL-SPY — <nav data-spy aria-label="Contents"><a href="#sec1">…</a></nav>; marks the section being read -- */
+  $$('[data-spy]').forEach(function(nav){
+    if(!('IntersectionObserver' in window))return;
+    var links=$$('a[href^="#"]',nav),map={};
+    links.forEach(function(a){var t=document.getElementById(decodeURIComponent(a.hash.slice(1)));if(t)map[t.id]=a;});
+    var sio=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(!e.isIntersecting||!map[e.target.id])return;
+      links.forEach(function(a){a.removeAttribute('aria-current');});map[e.target.id].setAttribute('aria-current','true');
+    });},{rootMargin:'-35% 0px -55% 0px'});
+    Object.keys(map).forEach(function(id){sio.observe(document.getElementById(id));});
+  });
+
+  /* -- MODULE: PAUSE MOTION — <button class="btn" type="button" data-pause-motion aria-pressed="false">⏸ Pause motion</button>
+        Required whenever anything loops > 5 s (motes, pulse, marquee). -- */
+  $$('[data-pause-motion]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var paused=root.dataset.motion==='paused';
+      if(paused)delete root.dataset.motion;else root.dataset.motion='paused';
+      $$('[data-pause-motion]').forEach(function(x){x.setAttribute('aria-pressed',String(!paused));x.textContent=paused?'⏸ Pause motion':'▶ Play motion';});
+    });
+  });
+
+  /* -- MODULE: PERF GUARD (weak phones: flag so heavy effects can switch off) -- */
+  (function(){
+    var last=performance.now(),slow=0,n=0;
+    (function tick(t){
+      var dt=t-last;last=t;
+      if(dt>34&&++slow>12)root.dataset.perf='low';
+      if(++n<240&&!root.dataset.perf)requestAnimationFrame(tick);   // sample ~4s, then stop
+    })(last);
+  })();
+
+  /* ===== KIT: DOCS / REFERENCE PAGE (kp-html-base 1.5.0) — panels, flip cards, stepper, practice quiz, copy, locks ===== */
+
+  /* -- DOCS PANELS: open on wide screens, folded on phones; tapping an "On this page" link folds the phone bar -- */
+  (function(){
+    var right=document.querySelector('.docs-right .docs-panel'),left=document.querySelector('.docs-left .docs-panel');
+    if(!right&&!left)return;
+    var mqR=matchMedia('(min-width: 860px)'),mqL=matchMedia('(min-width: 1100px)');
+    function sync(){if(right)right.open=mqR.matches;if(left)left.open=mqL.matches;}
+    sync();
+    [mqR,mqL].forEach(function(m){if(m.addEventListener)m.addEventListener('change',sync);});
+    if(right)$$('a[href^="#"]',right).forEach(function(a){a.addEventListener('click',function(){if(!mqR.matches)right.open=false;});});
+  })();
+
+  /* -- FLIP CARDS -- */
+  $$('.flip').forEach(function(b){
+    if(!b.hasAttribute('aria-pressed'))b.setAttribute('aria-pressed','false');
+    b.addEventListener('click',function(){b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true'));});
+  });
+
+  /* -- STEPPER: <div class="stepper card" data-stepper> <ol class="stepper-steps"><li>…</li></ol>
+        <div class="stepper-ctl"><button class="btn" type="button" data-step-reset>Reset</button><span data-step-status aria-live="polite"></span>
+        <button class="btn btn-primary" type="button" data-step-next>Next step →</button></div></div>
+        Fires 'kp:step' on the stepper (detail.index, detail.total) so page code can redraw a diagram. → advances the stepper in view. -- */
+  var steppers=$$('[data-stepper]').map(function(box){
+    var steps=$$('.stepper-steps>li',box),N=steps.length,k=0;
+    var nx=box.querySelector('[data-step-next]'),rs=box.querySelector('[data-step-reset]'),st=box.querySelector('[data-step-status]');
+    function paint(){
+      steps.forEach(function(li,i){li.classList.toggle('is-shown',i<=k);li.classList.toggle('is-current',i===k);});
+      if(st)st.textContent='Step '+(k+1)+' of '+N;
+      if(nx)nx.disabled=k>=N-1;
+      try{box.dispatchEvent(new CustomEvent('kp:step',{bubbles:true,detail:{index:k,total:N}}));}catch(e){}
+    }
+    function next(){if(k<N-1){k++;paint();}}
+    if(nx)nx.addEventListener('click',next);
+    if(rs)rs.addEventListener('click',function(){k=0;paint();});
+    if(N)paint();
+    return {box:box,next:next};
+  });
+  if(steppers.length&&!document.querySelector('[data-deck]'))addEventListener('keydown',function(e){
+    if(e.key!=='ArrowRight'||e.altKey||e.ctrlKey||e.metaKey)return;
+    var t=e.target;if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))return;
+    var mid=innerHeight/2,hit=null;
+    steppers.forEach(function(s){var r=s.box.getBoundingClientRect();if(!hit&&r.top<mid&&r.bottom>mid*.4)hit=s;});
+    if(hit){e.preventDefault();hit.next();}
+  });
+
+  /* -- PRACTICE QUIZ: <div class="quiz" data-quiz><p class="quiz-score" data-quiz-score aria-live="polite"></p>
+        <fieldset class="q"><legend>Q1 …</legend><button type="button" class="q-opt" data-correct data-why="…">…</button>
+        <button type="button" class="q-opt" data-why="why this is tempting but wrong">…</button><p class="q-fb" aria-live="polite"></p></fieldset></div>
+        Instant feedback with a one-line reason; score is practice-only and never stored. -- */
+  $$('[data-quiz]').forEach(function(qz){
+    var qs=$$('.q',qz),score=0,done=0,out=qz.querySelector('[data-quiz-score]');
+    function paint(){if(out)out.textContent='Score: '+score+' / '+qs.length+(done===qs.length?(score===qs.length?' 🎉':' — review the reasons above'):'');}
+    qs.forEach(function(q){
+      var opts=$$('.q-opt',q),fb=q.querySelector('.q-fb'),right=q.querySelector('.q-opt[data-correct]');
+      opts.forEach(function(o){o.setAttribute('aria-pressed','false');o.addEventListener('click',function(){
+        if(q.dataset.answered)return;q.dataset.answered='1';done++;
+        var ok=o.hasAttribute('data-correct');if(ok)score++;
+        o.setAttribute('aria-pressed','true');o.classList.add(ok?'is-right':'is-wrong');
+        if(!ok&&right)right.classList.add('is-answer');
+        opts.forEach(function(x){x.disabled=true;});
+        if(fb){fb.className='q-fb '+(ok?'ok':'no');
+          fb.textContent=ok?('✅ Right. '+(o.dataset.why||'')):('🙈 Close, here\u2019s why: '+(o.dataset.why||'')+(right?' Answer: '+right.textContent.trim()+'.':''));}
+        paint();
+      });});
+    });
+    paint();
+  });
+
+  /* -- COPY BUTTONS on <div class="code" data-copy><pre><code>…</code></pre></div> -- */
+  $$('.code[data-copy]').forEach(function(box){
+    var pre=box.querySelector('pre');if(!pre)return;
+    var b=document.createElement('button');b.type='button';b.className='copy';b.textContent='Copy';b.setAttribute('aria-label','Copy code');
+    b.addEventListener('click',function(){
+      var txt=pre.innerText,done=function(){b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy';},1400);};
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(done,fallback);else fallback();
+      function fallback(){var ta=document.createElement('textarea');ta.value=txt;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';
+        document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(ta);}
+    });
+    box.appendChild(b);
+  });
+
+  /* -- LOCKED SOLUTIONS (deterrent, not security — the text is in the page source):
+        <details class="reveal" data-lock="3"> … tap summary 3 times quickly;  <details class="reveal" data-lock-key="lab6answers"> … instructor key -- */
+  $$('details[data-lock],details[data-lock-key]').forEach(function(d){
+    var sm=d.querySelector('summary');if(!sm)return;var unlocked=false;
+    var key=d.getAttribute('data-lock-key'),need=+(d.getAttribute('data-lock')||3),taps=0,timer;
+    var base=sm.textContent;
+    if(key){
+      var f=document.createElement('div');f.className='lock-form';
+      var id='lk'+Math.random().toString(36).slice(2,8);
+      f.innerHTML='<label class="sr-only" for="'+id+'">Instructor key</label><input id="'+id+'" type="text" autocomplete="off" placeholder="Instructor key"><button class="btn" type="button">Unlock</button><p class="lock-msg" aria-live="polite"></p>';
+      d.parentNode.insertBefore(f,d.nextSibling);
+      var inp=f.querySelector('input'),msg=f.querySelector('.lock-msg');
+      var tryKey=function(){if(inp.value.trim().toLowerCase()===key.toLowerCase()){unlocked=true;f.classList.remove('is-open');d.open=true;}else{msg.textContent='That key doesn\u2019t match — your instructor shares it at the end.';}};
+      f.querySelector('button').addEventListener('click',tryKey);
+      inp.addEventListener('keydown',function(e){if(e.key==='Enter')tryKey();});
+    }
+    sm.addEventListener('click',function(e){
+      if(unlocked)return;e.preventDefault();
+      if(key){f.classList.toggle('is-open');if(f.classList.contains('is-open'))inp.focus();return;}
+      taps++;clearTimeout(timer);timer=setTimeout(function(){taps=0;sm.textContent=base;},1600);
+      if(taps>=need){unlocked=true;sm.textContent=base;d.open=true;}
+      else sm.textContent='Tap '+(need-taps)+' more time'+(need-taps>1?'s':'')+' to open';
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
