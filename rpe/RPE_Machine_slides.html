@@ -389,6 +389,26 @@ body.aud-mode .aud{display:block}
 .aud .mylb div{display:flex;justify-content:space-between;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
 .aud .mylb div.me{border-color:var(--accent);font-weight:700}
 
+/* stay in touch (slide 26 and the phone's final screen) */
+.connect{display:grid;gap:calc(var(--gap) * 1.5);grid-template-columns:1fr;align-items:center;margin-top:var(--gap)}
+@media (min-width:900px){.connect{grid-template-columns:minmax(0,26rem) auto;justify-content:center}}
+.connect-card{display:grid;justify-items:center;text-align:center;gap:4px}
+.connect-avatar{width:132px;height:132px;border-radius:50%;object-fit:cover;border:4px solid var(--card);box-shadow:var(--shadow-2);background:var(--card)}
+.slide h2.connect-name,.connect-name{margin:.35em 0 0;max-width:none}
+.connect-role{color:var(--muted);font-size:var(--step-0);line-height:1.5;margin:0 0 .8em}
+.connect-links{display:grid;gap:12px;width:100%;text-align:left}
+.connect-link{display:flex;align-items:center;gap:14px;min-height:56px;padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);color:var(--fg);text-decoration:none;box-shadow:var(--shadow-1);
+  transition:transform var(--dur-1) var(--ease-out),border-color var(--dur-1) var(--ease-out)}
+.connect-link svg{width:26px;height:26px;flex:none;color:var(--accent)}
+.connect-link span{display:grid;gap:2px;min-width:0}
+.connect-link b{overflow-wrap:anywhere}
+.connect-link small{color:var(--muted);font-size:.9rem}
+.connect-link:active{transform:scale(.98)}
+@media (hover:hover){.connect-link:hover{transform:translateY(-2px);border-color:var(--accent)}}
+.connect-qr{display:grid;justify-items:center;gap:8px;text-align:center}
+.connect-qr .qr{width:min(58vw,240px)}
+.aud .connect-links{margin-top:6px}
+
 /* live leaderboard widget (presenter): rail on laptops, one-line strip on phones/tablets.
    --rail-w / --lb-h are set by the page app; both are 0 while the widget is hidden. */
 :root{--rail-w:0px;--lb-h:0px;--fnav-w:0px}
@@ -493,6 +513,8 @@ body.aud-mode .fnav,body.aud-mode .lbw{display:none !important}
     <h2>Final standings</h2>
     <div class="mylb" id="a-lb"></div>
     <p class="status">Thank you for playing. Rule one: disclose the tool. Rule two: never let it make data. Rule three: you sign, you answer.</p>
+    <p class="kicker">Stay in touch</p>
+    <div class="connect-links"><a class="connect-link" href="https://kpsingh.in" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span><b>Portfolio · kpsingh.in</b><small>Papers, projects, tools</small></span></a><a class="connect-link" href="https://wa.me/918221002099?text=Hi%20KP%21%20I%20attended%20your%20talk%20%22The%20Machine%20That%20Writes%20Papers%22%20and%20would%20love%20to%20stay%20in%20touch." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 20l1.1-5.4A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.5 10.5c.3 2 2 3.7 4 4"/></svg><span><b>WhatsApp</b><small>Say hello, start a chat</small></span></a><a class="connect-link" href="https://www.linkedin.com/in/kaypee-singh" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 11v5M8 8v.01M12 16v-3.5a1.5 1.5 0 0 1 3 0V16M15 12.5V16"/></svg><span><b>LinkedIn</b><small>Connect professionally</small></span></a></div>
   </div>
 </section>
 
@@ -896,6 +918,26 @@ body.aud-mode .fnav,body.aud-mode .lbw{display:none !important}
       <p class="kicker" data-reveal>Thank you</p>
       <p class="qa" data-reveal>Questions?</p>
       <p class="byline" data-reveal>K.P. Singh · kamalpreet1010@gmail.com · kpsingh.in</p>
+    </div>
+  </section>
+
+  <!-- 26 STAY IN TOUCH -->
+  <section class="slide" id="s26" data-min="0" data-notes="Leave this slide on screen after questions. The QR code opens the same card on phones: portfolio, WhatsApp and LinkedIn. Participants who received the final standings also have these links on their phones.">
+    <div class="slide-inner">
+      <p class="kicker" data-reveal>Stay in touch</p>
+      <div class="connect">
+        <div class="connect-card" data-reveal>
+          <img class="connect-avatar" src="KP_Singh.png" alt="Kamal Preet Singh" width="132" height="132">
+          <h2 class="connect-name">Kamal Preet Singh</h2>
+          <p class="connect-role">Assistant Professor, CSE (AI/ML)<br>SOET, SGT University</p>
+          <div class="connect-links"><a class="connect-link" href="https://kpsingh.in" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span><b>Portfolio · kpsingh.in</b><small>Papers, projects, tools</small></span></a><a class="connect-link" href="https://wa.me/918221002099?text=Hi%20KP%21%20I%20attended%20your%20talk%20%22The%20Machine%20That%20Writes%20Papers%22%20and%20would%20love%20to%20stay%20in%20touch." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 20l1.1-5.4A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.5 10.5c.3 2 2 3.7 4 4"/></svg><span><b>WhatsApp</b><small>Say hello, start a chat</small></span></a><a class="connect-link" href="https://www.linkedin.com/in/kaypee-singh" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 11v5M8 8v.01M12 16v-3.5a1.5 1.5 0 0 1 3 0V16M15 12.5V16"/></svg><span><b>LinkedIn</b><small>Connect professionally</small></span></a></div>
+        </div>
+        <div class="connect-qr" data-reveal>
+          <p class="tag">Scan to keep these links</p>
+          <div class="qr" id="connectQr" aria-label="QR code for the contact card"><p class="qr-placeholder">kpsingh.in/uiet/connect</p></div>
+          <p class="join-url">kpsingh.in/uiet/connect</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1482,6 +1524,11 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       try{var q=qrcode(0,'M');q.addData(url);q.make();box.innerHTML=q.createSvgTag({cellSize:4,margin:0,scalable:true});
         var svg=box.querySelector('svg');if(svg){svg.setAttribute('role','img');svg.setAttribute('aria-label','QR code for '+url);}}catch(e){}
     }
+    var cq=$('connectQr');
+    if(cq&&window.qrcode){
+      try{var q2=qrcode(0,'M');q2.addData('https://kpsingh.in/uiet/connect');q2.make();cq.innerHTML=q2.createSvgTag({cellSize:4,margin:0,scalable:true});
+        var sv=cq.querySelector('svg');if(sv){sv.setAttribute('role','img');sv.setAttribute('aria-label','QR code for kpsingh.in/uiet/connect');}}catch(e){}
+    }
     var cj=$('copyJoin');
     if(cj){if(!url)cj.hidden=true;else cj.addEventListener('click',function(){
       var done=function(){flash('Join link copied: paste it in the meeting chat.');cj.textContent='Copied ✓';setTimeout(function(){cj.textContent='Copy link for chat';},2500);};
@@ -1533,7 +1580,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
   function paintLbw(){
     if(!lbwEl)return;
     try{
-      var top=state.lbTop||[],show=!isAll&&lbwUser&&state.online&&top.length>0&&!!cur&&cur.id!=='s1'&&cur.id!=='s22';
+      var top=state.lbTop||[],show=!isAll&&lbwUser&&state.online&&top.length>0&&!!cur&&cur.id!=='s1'&&cur.id!=='s22'&&cur.id!=='s26';
       if(show){
         var rows=top.slice(0,state.joined>15?3:1),lis=lbwList.children;
         while(lis.length>rows.length)lbwList.removeChild(lbwList.lastChild);
