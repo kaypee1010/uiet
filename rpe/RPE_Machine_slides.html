@@ -277,6 +277,9 @@ h1 em,h2 em{font-style:italic;color:var(--accent-2)}
 .join-url{font:700 clamp(1rem,.8rem + 1.2vw,1.6rem)/1.3 var(--font-mono);overflow-wrap:anywhere;margin:.2em 0}
 .joined{font:700 clamp(2.4rem,2rem + 3vw,4.6rem)/1 var(--font-display);color:var(--accent);margin:.1em 0}
 .setup{display:grid;gap:10px;margin-top:var(--gap)}
+.setup-wrap{margin-top:var(--gap)}
+.setup-wrap>summary{display:inline-flex;align-items:center;min-height:48px;cursor:pointer;color:var(--muted);font:600 .85rem/1.2 var(--font-mono)}
+.setup-wrap .setup{margin-top:4px}
 .setup input{width:100%}
 
 /* playground: spin slider */
@@ -373,6 +376,15 @@ body.aud-mode .aud{display:block}
 @keyframes kp-spin{to{transform:rotate(360deg)}}
 .aud .result{font:700 var(--step-2)/1.1 var(--font-display)}
 .aud .result.ok{color:var(--ok)} .aud .result.no{color:var(--bad)} .aud .result.poll{color:var(--accent)}
+.aud .abars{display:grid;gap:10px}
+.aud .abar{display:grid;grid-template-columns:1.8rem 1fr auto;gap:4px 10px;align-items:center}
+.aud .abar .k{font:700 .85rem/1 var(--font-mono);width:1.8rem;height:1.8rem;border-radius:50%;display:inline-grid;place-items:center;border:2px solid var(--line);background:var(--card)}
+.aud .abar .t{overflow-wrap:anywhere}
+.aud .abar .n{font:700 .9rem/1 var(--font-mono);font-variant-numeric:tabular-nums}
+.aud .abar .meter{grid-column:2 / 4;height:10px}
+.aud .abar.correct .k{border-color:var(--ok);background:var(--ok);color:var(--accent-fg)}
+.aud .abar.correct .meter>span{background:var(--ok)}
+.aud .abar.mine .t{font-weight:700}
 .aud .mylb{display:grid;gap:6px}
 .aud .mylb div{display:flex;justify-content:space-between;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
 .aud .mylb div.me{border-color:var(--accent);font-weight:700}
@@ -461,6 +473,7 @@ body.aud-mode .fnav,body.aud-mode .lbw{display:none !important}
   <div class="screen card" id="a-wait" hidden>
     <h2 id="a-hello">You're in</h2>
     <div class="wait"><div class="ring" aria-hidden="true"></div><p>Watch the screen. Questions appear here the moment K.P. opens them.</p></div>
+    <p class="status">On a laptop? Keep this window beside the meeting, not behind it. The tab title shows ● when a question opens.</p>
     <p class="status" id="a-wait-status"></p>
   </div>
   <div class="screen card" id="a-q" hidden aria-labelledby="a-qtext">
@@ -473,6 +486,7 @@ body.aud-mode .fnav,body.aud-mode .lbw{display:none !important}
     <h2>Locked in</h2>
     <p id="a-done-text">Your answer is recorded. Wait for the reveal on screen.</p>
     <p class="result" id="a-result" hidden></p>
+    <div class="abars" id="a-bars" hidden aria-label="How the room answered"></div>
     <p class="status" id="a-done-status"></p>
   </div>
   <div class="screen card" id="a-final" hidden>
@@ -497,21 +511,24 @@ body.aud-mode .fnav,body.aud-mode .lbw{display:none !important}
   <!-- 2 JOIN -->
   <section class="slide" id="s2" data-min="1.5" data-notes="Scan the code or type the address. Enter your name once. Your phone becomes your buzzer: eight questions, some scored, some opinion polls, and a leaderboard at the end. Give it sixty seconds; the counter tells me when we are ready. Presenter: if the counter says offline, the deck falls back to hand-raise tallies on each question. Transition: first question, and it is not a warm-up.">
     <div class="slide-inner">
-      <h2 data-reveal>Scan to join: your phone is your buzzer for the next 30 minutes</h2>
+      <h2 data-reveal>Scan with your phone, or open the link from the chat: your buzzer for the next 30 minutes</h2>
       <div class="join" data-reveal>
         <div class="qr" id="qrBox" aria-label="QR code to join"><p class="qr-placeholder">QR appears once the page is served from a web address</p></div>
         <div>
           <p class="tag">Or type this address</p>
           <p class="join-url" id="joinUrl">…</p>
+          <p><button class="btn" type="button" id="copyJoin">Copy link for chat</button></p>
           <p class="tag">Joined so far</p>
           <p class="joined num" id="joinedCount" aria-live="polite">0</p>
           <p><span class="pill" id="livePill">checking connection…</span></p>
+          <details class="setup-wrap" id="setupWrap"><summary>Presenter setup</summary>
           <div class="setup" id="setupBox">
             <label for="pinInput" class="small">Presenter PIN (matches PRESENTER_PIN in Code.gs)</label>
             <input id="pinInput" type="password" autocomplete="off" placeholder="PIN">
             <div class="live-ctl" style="margin-left:0"><button class="btn" type="button" id="pinSave">Use PIN</button><button class="btn" type="button" id="resetBtn">Reset session</button></div>
             <p class="small" id="setupMsg" role="status"></p>
           </div>
+          </details>
         </div>
       </div>
     </div>
@@ -1191,7 +1208,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
      joinUrl : optional short link that redirects to  <this page>?join  (leave '' to use this page's own address)
      Presenter PIN: type it on slide 2, or open the deck with ?pin=YOURPIN. It is kept in memory only.
      ============================================================================================ */
-  var LIVE={api:'https://script.google.com/macros/s/AKfycbyZAEu4bYu_dGYbwAhw-bsx6jFy2925eWRjU1GNgPdDSTQHUggb48heMHHlSIwah4n83Q/exec', joinUrl:''};
+  var LIVE={api:'https://script.google.com/macros/s/AKfycbyZAEu4bYu_dGYbwAhw-bsx6jFy2925eWRjU1GNgPdDSTQHUggb48heMHHlSIwah4n83Q/exec', joinUrl:'https://kpsingh.in/uiet/join'};
 
   var AUD=/[?&]join\b/.test(location.search);
   var $=function(id){return document.getElementById(id);};
@@ -1224,7 +1241,16 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
   /* ============================== AUDIENCE MODE (?join) ============================== */
   if(AUD){
     document.body.classList.add('aud-mode');
-    var me={id:'',name:''},answered={},lastOpen='',session=0,tick=null,showing='';
+    var me={id:'',name:''},answered={},lastOpen='',session=0,tick=null,showing='',baseTitle=document.title,barsKey='';
+    /* timer that keeps its pace in a background tab (Chrome slows hidden-tab timers to once a minute; worker timers are exempt) */
+    function ticker(ms,fn){
+      try{var w=new Worker(URL.createObjectURL(new Blob(['setInterval(function(){postMessage(0)},'+ms+')'],{type:'text/javascript'})));
+        w.onmessage=function(){fn();};return {stop:function(){w.terminate();}};}
+      catch(e){var t=setInterval(fn,ms);return {stop:function(){clearInterval(t);}};}
+    }
+    function alertTitle(on){try{document.title=on?'● Question open · answer now':baseTitle;}catch(e){}}
+    function buzz(){try{if(navigator.vibrate)navigator.vibrate([120,60,120]);}catch(e){}}
+    document.addEventListener('visibilitychange',function(){if(!document.hidden&&me.id)poll();});
     var screens=['a-join','a-wait','a-q','a-done','a-final'];
     function show(id){if(showing===id)return;showing=id;KP.swap(function(){screens.forEach(function(s){$(s).hidden=s!==id;});});}
     var nameIn=$('a-name');
@@ -1238,7 +1264,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       apiPost({action:'join',name:n,id:hash(n.toLowerCase())}).then(function(j){
         if(!j.ok)throw new Error(j.error||'join failed');
         me={id:j.id,name:j.name};$('a-hello').textContent='You’re in, '+me.name;show('a-wait');
-        clearInterval(tick);tick=setInterval(poll,2500);poll();
+        if(tick)tick.stop();tick=ticker(2500,poll);poll();
       }).catch(function(){$('a-msg').textContent='Could not reach the session. Check your signal and tap Join again.';$('a-go').disabled=false;});
     }
     function poll(){
@@ -1246,16 +1272,17 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
         if(!st.ok)return;
         if(st.session!==session){session=st.session;answered={};lastOpen='';}
         $('a-wait-status').textContent=st.joined+' joined';
+        alertTitle(!!(st.open&&QS[st.open]&&answered[st.open]===undefined));
         if(st.open==='final'){showFinal();return;}
         if(st.open&&QS[st.open]){
           if(answered[st.open]){show('a-done');$('a-done-status').textContent='Waiting for the reveal…';}
-          else{if(lastOpen!==st.open)renderQ(QS[st.open]);show('a-q');}
+          else{if(lastOpen!==st.open){renderQ(QS[st.open]);buzz();}show('a-q');}
           lastOpen=st.open;return;
         }
         // nothing open
         if(lastOpen&&QS[lastOpen]){
           var q=QS[lastOpen];
-          if(st.reveal){showResult(q);show('a-done');}
+          if(st.reveal){showResult(q,st.counts);show('a-done');}
           else if(answered[lastOpen]){show('a-done');$('a-done-status').textContent='Question closed. Waiting for the reveal…';}
           else{show('a-wait');}
         }else show('a-wait');
@@ -1263,7 +1290,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
     }
     var choice=-1;
     function renderQ(q){
-      choice=-1;$('a-submit').disabled=true;$('a-result').hidden=true;$('a-done-status').textContent='';
+      choice=-1;$('a-submit').disabled=true;$('a-result').hidden=true;$('a-bars').hidden=true;barsKey='';$('a-done-status').textContent='';
       $('a-qkind').textContent=(q.kind==='quiz'?'Scored question':'Opinion poll')+' · '+letter(QORDER.indexOf(q.id));
       $('a-qkind').textContent=q.kind==='quiz'?'Scored question · faster is better':'Opinion poll · 10 points for taking part';
       $('a-qtext').textContent=q.text;
@@ -1284,17 +1311,35 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
         answered[q.id]=choice;
         $('a-done-text').textContent=j.accepted?'Your answer ('+letter(choice)+') is recorded. Wait for the reveal on screen.':
           (j.reason==='closed'?'Too late: the question closed before your answer arrived.':'You had already answered this one.');
-        $('a-result').hidden=true;show('a-done');
+        $('a-result').hidden=true;$('a-bars').hidden=true;show('a-done');
       }).catch(function(){$('a-submit').disabled=false;$('a-qkind').textContent='Could not send. Tap Submit again.';});
     });
-    function showResult(q){
+    function showBars(q,counts){      /* how the room answered: same counts the presenter's bars use, already in the state reply */
+      try{
+        var c=(counts||{})[q.id]||{},n=q.opts.map(function(_,k){return +c[String(k)]||0;}),tot=n.reduce(function(a,b){return a+b;},0),max=Math.max.apply(null,n.concat([1]));
+        var key=q.id+':'+n.join(',');if(key===barsKey)return;barsKey=key;
+        var box=$('a-bars');box.textContent='';
+        q.opts.forEach(function(t,k){
+          var row=document.createElement('div');row.className='abar'+(q.kind==='quiz'&&k===q.ans?' correct':'')+(answered[q.id]===k?' mine':'');
+          var kk=document.createElement('span');kk.className='k';kk.textContent=letter(k);
+          var tx=document.createElement('span');tx.className='t';tx.textContent=t+(answered[q.id]===k?' (you)':'');
+          var nn=document.createElement('span');nn.className='n';nn.textContent=n[k]+(tot?' · '+Math.round(n[k]/tot*100)+'%':'');
+          var m=document.createElement('div');m.className='meter';var sp=document.createElement('span');m.appendChild(sp);
+          row.appendChild(kk);row.appendChild(tx);row.appendChild(nn);row.appendChild(m);box.appendChild(row);
+          requestAnimationFrame(function(){requestAnimationFrame(function(){sp.style.setProperty('--p',n[k]/max);});});
+        });
+        box.hidden=false;
+      }catch(e){}
+    }
+    function showResult(q,counts){
+      showBars(q,counts);
       var r=$('a-result');r.hidden=false;r.className='result';
       var mine=answered[q.id];
       if(q.kind==='quiz'){
         if(mine===undefined){r.textContent='Answer: '+letter(q.ans)+'. You did not answer this one.';r.classList.add('poll');}
         else if(mine===q.ans){r.textContent='Correct: '+letter(q.ans);r.classList.add('ok');}
         else{r.textContent='Not this time. Answer: '+letter(q.ans);r.classList.add('no');}
-      }else{r.textContent='Poll closed. Look at the screen for the result.';r.classList.add('poll');}
+      }else{r.textContent='Poll closed. Here is how the room voted.';r.classList.add('poll');}
       $('a-done-text').textContent=q.text;$('a-done-status').textContent='';
     }
     function showFinal(){
@@ -1323,7 +1368,8 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
   function control(cmd,q){
     if(!state.online)return Promise.reject(new Error('offline'));
     if(!PIN){flash('Enter the presenter PIN on slide 2 first.');return Promise.reject(new Error('nopin'));}
-    return apiPost({action:'control',pin:PIN,cmd:cmd,q:q||''}).then(function(j){if(!j.ok){flash(j.error==='bad pin'?'Wrong PIN.':'Control failed: '+j.error);throw new Error(j.error);}refresh();return j;});
+    var body={action:'control',pin:PIN,cmd:cmd,q:q||''};   // one retry below: slow or dropped connections are common online
+    return apiPost(body).catch(function(){return apiPost(body);}).then(function(j){if(!j.ok){flash(j.error==='bad pin'?'Wrong PIN.':'Control failed: '+j.error);throw new Error(j.error);}refresh();return j;});
   }
   var flashT=null;
   function flash(msg){var el=$('setupMsg');if(el){el.textContent=msg;clearTimeout(flashT);flashT=setTimeout(function(){el.textContent='';},4000);}var s=document.querySelector('.slide.is-active .live-status');if(s){s.textContent=msg;}}
@@ -1436,8 +1482,15 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
       try{var q=qrcode(0,'M');q.addData(url);q.make();box.innerHTML=q.createSvgTag({cellSize:4,margin:0,scalable:true});
         var svg=box.querySelector('svg');if(svg){svg.setAttribute('role','img');svg.setAttribute('aria-label','QR code for '+url);}}catch(e){}
     }
+    var cj=$('copyJoin');
+    if(cj){if(!url)cj.hidden=true;else cj.addEventListener('click',function(){
+      var done=function(){flash('Join link copied: paste it in the meeting chat.');cj.textContent='Copied ✓';setTimeout(function(){cj.textContent='Copy link for chat';},2500);};
+      var ask=function(){try{window.prompt('Copy this link for the chat',url);}catch(e){}};
+      try{navigator.clipboard.writeText(url).then(done,ask);}catch(e){ask();}
+    });}
     var pinIn=$('pinInput');
     if(pinIn&&PIN)pinIn.value=PIN;
+    var sw=$('setupWrap');if(sw&&!PIN)sw.open=true;   // PIN from ?pin= keeps the setup folded away while the screen is shared
     var save=$('pinSave');if(save)save.addEventListener('click',function(){PIN=pinIn.value.trim();flash(PIN?'PIN set for this session.':'PIN cleared.');setOnline(state.online);});
     var rst=$('resetBtn');if(rst)rst.addEventListener('click',function(){
       if(!state.online){flash('Not connected.');return;}
@@ -1446,11 +1499,12 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
   })();
 
   /* -- slide 22: leaderboard -- */
-  var lbShown=false;
+  var lbShown=false,lbFailed=false;
   function loadLeaderboard(){
     var box=$('lb');if(!box)return;
     if(!state.online&&!LIVE.api){box.innerHTML='';var p=document.createElement('p');p.className='lb-empty';p.textContent='Offline: no live scores. Use the hand-raise tallies on each question slide.';box.appendChild(p);return;}
     apiGet('leaderboard').then(function(j){
+      if(!j||!j.ok)throw new Error('bad reply');lbFailed=false;
       var top=j.top||[];box.textContent='';
       if(!top.length){var p=document.createElement('p');p.className='lb-empty';p.textContent='No scores yet.';box.appendChild(p);return;}
       top.slice(0,10).forEach(function(p,i){
@@ -1462,7 +1516,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
         KP.countUp(pt,p.pts,{ms:900});
       });
       if(!lbShown){lbShown=true;setTimeout(function(){KP.confetti();},600);}
-    }).catch(function(){box.textContent='';var p=document.createElement('p');p.className='lb-empty';p.textContent='Could not load the scores. Tap Refresh.';box.appendChild(p);});
+    }).catch(function(){lbFailed=true;box.textContent='';var p=document.createElement('p');p.className='lb-empty';p.textContent='Could not load the scores yet: retrying…';box.appendChild(p);});
   }
   var lr=$('lbRefresh');if(lr)lr.addEventListener('click',loadLeaderboard);
   var lf=$('lbFinal');if(lf)lf.addEventListener('click',function(){control('final').then(function(){flash('Final standings sent to phones.');},function(){});});
@@ -1507,6 +1561,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
   try{if(wide.addEventListener)wide.addEventListener('change',paintLbw);if(window.ResizeObserver&&lbwEl)new ResizeObserver(measureLb).observe(lbwEl);}catch(e){}
   function lbTick(){
     if(!LIVE.api||isAll)return;
+    if(cur&&cur.id==='s22'&&lbFailed)loadLeaderboard();              // slide 22 keeps retrying until the board loads
     var fast=cur&&(cur.dataset.q||cur.id==='s2'||cur.id==='s22');   // those slides already poll state every 2 s
     (fast?Promise.resolve():refresh()).then(function(){
       if(!state.online){paintLbw();return;}
