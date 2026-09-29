@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" data-base="1.5.0" data-persist="on" data-page="rpe-machine-script" data-profile="notes">
+<html lang="en" data-base="1.5.0" data-persist="on" data-page="rpe-machine-readaloud" data-profile="notes">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f6f7fb" id="themeColor">
-<meta name="description" content="Speaker script, timing plan, skip plan, likely questions and references for the RPE coursework talk on paper mills, tortured phrases and generative AI.">
-<title>The Machine That Writes Papers · Speaker script</title>
+<meta name="description" content="Word-for-word read-aloud script for the online RPE coursework talk on paper mills, tortured phrases and generative AI, with pause, key and chat cues for every slide.">
+<title>The Machine That Writes Papers · Read-aloud script</title>
 <script>document.documentElement.classList.add('js')</script>
 <script>try{var r=document.documentElement,t=localStorage.getItem('kp:theme');if(t==='light'||t==='dark')r.dataset.theme=t}catch(e){}</script>
 <style>
@@ -341,6 +341,17 @@ p code,li code,td code{background:var(--soft);padding:.1em .35em;border-radius:6
 .say{border-left:4px solid var(--accent);background:var(--soft);border-radius:0 var(--r) var(--r) 0;padding:10px 16px;margin:.7em 0;font-family:var(--font-display);font-size:var(--step-0);line-height:1.5}
 .tm{display:inline-block;margin-left:.4em;font:600 .72rem/1.4 var(--font-mono);color:var(--muted);letter-spacing:.04em;vertical-align:middle;white-space:nowrap}
 .docs-main section>p,.docs-main section li,.docs-main code,.docs-main td{overflow-wrap:anywhere;min-width:0}
+/* read-aloud: spoken text large and plain; cues small and quiet */
+.read p{font-family:var(--font-display);font-size:var(--step-1);line-height:1.6;margin:.55em 0}
+.read h2{font:700 .8rem/1.3 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 .6em}
+.read p.cue{font:600 .82rem/1.5 var(--font-mono);color:var(--muted);margin:.8em 0}
+.c{display:inline-block;font:600 .72rem/1.5 var(--font-mono);color:var(--muted);background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:0 6px;margin:0 2px;vertical-align:.12em;white-space:nowrap}
+.c.key{color:var(--accent);border-color:var(--accent)}
+.c.chat{color:var(--fg);border-color:var(--accent-2)}
+.c.opt{color:var(--fg);border-color:var(--accent-2);border-style:dashed}
+.opt-block{border-left:3px dashed var(--accent-2);padding-left:14px;margin:.8em 0}
+.next{font:700 .9rem/1 var(--font-mono);color:var(--accent);border-top:2px solid var(--accent);padding-top:10px;margin:0 0 .6rem}
+.read+.read{margin-top:2rem}
 /* ===== 6. REDUCED MOTION — always last ===== */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -362,286 +373,276 @@ p code,li code,td code{background:var(--soft);padding:.1em .35em;border-radius:6
 <div class="docs">
   <aside class="docs-left" aria-label="Presentation">
     <details class="docs-panel" open><summary>This talk</summary>
-      <nav aria-label="Presentation files"><a href="RPE_Machine_slides.html">Open the slides</a><a href="RPE_Machine_slides.html?join">Audience view (phone)</a><a href="#top" aria-current="page">Speaker guide</a><a href="RPE_Machine_readaloud.html">Read-aloud script</a></nav>
+      <nav aria-label="Presentation files"><a href="RPE_Machine_slides.html">Open the slides</a><a href="RPE_Machine_slides.html?join">Audience view (phone)</a><a href="RPE_Machine_speaker_script.html">Speaker guide</a><a href="#top" aria-current="page">Read-aloud script</a></nav>
     </details>
   </aside>
   <main id="main" class="docs-main" tabindex="-1">
     <section id="top">
-      <p class="kicker">Speaker script · online delivery · 25 slides · 30 min + 5 min Q&amp;A</p>
+      <p class="kicker">Read-aloud script · online · about 30 minutes + questions</p>
       <h1>The Machine That Writes Papers</h1>
-      <p class="callout"><span class="callout-face" aria-hidden="true">⏱</span><span>Keep this page open on your phone, a tablet or a second monitor, <b>never in the tab you share</b>. In the deck: <b>→ / ←</b> move, <b>O</b> opens a question on everyone's phone, <b>C</b> closes it, <b>R</b> reveals, <b>L</b> hides or shows the live leaderboard. Each block below matches a slide: <code>#p3</code> here ↔ <code>RPE_Machine_slides.html#s3</code>. Lines in a coloured bar are what you say; <b>Do</b> is what you press; <b>Chat</b> is what you type in the meeting chat.</span></p>
+      <p class="callout"><span class="callout-face" aria-hidden="true">🎙</span><span>Read the plain text aloud, exactly as written. The small grey tags are for you only: <span class="c">pause</span> means stop for a full breath (about two seconds); <span class="c">slow</span> means say the next line slowly; <span class="c key">O</span> <span class="c key">C</span> <span class="c key">R</span> are keys to press in the deck; <span class="c chat">chat</span> means type or paste in the meeting chat. A bar across the page (<b>→ Slide 4</b>) means press → to move on. Blocks marked <span class="c opt">optional</span> can be dropped if you are running late.</span></p>
+      <p class="mixup"><b>Pace:</b> read at conversational speed, a little slower than feels natural; online audiences hear you through compression. The spoken text is about 26 minutes at a relaxed pace; with the eight questions it comes to about 35, matching the timing plan in the speaker guide. The optional blocks save about 2 minutes; for a strict 30, also cut the waits on questions 2, 3 and 4 to twenty seconds. Keep a clock beside you: you should reach slide 14 at about 23 minutes. If you are later than that, drop the optional blocks.</p>
+    </section>
 
-      <h2>The set-up that works best online</h2>
+    <section id="r1" class="read"><h2>Slide 1 · Title</h2>
+      <p class="cue">Share the deck tab. Slide 1 showing.</p>
+      <p>Good morning, everyone. <span class="c">pause</span> Can you all see my screen? You should see a title: <i>The Machine That Writes Papers.</i> <span class="c">wait for a nod or a thumbs-up in the chat</span></p>
+      <p>Thank you. And thank you for giving me this slot today.</p>
+      <p>Let me begin with a small confession. <span class="c">pause</span> In the last two years, almost every one of us has opened a chatbot and asked it to "improve" a paragraph. I certainly have. <span class="c">pause</span> So today's question is a very practical one: where does that stop being help, and start being misconduct?</p>
+      <p>My topic is the newest research-integrity problem in our syllabus: papers that are written, or partly written, by machines. Three phrases will keep coming back: paper mills, tortured phrases, and generative AI.</p>
+      <p>And for the next thirty minutes, you will need your phone. <span class="c">pause</span> Yes, today, that is allowed.</p>
+    </section>
+
+    <section id="r2" class="read"><p class="next">→ Slide 2</p><h2>Slide 2 · Join</h2>
+      <p>So let's get everyone connected. <span class="c">pause</span></p>
+      <p>There are two ways in. If you have your phone with you, point its camera at the QR code on my screen. If you would rather use your laptop, I am putting the link in the chat right now.</p>
+      <p class="cue"><span class="c chat">chat</span> paste the join link (press <b>Copy link for chat</b> if it is not on your clipboard): <code>https://kpsingh.in/uiet/join</code></p>
+      <p>The link is k-p-singh dot in, slash u-i-e-t, slash join.</p>
+      <p>Type your name once. If you have a common name, add an initial. Then tap <i>Join</i>. That's it: your phone is now your buzzer.</p>
+      <p>There are eight questions. Some are scored: a hundred points for the right answer, and up to fifty more if you are quick. Some are opinion polls, where you get ten points just for taking part. And there is a leaderboard at the end.</p>
+      <p>If you are joining on the same laptop you are using for this meeting, open the quiz in a separate window and keep it <i>beside</i> the meeting, not behind it. When a question opens, its tab shows a small dot.</p>
+      <p class="cue">Watch <b>Joined so far</b> and read the number out as it climbs.</p>
+      <p>I can see … people already. <span class="c">pause</span> A few more coming in. <span class="c">pause</span> Good.</p>
+      <p class="cue">When the number has not moved for about ten seconds:</p>
+      <p>If you are still joining, don't worry: you can join at any point. <span class="c">pause</span> First question, and I'll warn you: it is not a warm-up.</p>
+    </section>
+
+    <section id="r3" class="read"><p class="next">→ Slide 3</p><h2>Slide 3 · Question 1</h2>
+      <p class="cue"><span class="c chat">chat</span> paste the join link once more, for latecomers.</p>
+      <p>Question one. <span class="c">pause</span> A published paper, peer-reviewed, in a real journal, studies patients with <i>"bosom peril".</i> <span class="c">pause</span> What did the authors mean?</p>
+      <p>A, a chest infection. B, heart disease. C, breast cancer. D, anxiety.</p>
+      <p class="cue"><span class="c key">O</span> as you finish reading.</p>
+      <p>It is on your phones now. Thirty seconds, and speed earns points.</p>
+      <p class="cue">While they answer: read the count on the slide every few seconds.</p>
+      <p><span class="c">say the real count</span> answers already… <span class="c">pause</span> A small hint: this is not a trick question. Somebody actually wrote this, and an editor actually published it. <span class="c">pause</span> Ten seconds… <span class="c">pause</span> Five.</p>
+      <p class="cue"><span class="c key">C</span></p>
+      <p>Before I show you: type one word in the chat. Why did you choose what you chose? <span class="c">read two answers aloud</span></p>
+      <p class="cue"><span class="c key">R</span></p>
+      <p>The answer is C: breast cancer. <span class="c">pause</span></p>
+      <p>Most people guess something to do with the chest or the heart, and that is perfectly reasonable. But the paper meant breast cancer. Now, no doctor in the world has ever called breast cancer "bosom peril". <span class="c">pause</span> So why would anyone write it? <span class="c">pause</span> Hold that thought for one slide.</p>
+    </section>
+
+    <section id="r4" class="read"><p class="next">→ Slide 4</p><h2>Slide 4 · Tortured phrases</h2>
+      <p>Because a machine wrote it, to hide something. <span class="c">pause</span></p>
+      <p>These are called <i>tortured phrases</i>. The name comes from three researchers, Guillaume Cabanac, Cyril Labbé and Alexander Magazinov, who in 2021 noticed that some papers were using very strange synonyms for completely standard terms.</p>
+      <p>Here is what was going on. Someone copied text from an existing paper. Then they pushed it through an automatic paraphrasing tool, a "rewriter", so that plagiarism software would no longer recognise the source. The tool does not understand science. It just swaps words for synonyms. So "breast cancer" becomes "bosom peril". "Artificial intelligence" becomes "counterfeit consciousness". <span class="c">pause</span> And look at the table: "mean square error" becomes "mean square blunder". <span class="c">let them smile</span></p>
+      <p>It sounds funny. But look at the numbers. <span class="c">slow</span> By January 2022, their list had 473 of these phrases, in 3,191 peer-reviewed articles. <span class="c">pause</span> More than three thousand papers that went through peer review, and nobody stopped them.</p>
+      <p>Keep the last two rows in mind: "profound neural organization" and "flag to clamor". They are coming back, for points.</p>
+    </section>
+
+    <section id="r5" class="read"><p class="next">→ Slide 5</p><h2>Slide 5 · Syllabus map</h2>
+      <p>Before we go further, where does all this sit in our course? <span class="c">pause</span></p>
+      <p>Everything today is anchored to our RS-9003 syllabus. From Unit 2, fabrication, point 2.3, because a machine can make up data, figures and references. From Unit 3, the types of publication misconduct and the problems that lead to it, point 3.4, and how misconduct gets identified, 3.6. From Unit 5, the software tools: what Turnitin, Urkund and AI detectors can see, and, more importantly, what they cannot. And near the end, authorship, 3.5, because that is where the question "can an AI be an author?" lives.</p>
+      <p>Now let me show you the trick actually working.</p>
+    </section>
+
+    <section id="r6" class="read"><p class="next">→ Slide 6</p><h2>Slide 6 · The paraphrase slider</h2>
+      <p>This is a small simulation I built for teaching. <span class="c">pause</span> Let me be clear about what it is: the phrases are real, they come from Cabanac's list, but the percentages are illustrative. This is not the output of any real tool.</p>
+      <p>Here is a normal sentence about a deep neural network used for breast-cancer screening. Below it are two bars. The top one is what plagiarism software sees: how similar the text is to its source. The bottom one is what a human reader sees: how much meaning is left.</p>
+      <p class="cue">Drag the slider one step. Wait two seconds for the shared screen to catch up.</p>
+      <p>One swap. "Artificial intelligence" is now "counterfeit consciousness". And the similarity score drops. <span class="c">pause</span></p>
+      <p class="cue">One more step.</p>
+      <p>"Mean square blunder." Similarity drops again. And look at the meaning bar: it is falling too.</p>
+      <p class="cue">Keep going, one step at a time, to the end.</p>
+      <p>"Flag to clamor"… "profound neural organization"… "bosom peril". <span class="c">pause</span> Now read that sentence. <span class="c">pause</span> It is nonsense. But the plagiarism report looks clean.</p>
+      <p>So, a quick one for the chat: which of these two bars does Turnitin actually measure? The top one, or the bottom one? <span class="c chat">read two answers</span></p>
+      <p>Exactly: only the top one. Similarity software counts overlapping words. It has no idea whether a sentence means anything at all. <span class="c">pause</span></p>
+      <p>Let's see if you can do better than the software. Two phrases to decode, for points.</p>
+    </section>
+
+    <section id="r7" class="read"><p class="next">→ Slide 7</p><h2>Slide 7 · Question 2</h2>
+      <p>Question two. <span class="c">pause</span> "Profound neural organization" is a tortured version of… A, a complex company structure. B, deep neural network. C, brain surgery. D, deep learning ethics.</p>
+      <p class="cue"><span class="c key">O</span></p>
+      <p>Open now. Twenty-five seconds.</p>
+      <p class="cue">Read the count. At about 25 seconds: <span class="c key">C</span> then <span class="c key">R</span></p>
+      <p>Deep neural network. <span class="c">pause</span> "Deep" became "profound", and "network" became "organization". Notice what happened: a computer-science term turned into something that sounds like management studies. And that is exactly why a reviewer from another field might read it and notice nothing wrong.</p>
+      <p>One more, and this one is harder.</p>
+    </section>
+
+    <section id="r8" class="read"><p class="next">→ Slide 8</p><h2>Slide 8 · Question 3</h2>
+      <p>Question three. A "flag to clamor" ratio is a tortured version of… A, a protest signal. B, a noise complaint. C, a warning sign. D, signal to noise.</p>
+      <p class="cue"><span class="c key">O</span></p>
+      <p>Open now.</p>
+      <p class="cue">Read the count. <span class="c key">C</span> then <span class="c key">R</span></p>
+      <p>D: signal to noise. "Signal" became "flag", and "noise" became "clamor". <span class="c">pause</span></p>
+      <p>Now, if you have ever pressed a "rephrase" or "paraphrase" button in a writing tool, you have used the same engine. So let me be fair to the tool. The tool is not the offence. <span class="c">pause</span> Using it to hide a copied source is.</p>
+      <p class="cue">Glance at the leaderboard strip or rail.</p>
+      <p>By the way, at the top of the board right now is … <span class="c">name</span>. Well done. <span class="c">pause</span></p>
+      <p>So who does this at scale? <span class="c">pause</span> Paper mills.</p>
+    </section>
+
+    <section id="r9" class="read"><p class="next">→ Slide 9</p><h2>Slide 9 · The pipeline</h2>
+      <p>Every paper travels through the same seven stages: the idea, the data, the analysis, the writing, the figures, the submission, and peer review.</p>
+      <p class="cue">Click <b>Honest lab</b>.</p>
+      <p>In an honest lab, every one of these stages is done by people, and every step is recorded.</p>
+      <p class="cue">Click <b>Paper mill</b>. Wait for the stages to change.</p>
+      <p>Now a paper mill. COPE, the Committee on Publication Ethics, defines a paper mill as a profit-oriented, unofficial and potentially illegal organisation that produces and sells fraudulent manuscripts. <span class="c">pause</span> Watch what changes. The data and the analysis are fabricated. The writing is spun, and this is where tortured phrases come from. The figures are recycled from other papers. The author slots are sold: you can literally buy your name onto a paper. And in the worst cases, the mill even supplies fake reviewers, or takes over a whole special issue.</p>
+      <p class="cue">Click <b>Undisclosed AI</b>.</p>
+      <p>And here is the newer case, which is much closer to home. <span class="c">pause</span> The researcher is real. The data are real. But the writing and the figures are generated by a tool, and nobody is told.</p>
+      <p>See the difference? The mill is fraud from start to finish. The AI case is one honest person crossing a line in two places.</p>
+      <p>How big is the mill problem? <span class="c">pause</span> Bigger than most people think.</p>
+    </section>
+
+    <section id="r10" class="read"><p class="next">→ Slide 10</p><h2>Slide 10 · The 2023 clean-up</h2>
+      <p class="cue">Let the counters finish before you speak.</p>
+      <p>In 2023, the number of retractions across all publishers passed ten thousand for the first time. A record, reported by <i>Nature</i> in December 2023. <span class="c">pause</span></p>
+      <p>More than eight thousand of those came from a single publisher: Hindawi, which is owned by Wiley. Their special issues had been taken over by paper mills. Wiley closed four journals as "overrun by paper mills", and reported thirty-five to forty million dollars of lost revenue. <span class="c">pause</span></p>
+      <p>Let me read COPE's definition once more, because every word matters. <span class="c">slow</span> "…profit oriented, unofficial and potentially illegal organisations that produce and sell fraudulent manuscripts that seem to resemble genuine research." <span class="c">pause</span></p>
+      <p>"Seem to resemble." That is the whole problem. <span class="c">pause</span> So: could you spot one?</p>
+    </section>
+
+    <section id="r11" class="read"><p class="next">→ Slide 11</p><h2>Slide 11 · Question 4</h2>
+      <p>Question four. Which is the strongest sign that a paper came from a mill? A, it has six authors. B, a phrase like "flag to clamor" where a standard term belongs. C, it is open access. D, it has a very long reference list.</p>
+      <p class="cue"><span class="c key">O</span></p>
+      <p>Open now.</p>
+      <p class="cue">Read the count. <span class="c key">C</span> then <span class="c key">R</span></p>
+      <p>B: the tortured phrase. <span class="c">pause</span> Six authors is normal. Open access is normal. A long reference list is normal. But a human expert never writes "flag to clamor". That is the fingerprint. And it is exactly what a tool called the Problematic Paper Screener searches the published literature for.</p>
+      <p>But from 2023 onwards, the machines got much better at writing. <span class="c">pause</span> And they started leaving new fingerprints.</p>
+    </section>
+
+    <section id="r12" class="read"><p class="next">→ Slide 12</p><h2>Slide 12 · Fingerprints</h2>
+      <p>Three real cases. All public, all checkable.</p>
+      <p>The first one is my favourite. In February 2024, an Elsevier journal called <i>Surfaces and Interfaces</i> published a paper whose introduction began with this sentence: <span class="c">slow</span> "Certainly, here is a possible introduction for your topic." <span class="c">pause</span> That is not the author speaking. That is the chatbot being polite. The authors pasted its reply, greeting and all, and it went through peer review, editing and typesetting without anyone noticing. It was retracted on the 31st of May 2024.</p>
+      <p>Second. By October 2023, Guillaume Cabanac, the same researcher behind tortured phrases, and his colleagues had flagged more than thirty published papers containing the words "Regenerate response", or "As an AI language model, I…". <span class="c">pause</span> "Regenerate response" is the label on a button in ChatGPT. People copied the button along with the answer.</p>
+      <p>Third, and this one went viral. In February 2024, a Frontiers journal published a figure of a rat drawn by an AI image tool, with anatomy that was, let's say, biologically impossible, and labels made of nonsense words. It was retracted within days. I won't show you the image; the description is enough. <span class="c">pause</span></p>
+      <p>Now, these are the careless ones. The real question is: what about the careful ones? <span class="c">pause</span> Can you tell machine writing from human writing? Let's test the room.</p>
+    </section>
+
+    <section id="r13" class="read"><p class="next">→ Slide 13</p><h2>Slide 13 · Question 5: human or machine?</h2>
+      <p>Question five, an opinion poll. Two short passages on the same topic: recognising handwritten Gurmukhi characters. One of them is from my own published paper. The other was generated with a chatbot, for this talk. <span class="c">pause</span> Your job: which one did the machine write?</p>
+      <p>Take your time to read both. Forty seconds. Ten points for taking part.</p>
+      <p class="cue"><span class="c key">O</span> Then stay silent for about fifteen seconds while they read.</p>
+      <p><span class="c">say the real count</span> answers in… <span class="c">pause</span> Ten more seconds.</p>
+      <p class="cue"><span class="c key">C</span></p>
+      <p>Before I show you: in the chat, one word. What gave it away? <span class="c chat">read two answers</span></p>
+      <p class="cue"><span class="c key">R</span> (the button says <i>Show result</i>)</p>
+      <p>B is the machine. <span class="c">pause</span></p>
+      <p>What gave it away? Usually it is words like "pivotal", "leveraging", "nuanced", and phrases like "several challenges remain". And look at the shape: one sentence of claim, one of benefit, one of caveat. Very tidy. Very balanced. <span class="c">pause</span> Very… machine.</p>
+      <p>Passage A is clumsier. It says "gradient information" three times, and "obtained" twice in one sentence. That is a real human, writing in 2015, with real flaws. It is the abstract of our paper in <i>Procedia Computer Science</i>.</p>
+      <p>But look at the bars. <span class="c">read the split</span> Not everyone got it. <span class="c">pause</span> So if humans cannot reliably tell, can software?</p>
+    </section>
+
+    <section id="r14" class="read"><p class="next">→ Slide 14</p><h2>Slide 14 · Detector arithmetic</h2>
+      <p>Imagine a class of one hundred students. This slider is the share who really used a chatbot. I'll start at twenty percent.</p>
+      <p class="cue">Set the slider to <b>20%</b>. Wait two seconds.</p>
+      <p>Now let's apply the figures OpenAI published for its own AI detector. It caught 26 percent of AI-written text. And it wrongly flagged 9 percent of human text. Those sound like small errors. <span class="c">pause</span> Watch.</p>
+      <p>Read the line under the big number. Of 100 students, 20 used AI. The detector catches 5 of them. <span class="c">pause</span> And it wrongly flags 7 who did not. <span class="c">pause</span> So twelve students are flagged, and seven of them did nothing wrong. More than half of the flagged students are innocent.</p>
+      <p class="cue">Slide down to <b>5%</b>.</p>
+      <p>And when use is rarer, it gets worse: now most of the flagged students are innocent. This is not a bug you can fix with a better setting. It is arithmetic.</p>
+      <div class="opt-block"><p class="cue"><span class="c opt">optional</span> a real example that matters for us</p>
+      <p>There is a second problem, and it matters for us in particular. In 2023, a team at Stanford, Liang and colleagues, published a study in the journal <i>Patterns</i>. They ran essays written by non-native English speakers through several popular AI detectors. <span class="c">pause</span> On average, more than half of those essays, written entirely by humans, were labelled as AI-generated. Simple, careful English, the kind many of us were taught to write, looks "machine-like" to a detector.</p></div>
+      <p>OpenAI itself withdrew that detector on the 20th of July 2023, "due to its low rate of accuracy". Turnitin says its detector has under one percent false positives for a whole document, but about four percent at the level of a sentence. And Turnitin itself says the score should start a dialogue, not decide a case. <span class="c">pause</span></p>
+      <p>So my advice is simple. A detector score is a reason to talk to someone. <span class="c">pause</span> It is never a verdict.</p>
+      <p>So what do publishers actually require? First, your opinion.</p>
+    </section>
+
+    <section id="r15" class="read"><p class="next">→ Slide 15</p><h2>Slide 15 · Question 6</h2>
+      <p>Question six, a quick opinion. If a chatbot wrote half your paper, can it be a co-author? A, yes, credit where it is due. B, no, never. C, only if the journal allows it.</p>
+      <p class="cue"><span class="c key">O</span> About 25 seconds, then <span class="c key">C</span> and <span class="c key">R</span></p>
+      <p>Interesting. <span class="c">read the split</span> <span class="c">pause</span></p>
+      <div class="opt-block"><p class="cue"><span class="c opt">optional</span></p>
+      <p>This was not a hypothetical question. In early 2023, ChatGPT actually was listed as a co-author on a handful of published papers and preprints. <i>Nature</i> reported on it in January 2023, and within days both <i>Nature</i> and <i>Science</i> announced that a language model cannot be credited as an author.</p></div>
+      <p>Whatever this room says, the publishers have already answered.</p>
+    </section>
+
+    <section id="r16" class="read"><p class="next">→ Slide 16</p><h2>Slide 16 · COPE and ICMJE</h2>
+      <p>In February 2023, COPE, the Committee on Publication Ethics, put it in a position statement. Three points. <span class="c">pause</span> One: AI tools cannot be listed as an author, because they cannot take responsibility for the submitted work. Two: authors must disclose, in the Methods or a similar section, which tool they used, and how. Three: authors are fully responsible for the content of their manuscript, even the parts produced by an AI tool.</p>
+      <p>The ICMJE, the International Committee of Medical Journal Editors, says the same thing in its own words. Chatbots should not be listed as authors, because they cannot be responsible for the accuracy, integrity and originality of the work. Describe the use in both the cover letter and the paper. And, this is the important line, <span class="c">slow</span> non-disclosure of AI use may be construed as misconduct, in some circumstances. <span class="c">pause</span></p>
+      <p class="cue">Move your mouse pointer over "responsibility" in the first column, then "responsible" in the second.</p>
+      <p>Notice the word that appears in both columns. <span class="c">pause</span> Responsible. <span class="c">pause</span> Responsibility is the whole story. And here is why.</p>
+    </section>
+
+    <section id="r17" class="read"><p class="next">→ Slide 17</p><h2>Slide 17 · Four criteria</h2>
+      <p>The ICMJE says an author must meet all four of these criteria. Not one, not three: all four.</p>
+      <p>One: a substantial contribution to the idea, the design, the data or the analysis. Two: drafting the work, or revising it critically. Three: final approval of the version to be published. And four: agreeing to be accountable for all parts of the work, being the person who answers any question about it.</p>
+      <p>Now, a machine can arguably do the first two. It can contribute. It can draft. But can it approve? <span class="c">pause</span> Can it be accountable? <span class="c">pause</span> You cannot email a chatbot a complaint. You cannot ask it to explain its data in front of an ethics committee.</p>
+      <p>The same four criteria also catch three classic abuses you will meet in your careers. Gift authorship: a name added for status or obligation. The head of department who did nothing. <span class="c">pause</span> Ghost authorship: a real contributor left off the list. A hired writer, a company, or a tool. <span class="c">pause</span> An undisclosed chatbot is a ghost author. And guest authorship: a famous name added to impress the reviewers.</p>
+      <p>Let's try the rule on a case that many of you will actually face.</p>
+    </section>
+
+    <section id="r18" class="read"><p class="next">→ Slide 18</p><h2>Slide 18 · Question 7</h2>
+      <p>Question seven, scored. Your supervisor's friend funded the equipment, but never read the paper. Under ICMJE, he is… A, first author. B, corresponding author. C, not an author: thank him in the acknowledgements. D, an author, as long as he approves the final draft.</p>
+      <p class="cue"><span class="c key">O</span> Thirty seconds, then <span class="c key">C</span> and <span class="c key">R</span></p>
+      <p>C. Not an author. Acknowledge him. <span class="c">pause</span> Funding equipment is not one of the four criteria. And approving a draft he never read does not make him accountable for it.</p>
+      <p>I know: in real life, this is an awkward conversation. So here is my practical advice. Agree authorship in writing, with your supervisor, before the work starts, not after the paper is written. It is much easier then.</p>
+      <p>And now, the hardest question of the day.</p>
+    </section>
+
+    <section id="r19" class="read"><p class="next">→ Slide 19</p><h2>Slide 19 · Question 8</h2>
+      <p>Five ways people use a chatbot in research. I want you to pick the <i>first</i> one you would call misconduct. <span class="c">pause</span></p>
+      <p>A, fixing grammar and spelling. B, summarising papers for your own notes. C, writing the discussion section. D, generating a figure. E, generating the data.</p>
+      <p>There is no single right answer to this poll. I want to see where this group draws the line. Forty seconds.</p>
+      <p class="cue"><span class="c key">O</span> Give the full forty seconds; read the count.</p>
+      <p>Take your time with this one… <span class="c">pause</span> Ten more seconds.</p>
+      <p class="cue"><span class="c key">C</span> then <span class="c key">R</span></p>
+      <p><span class="c">read the split</span> Usually a room splits between C and D: writing the discussion, and generating a figure. <span class="c">pause</span></p>
+      <p>If you chose C, type in the chat: why? And if you chose D, why not C? <span class="c chat">read one answer from each side</span></p>
+      <p>Here is where the guidance draws it.</p>
+    </section>
+
+    <section id="r20" class="read"><p class="next">→ Slide 20</p><h2>Slide 20 · Where the line is</h2>
+      <p>The guidance does not draw the line at "did you use AI or not". It draws it at three things: disclosure, accountability, and fabrication.</p>
+      <p>A, grammar and spelling: fine. Disclose it if a tool rewrote substantial text.</p>
+      <p>B, summaries for your own notes: fine. But verify before you cite anything from them.</p>
+      <div class="opt-block"><p class="cue"><span class="c opt">optional</span> a real example</p>
+      <p>And there is a famous reason for that warning. In 2023, in a New York court case called <i>Mata versus Avianca</i>, two lawyers filed a brief citing six earlier court decisions that ChatGPT had simply invented. <span class="c">pause</span> The cases did not exist. The judge fined the lawyers five thousand dollars. <span class="c">pause</span> A chatbot will give you a reference that looks perfect, and does not exist.</p></div>
+      <p>C, writing the discussion: allowed only with disclosure, and you remain responsible for every single claim in it. That is COPE and ICMJE.</p>
+      <p>D, generating a figure: that is fabrication, unless it is clearly labelled as an illustration. A figure is data. That is the Frontiers rat.</p>
+      <p>E, generating the data: fabrication. Unit 2.3. <span class="c">pause</span> No disclosure repairs it.</p>
+      <p>And here is the blind spot. <span class="c">pause</span> Plagiarism software would score all five of these at zero percent similarity. The UGC's 2018 levels, ten, forty and sixty percent, never see any of this.</p>
+      <p>So who does catch it?</p>
+    </section>
+
+    <section id="r21" class="read"><p class="next">→ Slide 21</p><h2>Slide 21 · Sleuths and growth</h2>
+      <p>Detection today is a community sport. <span class="c">pause</span> PubPeer: a website where anyone can comment publicly on a published paper. That is where most of today's cases were first flagged. The Problematic Paper Screener, built by Cabanac, Labbé and Magazinov, which scans the published literature for tortured phrases and chatbot text. And Retraction Watch, which keeps the public database of retractions.</p>
+      <p class="cue">Wait for the bars to grow.</p>
+      <p>Meanwhile, use is rising, and fast. A 2025 study in <i>Nature Human Behaviour</i> looked at 1,121,912 papers, from January 2020 to September 2024. It estimated that by September 2024, up to 22 percent of computer-science abstracts had been modified by a language model. Up to 9 percent in mathematics, and in Nature-portfolio journals. <span class="c">pause</span></p>
+      <p>This is not going away. So disclosure has to become the normal thing to do, as normal as citing your statistics package.</p>
+      <p>And now, the moment some of you have been waiting for.</p>
+    </section>
+
+    <section id="r22" class="read"><p class="next">→ Slide 22</p><h2>Slide 22 · Leaderboard</h2>
+      <p class="cue">Let the rows animate. If a score looks stale, press <b>Refresh</b>.</p>
+      <p>The leaderboard. A hundred points for every correct answer, up to fifty for speed, and ten for each poll you answered.</p>
+      <p>In third place… <span class="c">name</span>. <span class="c">pause</span> In second place… <span class="c">name</span>. <span class="c">pause</span> And leading the whole room… <span class="c">name</span>! <span class="c">pause</span> Congratulations! Everyone, a quick round of applause: unmute for a second, or put a clap in the chat.</p>
+      <p class="cue">Press <b>Send final standings to phones</b>.</p>
+      <p>I have just sent the final standings to your phones, so you can all see where you finished.</p>
+      <p>Before you go: three rules to take home.</p>
+    </section>
+
+    <section id="r23" class="read"><p class="next">→ Slide 23</p><h2>Slide 23 · Three rules</h2>
+      <p>Three rules you can apply tomorrow, in any discipline.</p>
+      <p>One. <span class="c">pause</span> Disclose the tool, and what it did. Name it in your Methods and in your cover letter. Silence is the misconduct, not the tool.</p>
+      <p>Two. <span class="c">pause</span> Never let it make data, figures or references. Generated data is fabrication. And check that every citation it suggests actually exists. <span class="c">pause</span> Remember the lawyers.</p>
+      <p>Three. <span class="c">pause</span> You sign, you answer. Read every sentence as if a reviewer will ask you about it. <span class="c">pause</span> Because one will.</p>
+      <p>And none of this is a computer-science problem. The Elsevier paper was about batteries. The Frontiers paper was biology. The Hindawi special issues covered almost everything.</p>
+    </section>
+
+    <section id="r24" class="read"><p class="next">→ Slide 24</p><h2>Slide 24 · References</h2>
+      <p>Everything I have shown you today is public and checkable. The full reference list is on this slide, and I am putting the link to the slides in the chat.</p>
+      <p class="cue"><span class="c chat">chat</span> <code>https://kpsingh.in/uiet/rpe/RPE_Machine_slides.html</code> (never the link with your PIN)</p>
+    </section>
+
+    <section id="r25" class="read"><p class="next">→ Slide 25</p><h2>Slide 25 · Questions</h2>
+      <p>Thank you, everyone, for playing along. <span class="c">pause</span> I am happy to take questions. Unmute, or type them in the chat, and I will read them out.</p>
+      <p class="cue">Read chat questions aloud before answering them. Short answers to the likely ones are in the speaker script, under "Likely questions".</p>
+      <p class="cue">If nobody asks:</p>
+      <p>Let me start us off with a question for our teacher. Would you accept a Methods line that simply says: "grammar corrected with an AI tool"?</p>
+    </section>
+
+    <section id="extra"><h2>Sources for the extra examples</h2>
+      <p class="small">These examples are not on the slides; check them before you rely on them in Q&amp;A.</p>
       <ul class="list">
-        <li><b>Share one browser tab, not your screen.</b> In Google Meet: <i>Present now → A tab</i> and pick the deck. (Zoom: <i>Share → Advanced → Chrome tab</i> or share the Chrome window; Teams: share the window.) Tab sharing means notifications, this script and other windows are never seen, and you can click between windows freely.</li>
-        <li><b>The deck, with your PIN already in it.</b> Bookmark and open <code>https://kpsingh.in/uiet/rpe/RPE_Machine_slides.html?pin=YOUR-PIN#s2</code> (your real PIN; it is deliberately not written on this public page). The page takes the PIN into memory and removes it from the address bar, so it never shows on the shared tab. Keep the bookmark private.</li>
-        <li><b>Do not press N while sharing.</b> The notes panel is part of the shared tab; this page replaces it.</li>
-        <li><b>Your audience's phone is their buzzer.</b> Participants scan the QR on slide 2 with their phone, or open <code>kpsingh.in/uiet/join</code> from the chat. Phones are best. On a laptop the quiz sits in a second window: tell them to keep it <i>beside</i> the meeting. The tab title shows <b>●</b> when a question opens.</li>
-        <li><b>Latency to expect:</b> the audience sees your shared screen 1–3 seconds late; a question reaches their phones within about 3 seconds of pressing <b>O</b>. So always give at least 30 seconds before <b>C</b>, and say the question aloud.</li>
-        <li><b>Capacity:</b> the Google Sheet backend is comfortable up to about 60 people answering at once. For a coursework class it is well inside that.</li>
+        <li><b>Detector bias against non-native English (slide 14):</b> Liang, W., Yuksekgonul, M., Mao, Y., Wu, E., &amp; Zou, J. (2023). GPT detectors are biased against non-native English writers. <i>Patterns</i>, 4(7), 100779.</li>
+        <li><b>ChatGPT listed as a co-author (slide 15):</b> Stokel-Walker, C. (2023, 18 Jan). ChatGPT listed as author on research papers: many scientists disapprove. <i>Nature</i>, 613, 620–621.</li>
+        <li><b>Nature and Science policies (slide 15):</b> Editorial (2023, 24 Jan). Tools such as ChatGPT threaten transparent science; here are our ground rules for their use. <i>Nature</i>, 613, 612. Thorp, H. H. (2023, 26 Jan). ChatGPT is fun, but not an author. <i>Science</i>, 379(6630), 313.</li>
+        <li><b>Invented court cases (slides 20, 23):</b> <i>Mata v. Avianca, Inc.</i>, No. 22-cv-1461 (S.D.N.Y., 22 June 2023), opinion and order on sanctions ($5,000).</li>
       </ul>
-
-      <h2 id="before">30 minutes before</h2>
-      <ol class="list">
-        <li>Laptop on power, notifications off (Windows: Focus / Do not disturb), all other tabs closed. Wired internet or strong Wi-Fi, and your phone's hotspot ready as a backup.</li>
-        <li>Open the deck bookmark (with the PIN). Slide 2 must show the pill <b>live · connected · PIN set</b>. Press <b>Presenter setup → Reset session</b> to clear any test players, then close that fold.</li>
-        <li>Press <b>Copy link for chat</b> on slide 2 once, so the join link is on your clipboard.</li>
-        <li>Rehearse the share: join the meeting from your phone as a guest, present the deck tab from the laptop and check the slides are readable on the phone. Leave the phone's meeting audio muted to avoid echo, then leave the meeting on the phone.</li>
-        <li>Open this script on your second device. Go to slide 1 in the deck, press <b>F11</b> for full screen, and start sharing only when the host hands over.</li>
-      </ol>
-
-      <h2 id="run">While presenting: five habits</h2>
-      <ol class="list">
-        <li><b>Say every question aloud</b> before pressing <b>O</b>; some people are listening, not watching.</li>
-        <li><b>Narrate the numbers:</b> "twelve answers in… fifteen… closing in five." Online silence feels twice as long as in a room.</li>
-        <li><b>Paste the link twice:</b> on slide 2 and again on slide 3 for latecomers.</li>
-        <li><b>Use names from the chat and the leaderboard</b> ("Priya is leading, 137 points"): it is the online equivalent of eye contact.</li>
-        <li><b>Discussion prompts go to the chat</b> ("type one word: what gave it away?"), then read two answers aloud. Invite one person to unmute only if the class usually does.</li>
-      </ol>
-
-      <h2 id="rescue">If something goes wrong</h2>
-      <div class="table-wrap"><table>
-        <caption class="sr-only">Problems and what to do</caption>
-        <tr><th scope="col">What you see</th><th scope="col">What to do</th></tr>
-        <tr><td>Pill says <b>offline</b></td><td>Reload the deck tab once. Still offline: say "the live quiz can't reach its server, so we'll vote in the chat", and ask for A, B, C or D in the chat. Use the <b>+1</b> buttons that appear under each question to tally what you read.</td></tr>
-        <tr><td>Someone says "my phone shows nothing"</td><td>"Reload the link." Typing the same name again puts them back as the same player with their points.</td></tr>
-        <tr><td>Two people type the same name</td><td>They become one player. Ask everyone to add an initial: "Priya S".</td></tr>
-        <tr><td>Shared screen freezes for the audience</td><td>Stop presenting and present the tab again; the deck keeps its place and its live state.</td></tr>
-        <tr><td>Your internet drops</td><td>Rejoin from your phone to tell the host; switch the laptop to the hotspot, reopen the bookmark and go to the slide you were on (<code>#s14</code> etc.). Nothing in the quiz is lost; it lives in the Google Sheet.</td></tr>
-        <tr><td>You pressed O on the wrong slide</td><td>Press <b>C</b>. Answers to a closed question are refused, so no harm is done.</td></tr>
-      </table></div>
-
-      <h2 id="timing">Timing plan</h2>
-      <div class="table-wrap"><table>
-        <caption class="sr-only">Timing plan</caption>
-        <tr><th scope="col">Slide</th><th scope="col">Minutes</th><th scope="col">Running total</th></tr>
-        <tr><td>1 Title</td><td>0.5</td><td>0.5</td></tr>
-        <tr><td>2 Join (QR and chat link)</td><td>1.5</td><td>2</td></tr>
-        <tr><td>3 Q1 bosom peril</td><td>2</td><td>4</td></tr>
-        <tr><td>4 Tortured phrases</td><td>1.5</td><td>5.5</td></tr>
-        <tr><td>5 Syllabus map</td><td>1</td><td>6.5</td></tr>
-        <tr><td>6 Playground: paraphrase slider</td><td>2.5</td><td>9</td></tr>
-        <tr><td>7 Q2 profound neural organization</td><td>1.5</td><td>10.5</td></tr>
-        <tr><td>8 Q3 flag to clamor</td><td>1.5</td><td>12</td></tr>
-        <tr><td>9 Playground: pipeline</td><td>2</td><td>14</td></tr>
-        <tr><td>10 Paper-mill numbers</td><td>1.5</td><td>15.5</td></tr>
-        <tr><td>11 Q4 spot the mill</td><td>1.5</td><td>17</td></tr>
-        <tr><td>12 AI fingerprints</td><td>1.5</td><td>18.5</td></tr>
-        <tr><td>13 Q5 human or machine</td><td>2</td><td>20.5</td></tr>
-        <tr><td>14 Playground: detector arithmetic</td><td>2.5</td><td>23</td></tr>
-        <tr><td>15 Q6 co-author poll</td><td>1</td><td>24</td></tr>
-        <tr><td>16 COPE and ICMJE</td><td>1.5</td><td>25.5</td></tr>
-        <tr><td>17 Four authorship criteria</td><td>1.5</td><td>27</td></tr>
-        <tr><td>18 Q7 who is an author</td><td>2</td><td>29</td></tr>
-        <tr><td>19 Q8 draw the line</td><td>2</td><td>31</td></tr>
-        <tr><td>20 Where the line is</td><td>1.5</td><td>32.5</td></tr>
-        <tr><td>21 Sleuths and growth</td><td>1.5</td><td>34</td></tr>
-        <tr><td>22 Leaderboard</td><td>1.5</td><td>35.5</td></tr>
-        <tr><td>23 Three rules</td><td>1</td><td>36.5</td></tr>
-        <tr><td>24 References</td><td>0.5</td><td>37</td></tr>
-        <tr><td>25 Questions</td><td>Q&amp;A</td><td>37 + Q&amp;A</td></tr>
-      </table></div>
-      <p class="mixup"><b>Running short?</b> Taken slowly the plan is 37 minutes; at a brisk pace it is 30. For a strict 30: skip slides 8, 11 and 18 (say each answer in one line) and give slide 14 ninety seconds. For 20 minutes: also skip slides 9, 17 and 21, and run only Q1, Q5, Q6 and Q8 live. Online, the join on slide 2 always takes longer than you expect: protect those 90 seconds.</p>
     </section>
-
-    <section id="p1"><h2>Slide 1 · Title <span class="tm">0.5 min · 0.5</span></h2>
-      <p><b>Do:</b> start presenting the deck tab when the host hands over. Check in the meeting preview that the title slide is showing.</p>
-      <p class="say">"Good morning, everyone, and thank you for having me. Can you all see my screen, with the title 'The Machine That Writes Papers'? … Good. My topic today is the newest research-integrity problem in our syllabus: papers that are written, or partly written, by machines. Paper mills, tortured phrases and generative AI. For the next thirty minutes you will need your phone, and yes, today that is allowed."</p>
-      <p><b>Chat:</b> nothing yet.</p>
-      <p><b>Transition:</b> "Let's get everyone connected first."</p></section>
-
-    <section id="p2"><h2>Slide 2 · Join <span class="tm">1.5 min · 2</span></h2>
-      <p><b>Do:</b> press → to slide 2. Paste the join link into the meeting chat (it is already on your clipboard; if not, press <b>Copy link for chat</b> on the slide).</p>
-      <p><b>Chat:</b> <code>Join the live quiz: https://kpsingh.in/uiet/join (phone is best; on a laptop keep it beside this window)</code></p>
-      <p class="say">"Two ways in. Point your phone's camera at the QR code on the screen, or open the link I've just put in the chat. Type your name once, with an initial if it's a common name, and your phone becomes your buzzer. There are eight questions: some are scored, some are opinion polls, and there's a leaderboard at the end. Points for being right and for being quick."</p>
-      <p class="say">"If you're joining on the laptop you're using for this meeting, open the link in a separate window and keep it beside the meeting, not hidden behind it. When a question opens, its tab shows a dot."</p>
-      <p><b>Do:</b> watch <b>Joined so far</b>. Read it out as it climbs: "eight… fifteen… twenty-two." When it has not moved for ten seconds, go on. Do not wait for the last person; latecomers can join any time.</p>
-      <p><b>If:</b> the pill says offline, reload once; still offline, switch to chat voting (see <a href="#rescue">If something goes wrong</a>).</p>
-      <p><b>Transition:</b> "First question, and it is not a warm-up."</p></section>
-
-    <section id="p3"><h2>Slide 3 · Q1 "bosom peril" (scored) <span class="tm">2 min · 4</span></h2>
-      <p><b>Chat:</b> paste the join link again for latecomers.</p>
-      <p class="say">"Question one. A published paper studies patients with 'bosom peril'. What did the authors mean? A, a chest infection; B, heart disease; C, breast cancer; D, anxiety. It's open on your phones now; you have thirty seconds, and speed earns points."</p>
-      <p><b>Do:</b> press <b>O</b> as you finish reading. Narrate the count shown on the slide ("twelve answered… eighteen…"). At about 30 seconds: "Five seconds." Press <b>C</b>.</p>
-      <p class="say">"Before I reveal it: in the chat, one word, why did you choose what you chose?" (Read two answers aloud.)</p>
-      <p><b>Do:</b> press <b>R</b>. The correct bar turns green, the ANSWER stamp lands, and every phone shows the room's bars and whether that person was right.</p>
-      <p class="say">"Breast cancer. Most people guess something to do with the chest or the heart, which is reasonable. The phrase is real: it appears in published, peer-reviewed papers. Why would any author write 'bosom peril' instead of 'breast cancer'? Hold that thought."</p>
-      <p><b>Transition:</b> "Because a machine wrote it, to hide something."</p></section>
-
-    <section id="p4"><h2>Slide 4 · Tortured phrases <span class="tm">1.5 min · 5.5</span></h2>
-      <p class="say">"These are called tortured phrases. In 2021 three researchers, Guillaume Cabanac, Cyril Labbé and Alexander Magazinov, noticed that some papers used bizarre synonyms for standard terms. The cause: copied text had been pushed through an automatic paraphrasing tool so that plagiarism software would no longer recognise the source. The tool swaps 'artificial intelligence' for 'counterfeit consciousness' because a thesaurus does not know that the phrase is a fixed technical term."</p>
-      <p class="say">"By January 2022 their list had 473 distinct tortured phrases, in 3,191 peer-reviewed articles. Look at the table: 'mean square blunder' for mean square error, 'profound neural organization' for deep neural network, 'flag to clamor' for signal to noise. Keep those last two in mind; they come back for points."</p>
-      <p><b>Do:</b> let the counters finish before you read the numbers.</p>
-      <p><b>Transition:</b> "Where does this sit in our syllabus?"</p></section>
-
-    <section id="p5"><h2>Slide 5 · Syllabus map <span class="tm">1 min · 6.5</span></h2>
-      <p class="say">"Everything today is anchored to our RS-9003 syllabus. Fabrication, point 2.3 in Unit 2: machine-made data, figures and references. From Unit 3, the types of publication misconduct and the problems that lead to it, 3.4, and how misconduct is identified, 3.6. From Unit 5, the software tools: what Turnitin, Urkund and AI detectors can and cannot see. And near the end, authorship, 3.5, because that is where the question 'can an AI be an author' lives."</p>
-      <p><b>Transition:</b> "Let me show you the trick working."</p></section>
-
-    <section id="p6"><h2>Slide 6 · Playground: paraphrase slider <span class="tm">2.5 min · 9</span></h2>
-      <p class="say">"This is a simulation I built for teaching. The phrases are real tortured phrases from Cabanac and colleagues; the percentages are illustrative, not the output of any tool. Here is a normal sentence about a deep neural network used for breast-cancer screening."</p>
-      <p><b>Do:</b> drag the slider one step at a time. Pause after each step so the shared screen catches up (1–2 seconds).</p>
-      <p class="say">"One step: 'artificial intelligence' becomes 'counterfeit consciousness'. Would Turnitin flag this? The similarity score has dropped. Next step… 'mean square blunder'. Similarity falls again, and so does the meaning. By the last step the sentence is nonsense, and the plagiarism report looks clean."</p>
-      <p><b>Chat:</b> "Quick one in the chat: which of these two bars does Turnitin actually measure, the top or the bottom?" Read two answers.</p>
-      <p class="say">"Only the first. Similarity software counts overlapping words. It has no idea what the sentence means."</p>
-      <p><b>Transition:</b> "Two more phrases to decode, for points."</p></section>
-
-    <section id="p7"><h2>Slide 7 · Q2 "profound neural organization" (scored) <span class="tm">1.5 min · 10.5</span></h2>
-      <p class="say">"Question two. 'Profound neural organization' is a tortured version of… A, a complex company structure; B, deep neural network; C, brain surgery; D, deep learning ethics. Open now, twenty-five seconds."</p>
-      <p><b>Do:</b> <b>O</b>, narrate the count, <b>C</b> at about 25 seconds, then <b>R</b>.</p>
-      <p class="say">"Deep neural network. 'Deep' became 'profound', 'network' became 'organization'. Notice how a computer-science term turned into something that sounds like management studies, which is exactly why a reviewer from another field might not notice."</p>
-      <p><b>Transition:</b> "One more, and this one is harder."</p></section>
-
-    <section id="p8"><h2>Slide 8 · Q3 "flag to clamor" (scored) <span class="tm">1.5 min · 12</span></h2>
-      <p class="say">"Question three. A 'flag to clamor' ratio is a tortured version of… A, a protest signal; B, a noise complaint; C, a warning sign; D, signal to noise. Open now."</p>
-      <p><b>Do:</b> <b>O</b>, 25 seconds, <b>C</b>, <b>R</b>.</p>
-      <p class="say">"Signal to noise. 'Signal' became 'flag', 'noise' became 'clamor'. If you've ever pressed a 'rephrase' button in a writing tool, you've used the same engine. The tool is not the offence; hiding a copied source with it is."</p>
-      <p><b>Do:</b> glance at the leaderboard strip or rail and name the leader: "Right now Priya is leading."</p>
-      <p><b>Transition:</b> "So who does this at scale? Paper mills."</p></section>
-
-    <section id="p9"><h2>Slide 9 · Playground: the pipeline <span class="tm">2 min · 14</span></h2>
-      <p class="say">"Every paper travels the same seven stages: idea, data, analysis, writing, figures, submission, peer review."</p>
-      <p><b>Do:</b> click <b>Honest lab</b>.</p>
-      <p class="say">"In an honest lab, every stage is done by people and recorded."</p>
-      <p><b>Do:</b> click <b>Paper mill</b>; wait for the stages to turn.</p>
-      <p class="say">"A paper mill sells the whole pipeline. COPE defines a paper mill as a profit-oriented, unofficial and potentially illegal organisation that produces and sells fraudulent manuscripts. The data and analysis are fabricated, the writing is spun, and this is where tortured phrases come from. Figures are recycled, author slots are sold, and in the worst cases the mill supplies fake reviewer accounts or takes over a special issue."</p>
-      <p><b>Do:</b> click <b>Undisclosed AI</b>.</p>
-      <p class="say">"Now the newer case. The researcher is real and the data are real, but the writing and figures are generated, and nobody is told. The mill is fraud from start to finish; the AI case is one honest person crossing a line in two places."</p>
-      <p><b>Transition:</b> "How big is the mill problem? Bigger than most people think."</p></section>
-
-    <section id="p10"><h2>Slide 10 · Paper-mill numbers <span class="tm">1.5 min · 15.5</span></h2>
-      <p><b>Do:</b> let the counters run before speaking.</p>
-      <p class="say">"In 2023 the number of retractions across all publishers passed ten thousand for the first time, a record reported by <i>Nature</i> in December 2023. More than eight thousand of them came from one publisher, Hindawi, owned by Wiley, whose special issues had been taken over by paper mills. Wiley closed four journals as 'overrun by paper mills' and reported thirty-five to forty million dollars of lost revenue."</p>
-      <p class="say">(Slowly.) "COPE's definition: '…profit oriented, unofficial and potentially illegal organisations that produce and sell fraudulent manuscripts that seem to resemble genuine research.'"</p>
-      <p><b>Transition:</b> "Could you spot a mill paper? Question four."</p></section>
-
-    <section id="p11"><h2>Slide 11 · Q4 spot the mill (scored) <span class="tm">1.5 min · 17</span></h2>
-      <p class="say">"Which is the strongest sign that a paper came from a mill? A, it has six authors; B, a phrase like 'flag to clamor' where a standard term belongs; C, it is open access; D, it has a very long reference list. Open now."</p>
-      <p><b>Do:</b> <b>O</b>, 25 seconds, <b>C</b>, <b>R</b>.</p>
-      <p class="say">"B, the tortured phrase. Six authors, open access and long reference lists are all perfectly normal. A human expert never writes 'flag to clamor'. That is the fingerprint, and it's what the Problematic Paper Screener searches for."</p>
-      <p><b>Transition:</b> "From 2023 the machine got much better at writing, and it started leaving new fingerprints."</p></section>
-
-    <section id="p12"><h2>Slide 12 · AI fingerprints <span class="tm">1.5 min · 18.5</span></h2>
-      <p class="say">"Three real, public cases. One: a paper in Elsevier's journal <i>Surfaces and Interfaces</i>, published in February 2024, whose introduction began with the chatbot's own reply: 'Certainly, here is a possible introduction for your topic.' It was retracted on 31 May 2024 for undisclosed generative-AI use."</p>
-      <p class="say">"Two: by October 2023, Guillaume Cabanac and colleagues had flagged on PubPeer more than thirty published papers containing 'Regenerate response' or 'As an AI language model'. The authors had copied the button text along with the answer."</p>
-      <p class="say">"Three: in February 2024 a Frontiers journal published an AI-drawn figure of a rat with nonsense labels. It was retracted within days, after the figures were shown to be AI-generated. I won't show the image; the description is enough."</p>
-      <p><b>Transition:</b> "Can you tell machine writing from human writing? Let's test the room."</p></section>
-
-    <section id="p13"><h2>Slide 13 · Q5 human or machine (poll) <span class="tm">2 min · 20.5</span></h2>
-      <p class="say">"Two short passages on the same topic, handwritten Gurmukhi recognition. One is from my own published paper; the other was generated with a chatbot for this talk. Read both. Which one was written by a machine: A or B? It's an opinion poll: ten points for taking part. Open now, forty seconds, because there's reading to do."</p>
-      <p><b>Do:</b> <b>O</b>. While they read, stay quiet for 15 seconds, then narrate the count. <b>C</b> at about 40 seconds.</p>
-      <p><b>Chat:</b> "Before the reveal: one word in the chat, what gave it away?"</p>
-      <p><b>Do:</b> <b>R</b> (the button says <i>Show result</i>).</p>
-      <p class="say">"B is the machine. What gave it away? Usually: 'pivotal', 'leveraging', 'nuanced', 'several challenges remain', and that tidy three-sentence shape: claim, benefit, caveat. Passage A is clumsier, and it's human: the abstract of our 2015 paper in <i>Procedia Computer Science</i>. Look at the split on screen: a good part of the room guessed, or got it wrong."</p>
-      <p><b>Transition:</b> "If humans cannot reliably tell, can software?"</p></section>
-
-    <section id="p14"><h2>Slide 14 · Playground: detector arithmetic <span class="tm">2.5 min · 23</span></h2>
-      <p class="say">"Imagine a class of one hundred. This slider is the share who really used a chatbot. I'll start at twenty percent."</p>
-      <p><b>Do:</b> set the slider to 20%. Pause two seconds for the share to catch up.</p>
-      <p class="say">"Now apply the figures OpenAI published for its own detector: it caught 26 percent of AI text and wrongly flagged 9 percent of human text. Read the sentence under the big number: of 100 students, 20 used AI. The detector catches 5 of them and wrongly flags 7 who did not. So of the twelve students flagged, more than half did nothing wrong."</p>
-      <p><b>Do:</b> slide down to 5%.</p>
-      <p class="say">"When use is rarer, it gets worse: most of the flagged students are innocent. That's base-rate arithmetic, not a flaw you can fix with a better threshold."</p>
-      <p class="say">"OpenAI withdrew that classifier on 20 July 2023, 'due to its low rate of accuracy'. Turnitin claims under one percent false positives at document level but about four percent per sentence, and Turnitin itself says the score should start a dialogue, not decide a case. A detector score is a reason to talk to a student, never a verdict."</p>
-      <p><b>Transition:</b> "So what do publishers actually require? First, your opinion."</p></section>
-
-    <section id="p15"><h2>Slide 15 · Q6 co-author poll <span class="tm">1 min · 24</span></h2>
-      <p class="say">"Quick opinion. If a chatbot wrote half your paper, can it be a co-author? A, yes, credit where it is due; B, no, never; C, only if the journal allows it. Open now, twenty-five seconds."</p>
-      <p><b>Do:</b> <b>O</b>, <b>C</b> at about 25 seconds, <b>R</b> to show the bars.</p>
-      <p class="say">"Interesting split. Whatever the room says, the publishers have already answered this one."</p>
-      <p><b>Transition:</b> next slide.</p></section>
-
-    <section id="p16"><h2>Slide 16 · COPE and ICMJE <span class="tm">1.5 min · 25.5</span></h2>
-      <p class="say">"COPE, the Committee on Publication Ethics, in its position statement of 13 February 2023: AI tools cannot be listed as an author, because they cannot take responsibility for the submitted work. Authors must disclose, in the Methods or a similar section, which tool they used and how. And authors are fully responsible for the content of their manuscript, even the parts produced by an AI tool."</p>
-      <p class="say">"The ICMJE, the medical journal editors' body, says the same: chatbots should not be listed as authors because they cannot be responsible for the accuracy, integrity and originality of the work. Describe the use in both the cover letter and the submitted work. And, importantly, non-disclosure of AI use may be construed as misconduct in some circumstances."</p>
-      <p><b>Do:</b> move your mouse pointer over the word "responsibility" in the first column, then "responsible" in the second: online, the pointer is your finger.</p>
-      <p><b>Transition:</b> "Responsibility is the whole story, and here is why: the authorship rules."</p></section>
-
-    <section id="p17"><h2>Slide 17 · Four authorship criteria <span class="tm">1.5 min · 27</span></h2>
-      <p class="say">"The ICMJE says an author must meet all four criteria: a substantial contribution to the idea, design, data or analysis; drafting or critically revising the work; final approval of the version to be published; and agreement to be accountable for all parts of the work. A machine can arguably do the first two. It cannot approve, and it cannot be accountable: you cannot email it a complaint."</p>
-      <p class="say">"The same test catches the three classic abuses. Gift authorship: a name added for status or obligation, a boss who did nothing. Ghost authorship: a real contributor left off the list, a writer, a company, or a tool; an undisclosed chatbot is a ghost author. Guest authorship: a well-known name added to impress reviewers."</p>
-      <p><b>Transition:</b> "Try the rule on a case you will meet."</p></section>
-
-    <section id="p18"><h2>Slide 18 · Q7 who is an author (scored) <span class="tm">2 min · 29</span></h2>
-      <p class="say">"Question seven, scored. Your supervisor's friend funded the equipment but never read the paper. Under ICMJE he is… A, first author; B, corresponding author; C, not an author, thank him in the acknowledgements; D, an author, as long as he approves the final draft. Open now, thirty seconds."</p>
-      <p><b>Do:</b> <b>O</b>, 30 seconds, <b>C</b>, <b>R</b>.</p>
-      <p class="say">"C: not an author, acknowledge him. Funding equipment is not one of the four criteria, and approving a draft he never read doesn't make him accountable for it. In practice, agree authorship in writing with your supervisor before the work starts, not after the paper is written."</p>
-      <p><b>Transition:</b> "Now the hardest question of the day: where is the line?"</p></section>
-
-    <section id="p19"><h2>Slide 19 · Q8 draw the line (poll) <span class="tm">2 min · 31</span></h2>
-      <p class="say">"Five ways people use a chatbot. Pick the first one you would call misconduct. A, fixing grammar and spelling; B, summarising papers for your own notes; C, writing the discussion section; D, generating a figure; E, generating the data. There's no single right answer for the poll: I want to see where this group disagrees. Forty seconds."</p>
-      <p><b>Do:</b> <b>O</b>, 40 seconds, <b>C</b>, <b>R</b>.</p>
-      <p class="say">"The split is usually between C and D." <b>Chat:</b> "If you chose C, one line in the chat: why? If you chose D, why?" Read one from each side.</p>
-      <p><b>Transition:</b> "Here is where the guidance draws it."</p></section>
-
-    <section id="p20"><h2>Slide 20 · Where the line is <span class="tm">1.5 min · 32.5</span></h2>
-      <p class="say">"The guidance doesn't draw the line at 'used AI or not'. It draws it at three things: disclosure, accountability and fabrication. A, grammar and spelling: fine; disclose if a tool rewrote substantial text. B, summaries for your own notes: fine; verify before you cite anything from them. C, writing the discussion: allowed only with disclosure, and you remain responsible for every claim; that's COPE and ICMJE. D, generating a figure: fabrication unless it's clearly labelled as an illustration, because a figure is data; that's the Frontiers case. E, generating the data: fabrication, Unit 2.3; no disclosure repairs it."</p>
-      <p class="say">"And the blind spot: plagiarism software would score all five at zero percent similarity. The UGC 2018 levels of ten, forty and sixty percent never see any of this."</p>
-      <p><b>Transition:</b> "So who catches it?"</p></section>
-
-    <section id="p21"><h2>Slide 21 · Sleuths and growth <span class="tm">1.5 min · 34</span></h2>
-      <p class="say">"Detection today is a community sport. PubPeer, where people comment publicly on published papers and where most of today's cases were first flagged. The Problematic Paper Screener, by Cabanac, Labbé and Magazinov, which scans the literature for tortured phrases and chatbot text. And Retraction Watch, the public database of retractions."</p>
-      <p><b>Do:</b> wait for the bars to grow.</p>
-      <p class="say">"Meanwhile use is rising fast. A 2025 study in <i>Nature Human Behaviour</i> of 1,121,912 papers estimated that by September 2024 up to 22 percent of computer-science abstracts had been modified by a language model, and up to 9 percent in mathematics and in Nature-portfolio journals. This is not going away. Disclosure has to become the normal thing to do."</p>
-      <p><b>Transition:</b> "Leaderboard time."</p></section>
-
-    <section id="p22"><h2>Slide 22 · Leaderboard <span class="tm">1.5 min · 35.5</span></h2>
-      <p><b>Do:</b> let the rows animate. If a score looks stale, press <b>Refresh</b>.</p>
-      <p class="say">"Here's the board: a hundred points for a correct answer, up to fifty more for speed, and ten for each poll you answered. In third place… in second… and leading the room, [name]! Congratulations. Everyone, please unmute for a moment and give them a round of applause, or put a 👏 in the chat."</p>
-      <p><b>Do:</b> press <b>Send final standings to phones</b>.</p>
-      <p class="say">"Your phones now show the final standings and your own place."</p>
-      <p><b>If:</b> the session was offline, name the option that won each chat vote instead.</p>
-      <p><b>Transition:</b> "Three rules to take home."</p></section>
-
-    <section id="p23"><h2>Slide 23 · Three rules <span class="tm">1 min · 36.5</span></h2>
-      <p class="say">"Three rules you can apply tomorrow, in any discipline. One: disclose the tool and what it did. Name it in the Methods and the cover letter. Silence is the misconduct, not the tool. Two: never let it make data, figures or references. Generated data is fabrication, and check that every citation it suggests actually exists. Three: you sign, you answer. Read every sentence as if a reviewer will ask you about it, because one will."</p>
-      <p class="say">(If the audience is mixed.) "None of this is a computer-science problem. The Elsevier paper was about batteries, the Frontiers paper was biology, and the Hindawi special issues covered everything."</p>
-      <p><b>Transition:</b> "References, then questions."</p></section>
-
-    <section id="p24"><h2>Slide 24 · References <span class="tm">0.5 min · 37</span></h2>
-      <p class="say">"Every case today is public and checkable; the full reference list is on this slide."</p>
-      <p><b>Chat:</b> <code>Slides and references: https://kpsingh.in/uiet/rpe/RPE_Machine_slides.html</code> (never the link with the PIN).</p>
-      <p><b>Transition:</b> "And thank you."</p></section>
-
-    <section id="p25"><h2>Slide 25 · Questions <span class="tm">Q&amp;A</span></h2>
-      <p class="say">"Thank you for playing along. I'm happy to take questions: unmute, or type them in the chat and I'll read them out."</p>
-      <p><b>Do:</b> read chat questions aloud before answering, so the recording makes sense. Answers to the likely ones are below.</p>
-      <p><b>If the room is quiet:</b> ask the teacher: "Would you accept a Methods line that says 'grammar corrected with an AI tool'?"</p>
-      <p><b>After the talk:</b> stop sharing. Later, open slide 2 → <b>Presenter setup → Reset session</b> if you will run it again; the names and scores stay in the Google Sheet until you reset.</p></section>
-
-
-    <section id="qa"><h2>Likely questions</h2>
-      <details class="reveal"><summary>Is Grammarly or a spell-checker "AI use" that must be disclosed?</summary><div><p>COPE and ICMJE target substantive use: text generation, rewriting, summarising, analysis. Basic grammar and spelling correction does not normally need disclosure. If a tool rewrote whole paragraphs, disclose it.</p></div></details>
-      <details class="reveal"><summary>Can I use a chatbot to translate my paper into English?</summary><div><p>Most publishers treat that as a disclosable writing aid: say so in Methods or the cover letter, and you remain responsible for the accuracy of every sentence in the translation.</p></div></details>
-      <details class="reveal"><summary>Can I use it for the literature review?</summary><div><p>To search, sort and summarise for yourself, yes, with two rules: verify every claim and every citation against the original source (these tools invent references), and never paste its summary into your text as if you wrote it, without disclosure.</p></div></details>
-      <details class="reveal"><summary>Does UGC have a rule on AI-generated text?</summary><div><p>The UGC 2018 plagiarism regulations define similarity levels; they say nothing about generated text, which scores zero similarity. Individual universities and funders have started issuing AI policies; check yours and your target journal's. Do not claim a national rule that does not exist.</p></div></details>
-      <details class="reveal"><summary>Where do the 26% and 9% figures come from?</summary><div><p>From OpenAI's own page for its AI text classifier, January 2023: it identified 26 percent of AI-written text as "likely AI-written" and mislabelled 9 percent of human text. The page carries the note that the classifier was withdrawn on 20 July 2023 for low accuracy. The simulator applies those two rates to a class of 100; it is arithmetic, not a study of any real class.</p></div></details>
-      <details class="reveal"><summary>Are the retraction figures certain?</summary><div><p>The "more than 10,000 in 2023" figure is from Nature's news analysis of 12 December 2023, based on Retraction Watch data; "more than 8,000" from Hindawi is Wiley's own figure reported by Retraction Watch on 19 December 2023. Both are counts at that date and have since grown.</p></div></details>
-      <details class="reveal"><summary>What is the Problematic Paper Screener?</summary><div><p>A public tool built by Cabanac, Labbé and Magazinov that scans the published literature for signals such as tortured phrases and chatbot text, and lists flagged papers for human checking. It flags; people judge.</p></div></details>
-      <details class="reveal"><summary>How do I disclose AI use in practice?</summary><div><p>One or two sentences in Methods or Acknowledgements: which tool, which version, what it was used for (for example, "language editing of the Introduction"), and a statement that the authors reviewed and take responsibility for the content. Repeat it in the cover letter if the journal follows ICMJE.</p></div></details>
-    </section>
-
-    <section id="refs"><h2>References</h2>
-      <ul class="recap">
-        <li>Cabanac, G., Labbé, C., &amp; Magazinov, A. (2021). Tortured phrases: A dubious writing style emerging in science. arXiv:2107.06751.</li>
-        <li>Bulletin of the Atomic Scientists (2022, 20 January). "Bosom peril" is not "breast cancer": How weird computer-generated phrases help researchers find scientific publishing fraud.</li>
-        <li>Committee on Publication Ethics (2023, 13 February). Authorship and AI tools: COPE position statement.</li>
-        <li>Committee on Publication Ethics. Paper mills (topic discussion); COPE &amp; STM (2022). Paper mills research report.</li>
-        <li>International Committee of Medical Journal Editors. Recommendations: Defining the role of authors and contributors; Artificial intelligence: AI use by authors.</li>
-        <li>Van Noorden, R. (2023, 12 December). More than 10,000 research papers were retracted in 2023: a new record. Nature, 624, 479–481.</li>
-        <li>Retraction Watch (2023, 19 December). Hindawi reveals process for retracting more than 8,000 paper mill articles.</li>
-        <li>Retraction Watch (2023, 6 October). Signs of undeclared ChatGPT use in papers mounting.</li>
-        <li>Zhang et al. (2024). Surfaces and Interfaces (Elsevier); published 17 February 2024; retracted 31 May 2024 (retraction notice cites undisclosed generative-AI use).</li>
-        <li>Frontiers (2024, 16 February). Statement concerning the article "Cellular functions of spermatogonial stem cells in relation to JAK/STAT signaling pathway".</li>
-        <li>OpenAI (2023, 31 January; note added 20 July 2023). New AI classifier for indicating AI-written text.</li>
-        <li>Turnitin (2023, 23 May). AI writing detection update from Turnitin's Chief Product Officer.</li>
-        <li>Liang, W., Zhang, Y., et al. (2025). Quantifying large language model usage in scientific papers. Nature Human Behaviour. doi:10.1038/s41562-025-02273-8.</li>
-        <li>University Grants Commission (2018). UGC (Promotion of Academic Integrity and Prevention of Plagiarism in Higher Educational Institutions) Regulations, 2018.</li>
-        <li>Panjab University. RS-9003 Research and Publication Ethics: syllabus.</li>
-      </ul></section>
   </main>
   <aside class="docs-right" aria-label="On this page">
     <details class="docs-panel" open><summary>On this page</summary>
-      <nav data-spy aria-label="On this page"><a href="#top">Online set-up</a><a href="#before">30 minutes before</a><a href="#run">While presenting</a><a href="#rescue">If something goes wrong</a><a href="#timing">Timing plan</a><a href="#p1">1 Title</a><a href="#p2">2 Join</a><a href="#p3">3 Q1</a><a href="#p4">4 Tortured phrases</a><a href="#p5">5 Syllabus</a><a href="#p6">6 Slider</a><a href="#p7">7 Q2</a><a href="#p8">8 Q3</a><a href="#p9">9 Pipeline</a><a href="#p10">10 Numbers</a><a href="#p11">11 Q4</a><a href="#p12">12 Fingerprints</a><a href="#p13">13 Q5</a><a href="#p14">14 Detector</a><a href="#p15">15 Q6</a><a href="#p16">16 COPE/ICMJE</a><a href="#p17">17 Authorship</a><a href="#p18">18 Q7</a><a href="#p19">19 Q8</a><a href="#p20">20 The line</a><a href="#p21">21 Sleuths</a><a href="#p22">22 Leaderboard</a><a href="#p23">23 Rules</a><a href="#p24">24 References</a><a href="#p25">25 Questions</a><a href="#qa">Likely questions</a><a href="#refs">References</a></nav>
+      <nav data-spy aria-label="On this page"><a href="#top">How to read this</a><a href="#r1">Slide 1</a><a href="#r2">Slide 2</a><a href="#r3">Slide 3</a><a href="#r4">Slide 4</a><a href="#r5">Slide 5</a><a href="#r6">Slide 6</a><a href="#r7">Slide 7</a><a href="#r8">Slide 8</a><a href="#r9">Slide 9</a><a href="#r10">Slide 10</a><a href="#r11">Slide 11</a><a href="#r12">Slide 12</a><a href="#r13">Slide 13</a><a href="#r14">Slide 14</a><a href="#r15">Slide 15</a><a href="#r16">Slide 16</a><a href="#r17">Slide 17</a><a href="#r18">Slide 18</a><a href="#r19">Slide 19</a><a href="#r20">Slide 20</a><a href="#r21">Slide 21</a><a href="#r22">Slide 22</a><a href="#r23">Slide 23</a><a href="#r24">Slide 24</a><a href="#r25">Slide 25</a><a href="#extra">Extra sources</a></nav>
     </details>
   </aside>
 </div>
