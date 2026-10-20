@@ -542,6 +542,65 @@ body.aud-mode .aud{display:block}
 .deck .slide .demo,.deck .slide .demo .btn,.deck .slide .sim{font-size:1.05rem}
 .deck .slide .demo .btn{text-decoration:none}
 .deck .slide .demo .small,.deck .slide .sim .small,.deck .slide .sim p.sim-meta{font-size:.98rem}
+/* ---- visual upgrade (21 Oct) ---- */
+:root{--oa-gold:#a8650a;--oa-green:#23784a;--oa-diamond:#2563a8;--oa-hybrid:#7a4bb8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--oa-gold:#f6c25b;--oa-green:#6fd3a0;--oa-diamond:#8cc0ff;--oa-hybrid:#c9a7ff}}
+:root[data-theme="dark"]{--oa-gold:#f6c25b;--oa-green:#6fd3a0;--oa-diamond:#8cc0ff;--oa-hybrid:#c9a7ff}
+.slide svg *{vector-effect:non-scaling-stroke}
+.routes,.vcards{display:grid;gap:14px;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:var(--gap)}
+.route,.vcard{--c:var(--accent);position:relative;display:grid;gap:6px;align-content:start;padding:18px 18px 20px;border-radius:var(--r-lg);background:var(--card);border:1px solid var(--line);border-top:6px solid var(--c);box-shadow:var(--shadow-1)}
+.r-gold{--c:var(--oa-gold)}.r-green{--c:var(--oa-green)}.r-diamond{--c:var(--oa-diamond)}.r-hybrid{--c:var(--oa-hybrid)}
+.vcard:nth-child(1){--c:var(--accent-2)}.vcard:nth-child(2){--c:var(--oa-green)}.vcard:nth-child(3){--c:var(--oa-diamond)}.vcard:nth-child(4){--c:var(--accent)}
+.route-ico,.vcard-ico{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c)}
+.route-ico svg,.vcard-ico svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.deck .slide .route-tag{font-family:var(--font-mono);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--c);font-weight:700}
+.deck .slide .route b,.deck .slide .vcard b{font-family:var(--font-display);font-size:1.45rem;line-height:1.15;color:var(--fg)}
+.deck .slide .route-txt{font-size:1.05rem;line-height:1.4;color:var(--muted)}
+/* pipeline */
+.pipe{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:10px;align-items:stretch;margin-top:var(--gap)}
+.pipe-step{display:grid;grid-template-rows:auto 1fr auto;gap:10px;padding:16px;border-radius:var(--r-lg);background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow-1);position:relative}
+.pipe-n{position:absolute;top:-14px;left:14px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--accent-fg);font-weight:700;font-size:.95rem}
+.deck .slide .pipe-step p{margin:0;font-size:1.05rem;line-height:1.35;color:var(--fg)}
+.pipe-arrow{align-self:center;font-size:2rem;color:var(--accent)}
+.pipe-doc{display:grid;gap:7px;padding:14px;border-radius:10px;background:var(--soft);min-height:110px;align-content:center}
+.pipe-doc i{display:block;height:8px;border-radius:4px;background:var(--line)}.pipe-doc i.s{width:62%}
+.pipe-chips{display:flex;flex-wrap:wrap;gap:6px;align-content:center;min-height:110px}
+.pipe-chips span{padding:4px 10px;border-radius:var(--r-pill);background:color-mix(in srgb,var(--accent-2) 14%,transparent);color:var(--accent-2);font-weight:600}
+.deck .slide .pipe-chips .w1{font-size:.85rem}.deck .slide .pipe-chips .w2{font-size:1rem}.deck .slide .pipe-chips .w3{font-size:1.25rem}
+.pipe-stack{position:relative;min-height:110px}
+.pipe-stack i{position:absolute;left:calc(var(--k,0)*12px + 8px);top:calc(var(--k,0)*10px + 8px);width:62%;height:70px;border-radius:8px;background:var(--card);border:2px solid var(--accent-2);box-shadow:var(--shadow-1)}
+.pipe-stack i:nth-child(2){--k:1}.pipe-stack i:nth-child(3){--k:2}.pipe-stack i:nth-child(4){--k:3}
+.pipe-bars{display:grid;gap:10px;align-content:center;min-height:110px}
+.pipe-bars i{display:block;height:16px;border-radius:8px;background:var(--accent);transform-origin:left;transform:scaleX(var(--w))}
+.pipe-bars i:nth-child(2){opacity:.75}.pipe-bars i:nth-child(3){opacity:.5}
+/* timeline */
+.tline{list-style:none;margin:var(--gap) 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;position:relative}
+.tline::before{content:"";position:absolute;left:12px;right:12px;top:15px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent-2),var(--accent))}
+.tline li{position:relative;padding-top:42px;display:grid;gap:6px}
+.tline li::before{content:"";position:absolute;top:4px;left:4px;width:26px;height:26px;border-radius:50%;background:var(--bg);border:5px solid var(--accent)}
+.tline li:last-child::before{background:var(--accent)}
+.deck .slide .tline b{font-family:var(--font-display);font-size:1.9rem;color:var(--accent)}
+.deck .slide .tline span{font-size:1.05rem;line-height:1.4;color:var(--fg)}
+/* playbook */
+.play{list-style:none;margin:var(--gap) 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.play li{position:relative;display:grid;gap:6px;align-content:start;padding:18px 16px;border-radius:var(--r-lg);background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow-1)}
+.play li:not(:last-child)::after{content:"›";position:absolute;right:-12px;top:50%;transform:translateY(-50%);font-size:1.8rem;color:var(--accent);z-index:1}
+.play-n{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--accent-fg);font-weight:800;font-size:1.1rem}
+.deck .slide .play b{font-family:var(--font-display);font-size:1.5rem;color:var(--fg)}
+.deck .slide .play span:not(.play-n){font-size:1.02rem;line-height:1.4;color:var(--muted)}
+/* title art */
+.talk-title .slide-inner{position:relative}
+.title-art{position:absolute;right:0;top:50%;transform:translateY(-50%);width:min(36vw,440px);opacity:.95}
+.title-art svg{width:100%;height:auto}
+.title-art .b1{fill:var(--oa-gold)}.title-art .b2{fill:var(--oa-green)}.title-art .b3{fill:var(--accent)}.title-art .b4{fill:var(--oa-diamond)}.title-art .b5{fill:var(--oa-hybrid)}
+.title-art .ln{stroke:var(--fg);stroke-width:3}
+.title-art .lc{fill:color-mix(in srgb,var(--bg) 70%,transparent);stroke:var(--fg);stroke-width:7}
+.title-art .lh{stroke:var(--fg);stroke-width:12;stroke-linecap:round}
+.title-art .lx{stroke:var(--accent-2);stroke-width:3;stroke-linecap:round}
+@media (max-width:1000px){.title-art{position:static;transform:none;width:min(70vw,320px);margin-top:var(--gap)}}
+@media (max-width:900px){.routes,.vcards{grid-template-columns:repeat(2,minmax(0,1fr))}.pipe{grid-template-columns:1fr}.pipe-arrow{transform:rotate(90deg);justify-self:center}.tline{grid-template-columns:1fr 1fr}.tline::before{display:none}.play{grid-template-columns:1fr 1fr}.play li::after{display:none}}
+@media (max-width:520px){.routes,.vcards,.tline,.play{grid-template-columns:1fr}}
+@media (min-width:1001px){.talk-title h1,.talk-title .byline,.talk-title .kicker{max-width:56%}.title-art{width:min(32vw,420px)}}
 
 .connect{display:grid;gap:calc(var(--gap) * 1.5);grid-template-columns:1fr;align-items:center;margin-top:var(--gap)}
 @media (min-width:900px){.connect{grid-template-columns:minmax(0,26rem) auto;justify-content:center}}
@@ -670,6 +729,7 @@ body.aud-mode .aud{display:block}
       <p class="kicker" data-reveal>PhD coursework · Research and Publication Ethics · Unit 4</p>
       <h1 data-reveal>Where should my paper go? <em>Let the journal finders help</em></h1>
       <p class="byline" data-reveal>K.P. Singh · PhD coursework, Panjab University · 21 October 2026</p>
+      <div data-reveal><div class="title-art" aria-hidden="true"><svg viewBox="0 0 320 220"><g class="shelf"><rect x="20" y="40" width="34" height="140" rx="3" class="b1"/><rect x="58" y="60" width="28" height="120" rx="3" class="b2"/><rect x="90" y="30" width="38" height="150" rx="3" class="b3"/><rect x="132" y="70" width="26" height="110" rx="3" class="b4"/><rect x="162" y="50" width="34" height="130" rx="3" class="b5"/><line x1="10" y1="182" x2="210" y2="182" class="ln"/></g><g class="lens"><circle cx="236" cy="96" r="52" class="lc"/><line x1="273" y1="133" x2="306" y2="166" class="lh"/><path d="M212 96h48M236 72v48" class="lx"/></g></svg></div></div>
     </div>
   </section>
 <section class="slide" id="s2" data-min="1" data-notes="Scan the QR code or type the address. Enter your name. You will answer on the phone and see the result on the screen. Wait until the joined count stops moving. Next: A warm-up question, no right answer.">
@@ -701,14 +761,14 @@ body.aud-mode .aud{display:block}
   <section class="slide talk-claim" id="s4" data-min="1.5" data-notes="Open access means free to read online. Gold is the journal opening it, often with an article processing charge. Green is you placing a version in a repository. Diamond charges neither reader nor author. Hybrid is a subscription journal that opens one paper for a fee. Next: Now, how do you find the right journal among thousands?">
     <div class="slide-inner">
       <h2 data-reveal>Open access means anyone can read your paper, by one of four routes</h2>
-      <div class="tcards" data-stagger><div class="tcard" data-reveal><span class="kicker tag">Gold</span><b>Journal opens it</b>Free to read, may charge an APC</div><div class="tcard" data-reveal><span class="kicker tag">Green</span><b>You archive it</b>A version in a repository, often after an embargo</div><div class="tcard" data-reveal><span class="kicker tag">Diamond</span><b>Free both ways</b>No fee to read, no fee to publish</div><div class="tcard" data-reveal><span class="kicker tag">Hybrid</span><b>Pay to open</b>A subscription journal opens one article for a fee</div></div>
+      <div data-reveal><div class="routes" data-stagger><div class="route r-gold" data-reveal><span class="route-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/></svg></span><span class="route-tag">Gold</span><b>Journal opens it</b><span class="route-txt">Free to read, may charge an APC</span></div><div class="route r-green" data-reveal><span class="route-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M8 4v6l2-1.5L12 10V4"/></svg></span><span class="route-tag">Green</span><b>You archive it</b><span class="route-txt">A version in a repository, often after an embargo</span></div><div class="route r-diamond" data-reveal><span class="route-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M9 3l3 18 3-18"/></svg></span><span class="route-tag">Diamond</span><b>Free both ways</b><span class="route-txt">No fee to read, no fee to publish</span></div><div class="route r-hybrid" data-reveal><span class="route-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><path d="M12 15v2"/></svg></span><span class="route-tag">Hybrid</span><b>Pay to open</b><span class="route-txt">A subscription journal opens one article for a fee</span></div></div></div>
       <p class="src" data-reveal>Source: Budapest Open Access Initiative (2002). Action Plan for Diamond Open Access (2022).</p>
     </div>
   </section>
   <section class="slide talk-claim" id="s5" data-min="1.5" data-notes="Think of it as matchmaking by vocabulary. Elsevier&#x27;s JournalFinder builds a fingerprint of weighted terms from your abstract and compares it with published articles. JANE compares your text with millions of PubMed records. A journal that has published papers like yours ranks high. Next: Quick check on your phones.">
     <div class="slide-inner">
       <h2 data-reveal>A journal finder matches your abstract with what journals already publish</h2>
-      <ol class="steps" data-stagger><li data-reveal>You paste a title and abstract</li><li data-reveal>The tool turns the text into weighted key terms</li><li data-reveal>It compares them with articles each journal has published</li><li data-reveal>Journals with the most similar articles rise to the top</li></ol>
+      <div data-reveal><div class="pipe" data-stagger><div class="pipe-step" data-reveal><span class="pipe-n">1</span><div class="pipe-doc"><i></i><i></i><i class="s"></i><i></i><i class="s"></i></div><p>You paste a title and abstract</p></div><span class="pipe-arrow" aria-hidden="true">→</span><div class="pipe-step" data-reveal><span class="pipe-n">2</span><div class="pipe-chips"><span class="w3">calibration</span><span class="w2">students</span><span class="w1">prediction</span><span class="w2">learning</span><span class="w1">alerts</span></div><p>The text becomes weighted key terms</p></div><span class="pipe-arrow" aria-hidden="true">→</span><div class="pipe-step" data-reveal><span class="pipe-n">3</span><div class="pipe-stack"><i></i><i></i><i></i><i></i></div><p>It compares them with articles each journal published</p></div><span class="pipe-arrow" aria-hidden="true">→</span><div class="pipe-step" data-reveal><span class="pipe-n">4</span><div class="pipe-bars"><i style="--w:.92"></i><i style="--w:.74"></i><i style="--w:.55"></i></div><p>The closest journals rise to the top</p></div></div></div>
       <p class="src" data-reveal>Source: Elsevier Connect (2013, relaunched 2019). JANE, jane.biosemantics.org.</p>
     </div>
   </section>
@@ -752,14 +812,14 @@ body.aud-mode .aud{display:block}
   <section class="slide talk-claim" id="s11" data-min="1.5" data-notes="Never trust a journal&#x27;s own website for its indexing. Search it in Scopus or Web of Science. DOAJ lists vetted open access journals. Sherpa Romeo, which the syllabus names, is now part of Jisc&#x27;s Open Policy Finder and tells you which version you may self-archive. Think Check Submit is a checklist. Next: India has its own story here.">
     <div class="slide-inner">
       <h2 data-reveal>A finder only suggests, so verify four things before you submit</h2>
-      <div class="tcards" data-stagger><div class="tcard" data-reveal><span class="kicker tag">Indexing</span><b>Search the database itself</b>Scopus or Web of Science, not the journal's own claim</div><div class="tcard" data-reveal><span class="kicker tag">Open access</span><b>DOAJ</b>Lists vetted open access journals</div><div class="tcard" data-reveal><span class="kicker tag">Rights</span><b>Open Policy Finder</b>Formerly Sherpa Romeo: what you may self-archive, and when</div><div class="tcard" data-reveal><span class="kicker tag">Checklist</span><b>Think. Check. Submit.</b>A short checklist to judge a journal</div></div>
+      <div data-reveal><div class="vcards" data-stagger><div class="vcard" data-reveal><span class="vcard-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span><span class="route-tag">Indexing</span><b>Search the database itself</b><span class="route-txt">Scopus or Web of Science, not the journal's own claim</span></div><div class="vcard" data-reveal><span class="vcard-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/></svg></span><span class="route-tag">Open access</span><b>DOAJ</b><span class="route-txt">Lists vetted open access journals</span></div><div class="vcard" data-reveal><span class="vcard-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h8M9 17h6"/></svg></span><span class="route-tag">Rights</span><b>Open Policy Finder</b><span class="route-txt">Formerly Sherpa Romeo: what you may self-archive, and when</span></div><div class="vcard" data-reveal><span class="vcard-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6l2 2 3-3M4 13l2 2 3-3M4 20l2 2 3-3"/><path d="M12 7h8M12 14h8M12 21h8"/></svg></span><span class="route-tag">Checklist</span><b>Think. Check. Submit.</b><span class="route-txt">A short checklist to judge a journal</span></div></div></div>
       <p class="src" data-reveal>Source: Jisc, Open Policy Finder (2024). doaj.org. thinkchecksubmit.org.</p>
     </div>
   </section>
   <section class="slide talk-claim" id="s12" data-min="1" data-notes="A 2018 study from SPPU, Pune, found most journals recommended for the UGC list were of poor quality. UGC removed 4,305 journals that year and built the CARE list in 2019, screened at SPPU. In 2025 UGC discontinued the list. Each institution now judges journals using suggested parameters. Next: One last question, a real-looking email.">
     <div class="slide-inner">
       <h2 data-reveal>In India, journal checks moved from one central list to each institution</h2>
-      <div class="facts" data-stagger><div class="fact" data-reveal><b class="num">2018</b><span>SPPU study finds about 88% of journals recommended for the UGC list poor</span></div><div class="fact" data-reveal><b class="num">4,305</b><span>journals removed from the UGC list, May 2018</span></div><div class="fact" data-reveal><b class="num">2019</b><span>UGC-CARE list, screened at SPPU's Centre for Publication Ethics</span></div><div class="fact" data-reveal><b class="num">2025</b><span>CARE list discontinued, institutions now evaluate journals</span></div></div>
+      <div data-reveal><ol class="tline" data-stagger><li data-reveal><b class="num">2018</b><span>SPPU study: about 88% of journals recommended for the UGC list were poor</span></li><li data-reveal><b class="num">May 2018</b><span>UGC removes 4,305 journals from its list</span></li><li data-reveal><b class="num">2019</b><span>UGC-CARE list, screened at SPPU’s Centre for Publication Ethics</span></li><li data-reveal><b class="num">2025</b><span>CARE list discontinued, institutions now evaluate journals</span></li></ol></div>
       <p class="src" data-reveal>Source: Nature Index (3 May 2018). Scholarly Kitchen (5 Feb 2020). UGC 584th meeting (3 Oct 2024), announced Feb 2025.</p>
     </div>
   </section>
@@ -784,7 +844,7 @@ body.aud-mode .aud{display:block}
   <section class="slide talk-takeaway" id="s15" data-min="1" data-notes="Here is the playbook. A clear abstract, two finders from different publishers, a shortlist of three, then verify indexing, open access and rights. Finally read the journal&#x27;s aims and a few recent papers. The finder saves you time. Your judgement keeps you safe. Next: The sources I used.">
     <div class="slide-inner">
       <h2 class="display" data-reveal>Run two finders, then verify before you submit</h2>
-      <ol class="steps" data-stagger><li data-reveal>Write a clear title and abstract</li><li data-reveal>Run at least two finders, from different publishers</li><li data-reveal>Shortlist three journals</li><li data-reveal>Verify indexing, DOAJ and self-archiving rights</li><li data-reveal>Read the aims, scope and recent issues</li></ol>
+      <div data-reveal><ol class="play" data-stagger><li data-reveal><span class="play-n">1</span><b>Write</b><span>a clear title and abstract</span></li><li data-reveal><span class="play-n">2</span><b>Run</b><span>two finders, from different publishers</span></li><li data-reveal><span class="play-n">3</span><b>Shortlist</b><span>three journals</span></li><li data-reveal><span class="play-n">4</span><b>Verify</b><span>indexing, DOAJ and self-archiving rights</span></li><li data-reveal><span class="play-n">5</span><b>Read</b><span>the aims, scope and recent issues</span></li></ol></div>
     </div>
   </section>
   <section class="slide talk-refs" id="s16" data-min="0.5" data-notes="Every fact on the slides comes from these sources, checked on 21 October 2026. Next: Questions, please.">
