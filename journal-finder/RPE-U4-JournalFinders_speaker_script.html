@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en" data-base="1.9.1" data-persist="on" data-page="rpe-u4-journalfinders-script" data-profile="notes" data-core="c0.0.0" data-pack="p0.0.0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f6f7fb" id="themeColor">
+<meta name="description" content="Speaker script, timing plan, likely questions and references for: Where should my paper go? Journal finders, hands on">
+<title>Speaker script · Where should my paper go? Journal finders, hands on</title>
+<script>document.documentElement.classList.add('js')</script>
+<script>try{var r=document.documentElement,t=localStorage.getItem('kp:theme');if(t==='light'||t==='dark')r.dataset.theme=t}catch(e){}</script>
+<style>
+/* DESIGN: Same field-guide look as the slides, plain and scannable while presenting. */
+/* ===== 1. TOKENS — names are fixed by kp-html-base; VALUES are the page's own design choice ===== */
+:root{
+  --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+  --sal:env(safe-area-inset-left,0px); --sar:env(safe-area-inset-right,0px);
+  --pad:clamp(16px,4vw,32px); --gap:clamp(12px,3vw,24px);
+  --r:16px; --r-lg:24px; --r-pill:999px;
+  --nav-h:65px; --dock-h:73px; --measure:68ch;
+  --dur-1:140ms; --dur-2:260ms; --dur-3:460ms;
+  --ease-out:cubic-bezier(.22,.61,.36,1); --ease-in:cubic-bezier(.55,.06,.68,.19);
+  --ease-soft:cubic-bezier(.2,.8,.2,1); --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --step--1:clamp(.84rem,.82rem + .1vw,.9rem);
+  --step-0:clamp(1rem,.95rem + .25vw,1.12rem);
+  --step-1:clamp(1.2rem,1.1rem + .5vw,1.45rem);
+  --step-2:clamp(1.6rem,1.32rem + 1.4vw,2.4rem);
+  --step-3:clamp(2.1rem,1.6rem + 2.5vw,3.4rem);
+  --font-body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-display:var(--font-body);
+  --font-mono:ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,monospace;
+  /* light palette (placeholder — override freely, keep the token names) */
+  --bg:#f6f7fb; --card:#ffffff; --soft:#e9ecf5; --fg:#15171f; --muted:#555b6e;
+  --line:#c9cfdf; --accent:#3a4fd7; --accent-fg:#ffffff; --accent-2:#d7359a;
+  --nav-bg:rgba(246,247,251,.82);
+  --shadow-1:0 1px 2px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+  --shadow-2:0 6px 18px rgba(0,0,0,.08),0 1px 3px rgba(0,0,0,.05);
+  --shadow-3:0 18px 48px rgba(0,0,0,.14);
+  --ambient-glow:rgba(58,79,215,.07); --ambient-rule:rgba(21,23,31,.035);
+  --glass:rgba(255,255,255,.74); --code-bg:#1e1e2e; --code-fg:#f2f2f0;
+  --ok:#1d7a4f; --warn:#8a5a00; --bad:#b3261e;
+  --tint:#eef1fb; --tint-2:#fbeef6;
+}
+/* dark palette — layer 2 (system preference, unless the user forced light) */
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1117; --card:#181b25; --soft:#252a38; --fg:#eef0f6; --muted:#a3a9bd;
+    --line:#3a4157; --accent:#8fa0ff; --accent-fg:#0f1117; --accent-2:#ff7ac6;
+    --nav-bg:rgba(15,17,23,.82);
+    --shadow-1:0 1px 2px rgba(0,0,0,.4); --shadow-2:0 8px 22px rgba(0,0,0,.45); --shadow-3:0 22px 56px rgba(0,0,0,.6);
+    --ambient-glow:rgba(143,160,255,.07); --ambient-rule:rgba(238,240,246,.03);
+    --glass:rgba(24,27,37,.74); --code-bg:#11121a; --code-fg:#f2f2f0;
+    --ok:#6fd3a0; --warn:#f0c05a; --bad:#ff8a80;
+    --tint:#1d2231; --tint-2:#2a1d27;
+  }
+}
+/* dark palette — layer 3 (explicit toggle). KEEP IDENTICAL to layer 2 values. */
+:root[data-theme="dark"]{
+  --bg:#0f1117; --card:#181b25; --soft:#252a38; --fg:#eef0f6; --muted:#a3a9bd;
+  --line:#3a4157; --accent:#8fa0ff; --accent-fg:#0f1117; --accent-2:#ff7ac6;
+  --nav-bg:rgba(15,17,23,.82);
+  --shadow-1:0 1px 2px rgba(0,0,0,.4); --shadow-2:0 8px 22px rgba(0,0,0,.45); --shadow-3:0 22px 56px rgba(0,0,0,.6);
+  --ambient-glow:rgba(143,160,255,.07); --ambient-rule:rgba(238,240,246,.03);
+  --glass:rgba(24,27,37,.74); --code-bg:#11121a; --code-fg:#f2f2f0;
+  --ok:#6fd3a0; --warn:#f0c05a; --bad:#ff8a80;
+  --tint:#1d2231; --tint-2:#2a1d27;
+}
+
+/* ===== 2. RESET / BASE ===== */
+*,*::before,*::after{box-sizing:border-box}
+html{color-scheme:light dark;-webkit-text-size-adjust:100%;text-size-adjust:100%;
+  scroll-padding-top:calc(var(--nav-h) + var(--sat) + 12px);scroll-behavior:smooth}
+:root[data-theme="light"]{color-scheme:light}
+:root[data-theme="dark"]{color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:400 var(--step-0)/1.55 var(--font-body);
+  overflow-x:clip;-webkit-tap-highlight-color:transparent;text-rendering:optimizeLegibility;
+  padding-top:calc(var(--nav-h) + var(--sat) + var(--gap));
+  padding-bottom:calc(var(--sab) + var(--gap));
+  padding-left:calc(var(--sal) + var(--pad)); padding-right:calc(var(--sar) + var(--pad))}
+img,video,canvas,svg{max-width:100%;display:block;height:auto}
+h1,h2,h3{font-family:var(--font-display)}
+h1{font-size:var(--step-3);line-height:1.08;margin:.2em 0 .4em;text-wrap:balance}
+h2{font-size:var(--step-2);line-height:1.15;margin:1.2em 0 .4em;text-wrap:balance}
+h3{font-size:var(--step-1);line-height:1.25;margin:1em 0 .35em}
+p{text-wrap:pretty}
+code,kbd,pre{font-family:var(--font-mono)}
+/* iOS zooms the whole page when a focused input is < 16px — never go below 16px */
+button,input,select,textarea{font:inherit;color:inherit}
+input:not([type=checkbox]):not([type=radio]):not([type=range]),select,textarea{font-size:max(16px,1em);min-height:48px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);max-width:100%}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-9999px}
+.skip:focus{display:inline-flex;align-items:center;min-height:48px;left:12px;top:calc(var(--sat) + 8px);z-index:100;background:var(--card);color:var(--fg);padding:12px 16px;border-radius:10px;border:1px solid var(--line)}
+
+/* ===== 3. NAV (kp-html-base — edit HERE ONLY, every skill inherits) ===== */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;gap:8px;
+  padding:calc(var(--sat) + 8px) calc(var(--sar) + var(--pad)) 8px calc(var(--sal) + var(--pad));
+  /* opaque: --nav-bg tints a solid --bg layer, so page text never shows through (1.6.1) */
+  background:linear-gradient(var(--nav-bg),var(--nav-bg)),var(--bg);border-bottom:1px solid var(--line);
+  -webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.nav{background:var(--card)}}
+.nav-brand{display:flex;align-items:center;gap:10px;min-width:0;margin-right:auto}
+.nav-brand>div{min-width:0}
+.nav-logo{width:40px;height:40px;flex:none;border-radius:50%;object-fit:contain;background:transparent}
+.nav-logo[hidden]{display:none}
+.nav-name{font-weight:700;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-sub{font-size:.75rem;line-height:1.2;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-cta{display:inline-flex;align-items:center;min-height:48px;padding:0 14px;flex:none;
+  border-radius:var(--r-pill);background:var(--accent);color:var(--accent-fg);
+  font-size:.85rem;font-weight:600;text-decoration:none;white-space:nowrap}
+.theme-toggle{flex:none;width:48px;height:48px;border:0;border-radius:50%;background:transparent;
+  font-size:1.25rem;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+@media (hover:hover){.theme-toggle:hover{background:var(--soft)}}
+.nav-roll{cursor:default;background:var(--soft);color:var(--fg);border:1px solid var(--line);font-variant-numeric:tabular-nums;max-width:44vw;overflow:hidden}
+@media (max-width:379px){.nav-sub{display:none}.nav-cta{padding:0 10px;font-size:.78rem}.nav-roll-label{display:none}}
+@media (max-width:479px){.nav-roll-label{display:none}.nav-roll{padding:0 12px}}
+/* nav profiles sgt-rd and none (1.7.0): sgt-rd = "SGT · R&D" badge left, SGT logo centred (seal only below 640px), toggle right;
+   none = the page title and the toggle only. The logo sits on its own white plate so the blue wordmark reads in both themes. */
+.nav-sgt{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}
+.nav-sgt .nav-brand{margin-right:0}.nav-sgt .theme-toggle{justify-self:end}
+.nav-badge{display:inline-flex;align-items:center;min-height:32px;padding:0 10px;flex:none;border-radius:var(--r-pill);border:1px solid var(--line);
+  background:var(--soft);color:var(--fg);font:700 .72rem/1 var(--font-mono);letter-spacing:.08em;white-space:nowrap}
+.nav-mark{display:flex;align-items:center;justify-content:center;flex:none;height:44px;padding:4px 10px;border-radius:10px;background:#fff}
+.nav-mark img{display:block;height:34px;width:auto;max-width:none}
+.nav-mark[hidden]{display:none}
+@media (max-width:639px){.nav-mark{width:44px;padding:2px;border-radius:50%}.nav-mark img{width:40px;height:40px;object-fit:cover;object-position:left center;border-radius:50%}}
+
+/* ===== 4. LAYOUT / COMPONENTS ===== */
+.wrap{max-width:72rem;margin-inline:auto}
+.measure{max-width:var(--measure)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:var(--gap)}
+.btn{min-height:48px;min-width:48px;padding:12px 20px;border-radius:var(--r-pill);cursor:pointer;
+  border:1px solid var(--line);background:var(--card);
+  transition:transform var(--dur-1) var(--ease-out),border-color var(--dur-1) var(--ease-out)}
+.btn:active{transform:scale(.96)}
+.btn:disabled{opacity:.45;cursor:default;transform:none}
+.btn-primary{background:var(--accent);color:var(--accent-fg);border-color:transparent}
+@media (hover:hover){.btn:not(:disabled):hover{border-color:var(--accent)}}
+.num{font-variant-numeric:tabular-nums}
+.meter{height:8px;border-radius:var(--r-pill);background:var(--soft);overflow:hidden}
+.meter>span{display:block;height:100%;border-radius:inherit;background:var(--accent);transform-origin:0 50%;transform:scaleX(var(--p,0));transition:transform var(--dur-3) var(--ease-out)}
+.cp{display:flex;align-items:center;gap:12px;min-height:48px;cursor:pointer}
+.cp input{width:24px;height:24px;flex:none;accent-color:var(--accent)}
+/* bottom action dock (quiz attempt screen, deck controls): clears the iPhone home bar; add class "has-dock" to <body> */
+body.has-dock{padding-bottom:calc(var(--dock-h) + var(--sab) + var(--gap))}
+.dock{position:fixed;inset:auto 0 0 0;z-index:40;display:flex;gap:12px;align-items:center;
+  padding:12px calc(var(--sar) + var(--pad)) calc(var(--sab) + 12px) calc(var(--sal) + var(--pad));
+  background:linear-gradient(var(--nav-bg),var(--nav-bg)),var(--bg);border-top:1px solid var(--line);
+  -webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.dock{background:var(--card)}}
+.dock .btn{flex:1;padding-block:0;line-height:1.2}
+.dock-status{flex:none;font-variant-numeric:tabular-nums;color:var(--muted);font-size:.9rem;min-width:4.5em;text-align:center}
+/* long pages: reading-progress hairline + scroll-spy contents */
+.scroll-progress{position:fixed;left:0;right:0;top:var(--sat);height:3px;z-index:60;pointer-events:none}
+.scroll-progress>span{display:block;height:100%;background:var(--accent);transform-origin:0 50%;transform:scaleX(var(--p,0))}
+[data-spy] a[aria-current="true"]{color:var(--accent);font-weight:700}
+
+/* ===== 5. MOTION (library — use what the page needs; every piece degrades to static) ===== */
+.js [data-reveal]{opacity:0;transform:translate3d(0,20px,0);
+  transition:opacity var(--dur-3) var(--ease-soft) var(--d,0ms),transform var(--dur-3) var(--ease-soft) var(--d,0ms)}
+.js [data-reveal].is-in{opacity:1;transform:none}
+@keyframes kp-rise{from{opacity:0;transform:translate3d(0,24px,0)}to{opacity:1;transform:none}}
+@keyframes kp-slam{0%{opacity:0;transform:rotate(var(--tilt,-6deg)) scale(2.4)}62%{opacity:1;transform:rotate(var(--tilt,-6deg)) scale(.94)}100%{opacity:1;transform:rotate(var(--tilt,-6deg)) scale(1)}}
+@keyframes kp-pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}
+@keyframes kp-drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(40px,-70px,0)}}
+.kp-rise{animation:kp-rise var(--dur-3) var(--ease-soft) both}
+.kp-slam{display:inline-block;animation:kp-slam .55s var(--ease-spring) both}
+.kp-pop{animation:kp-pop var(--dur-3) var(--ease-spring) both}
+/* ambient texture (static, cheap): <body data-ambient> — soft glow + faint ruled lines */
+body[data-ambient]::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(1100px 650px at 75% -10%,var(--ambient-glow),transparent 60%),
+    repeating-linear-gradient(0deg,transparent 0 46px,var(--ambient-rule) 46px 47px)}
+/* drifting motes: LOOPING decoration → page must also carry a data-pause-motion button */
+.mote{position:fixed;z-index:-1;border-radius:50%;background:var(--fg);opacity:.05;pointer-events:none;
+  animation:kp-drift 26s ease-in-out infinite alternate}
+[data-motion="paused"] *,[data-motion="paused"] *::before,[data-motion="paused"] *::after{animation-play-state:paused !important}
+@media print{
+  .nav,.dock,.scroll-progress,.theme-toggle,[data-pause-motion],.mote{display:none !important}
+  body{padding:0;background:#fff;color:#000}
+  .js [data-reveal]{opacity:1 !important;transform:none !important}
+}
+
+/* ===== KIT: DOCS / REFERENCE PAGE (kp-html-base 1.6.0) — lab manuals + lecture notes =====
+   Layout: left course resources · centre content · right "On this page" (scroll-spy).
+   ≥1100px three columns · 860–1099px content + right column (course list folds above content) · <860px one column,
+   "On this page" becomes a sticky fold-out bar under the nav. Every panel stays reachable — never display:none. */
+.docs{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap);max-width:88rem;margin-inline:auto;align-items:start}
+.docs-main{min-width:0;width:100%;max-width:50rem;margin-inline:auto}
+.docs-left{order:-2}.docs-right{order:-1}
+.docs-panel{border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+.docs-panel>summary{display:flex;align-items:center;gap:8px;min-height:48px;padding:0 16px;cursor:pointer;list-style:none;
+  font:700 .95rem/1.3 var(--font-body);color:var(--fg)}   /* sidebar labels: bold sentence case, not spaced monospace capitals (1.8.1) */
+.docs-panel>summary::-webkit-details-marker{display:none}
+.docs-panel>summary::after{content:"▾";margin-left:auto;transition:transform var(--dur-2) var(--ease-out)}
+.docs-panel[open]>summary::after{transform:rotate(180deg)}
+.docs-panel nav{display:grid;gap:2px;padding:0 8px 10px}
+.docs-panel nav a{display:flex;align-items:center;min-height:44px;padding:6px 10px;border-radius:10px;color:var(--fg);
+  text-decoration:none;font-size:.92rem;line-height:1.3}
+@media (pointer:coarse){.docs-panel nav a{min-height:48px}}
+.docs-panel nav a[aria-current]{color:var(--accent);background:var(--soft);font-weight:700}
+@media (hover:hover){.docs-panel nav a:hover{background:var(--soft)}}
+@media (max-width:859px){
+  html{scroll-padding-top:calc(var(--nav-h) + var(--sat) + 72px)}
+  .docs-right{position:sticky;top:calc(var(--nav-h) + var(--sat) + 6px);z-index:30}
+  .docs-right .docs-panel{box-shadow:var(--shadow-2)}
+  .docs-right nav{max-height:55dvh;overflow:auto}
+}
+@media (min-width:860px){
+  .docs{grid-template-columns:minmax(0,1fr) 13.5rem}
+  .docs-left{grid-column:1;grid-row:1}
+  .docs-main{grid-column:1;grid-row:2}
+  .docs-right{grid-column:2;grid-row:1 / span 2;position:sticky;top:calc(var(--nav-h) + var(--sat) + var(--gap))}
+  .docs-right nav{max-height:calc(100dvh - var(--nav-h) - var(--sat) - 7rem);overflow:auto}
+  .docs-right .docs-panel>summary{pointer-events:none}
+  .docs-right .docs-panel>summary::after{display:none}
+}
+@media (min-width:1100px){
+  .docs{grid-template-columns:13rem minmax(0,1fr) 13.5rem}
+  .docs-left{grid-column:1;grid-row:1;position:sticky;top:calc(var(--nav-h) + var(--sat) + var(--gap))}
+  .docs-main{grid-column:2;grid-row:1}
+  .docs-right{grid-column:3;grid-row:1}
+  .docs-left nav{max-height:calc(100dvh - var(--nav-h) - var(--sat) - 7rem);overflow:auto}
+  .docs-left .docs-panel>summary{pointer-events:none}
+  .docs-left .docs-panel>summary::after{display:none}
+}
+.docs-main>section{padding-top:.5rem}
+.docs-main>section+section{margin-top:clamp(1.5rem,4vw,2.75rem)}
+@media (max-width:859px){.docs-main>section+section{margin-top:.75rem}.docs-main>section>h2:first-child{margin-top:.35em}}   /* phones: half the space above a section title (1.7.0) */
+@media (min-width:860px){.docs-main>section+section{margin-top:1.75rem}.docs-main>section>h2:first-child{margin-top:.35em}}   /* laptops: half the space above a section title, 98 -> 49 px (1.8.1) */
+
+/* ---- surfaces ---- */
+.glass{background:var(--glass);border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--gap);box-shadow:var(--shadow-2)}
+@media (min-width:768px) and (hover:hover){html:not([data-perf="low"]) .glass{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}}
+.kicker{font:700 .74rem/1.3 var(--font-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0}
+.sub{color:var(--muted);font-size:var(--step-1);margin-top:0}
+.plain{border-left:4px solid var(--accent-2);background:var(--soft);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:1rem 0}
+.plain>b:first-child{color:var(--fg)}
+.callout{display:flex;gap:12px;align-items:flex-start;background:var(--soft);border-radius:var(--r);padding:12px 16px;margin:1rem 0}
+.callout-face{font-size:1.6rem;line-height:1;flex:none}
+.mixup{border:1px dashed var(--warn);border-radius:var(--r);padding:12px 16px;margin:1rem 0}
+.mixup>b:first-child{color:var(--warn)}
+.takeaway{font:italic 600 var(--step-1)/1.4 var(--font-display);border-left:4px solid var(--accent);padding:6px 0 6px 16px;margin:1.2rem 0}
+.formula{display:inline-block;font:600 1.02rem/1.4 var(--font-mono);color:var(--accent);background:var(--soft);border-radius:10px;padding:6px 12px;overflow-wrap:anywhere;max-width:100%}
+.grid-cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));margin:1rem 0}
+.plan{list-style:none;counter-reset:plan;padding:0;margin:1rem 0;display:grid;gap:10px}
+.plan>li{counter-increment:plan;display:flex;gap:12px;align-items:flex-start}
+.plan>li::before{content:counter(plan);flex:none;display:grid;place-items:center;width:2rem;height:2rem;border-radius:50%;
+  background:var(--accent);color:var(--accent-fg);font-weight:700}
+.slips{list-style:none;padding:0;display:grid;gap:10px}
+.slips>li{display:flex;gap:10px;background:var(--soft);border-radius:var(--r);padding:12px 14px}
+.slips>li::before{content:"⚠️";flex:none}
+.recap{border-top:2px solid var(--accent);padding-top:.5rem}
+.next-up{display:flex;gap:12px;align-items:flex-start;background:var(--soft);border-radius:var(--r);padding:14px 18px}
+.table-wrap{overflow-x:auto;margin:1rem 0;border:1px solid var(--line);border-radius:var(--r)}
+.table-wrap table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;background:var(--card)}
+.table-wrap th,.table-wrap td{padding:10px 14px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.table-wrap th{background:var(--soft);font-size:.85rem}
+.table-wrap tr:last-child td{border-bottom:0}
+.table-wrap caption{padding:10px 14px}   /* 1.9.1 (A4-5): a caption sat against the box border; same padding as the cells */
+
+/* ---- code blocks: solid, never glassy (readability 7:1) ---- */
+.code{position:relative;margin:1rem 0}
+.code pre{margin:0;background:var(--code-bg);color:var(--code-fg);border-radius:var(--r);padding:16px 18px;overflow-x:auto;
+  font:500 .9rem/1.6 var(--font-mono);tab-size:2}
+.code .copy{position:absolute;top:6px;right:6px;min-height:40px;min-width:64px;border-radius:10px;border:1px solid rgba(242,242,240,.35);
+  background:var(--code-bg);color:var(--code-fg);font:600 .75rem/1 var(--font-mono);cursor:pointer}
+@media (pointer:coarse){.code .copy{min-height:48px}}
+code{font-size:.92em}
+p code,li code,td code{background:var(--soft);padding:.1em .35em;border-radius:6px}
+
+/* ---- reveal / predict / exam-angle (native <details>: works with JS off) ---- */
+.reveal{border:1px solid var(--line);border-radius:var(--r);background:var(--card);margin:1rem 0}
+.reveal>summary{display:flex;align-items:center;min-height:48px;padding:0 16px;cursor:pointer;font-weight:600;list-style:none}
+.reveal>summary::-webkit-details-marker{display:none}
+.reveal>summary::before{content:"▸";margin-right:10px;transition:transform var(--dur-2) var(--ease-out)}
+.reveal[open]>summary::before{transform:rotate(90deg)}
+.reveal>div{padding:0 16px 14px}
+.reveal[open]>div{animation:kp-rise var(--dur-3) var(--ease-soft) both}
+
+/* ---- flip cards: <button class="flip" type="button" aria-pressed="false"><span class="flip-front">…</span><span class="flip-back">…</span></button> ---- */
+.flip{display:grid;gap:8px;width:100%;min-height:9rem;padding:0;border:0;background:transparent;text-align:left;cursor:pointer;font:inherit;color:inherit}
+.flip>span{display:grid;align-content:center;gap:6px;padding:16px;border-radius:var(--r);border:1px solid var(--line)}
+.flip-front{background:var(--card);box-shadow:var(--shadow-1)}
+.flip-back{background:var(--soft);border-color:var(--accent)}
+.flip-hint{font:600 .72rem/1 var(--font-mono);letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.js .flip{perspective:900px}
+.js .flip>span{grid-area:1/1;-webkit-backface-visibility:hidden;backface-visibility:hidden;transition:transform var(--dur-3) var(--ease-soft)}
+.js .flip-back{transform:rotateY(180deg)}
+.js .flip[aria-pressed="true"] .flip-front{transform:rotateY(-180deg)}
+.js .flip[aria-pressed="true"] .flip-back{transform:rotateY(0)}
+.flip:focus-visible{outline:none}
+.flip:focus-visible>span{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ---- step-through widget: [data-stepper] ---- */
+.stepper{margin:1rem 0}
+.stepper-steps{margin:0 0 12px;padding-left:1.4rem;display:grid;gap:8px}
+.stepper-steps>li{padding:8px 12px;border-radius:10px}
+.js .stepper-steps>li{display:none}
+.js .stepper-steps>li.is-shown{display:list-item;color:var(--muted)}
+.js .stepper-steps>li.is-current{color:var(--fg);background:var(--soft);box-shadow:inset 3px 0 0 var(--accent);animation:kp-rise var(--dur-2) var(--ease-soft) both}
+.stepper-ctl{display:none;gap:10px;align-items:center;flex-wrap:wrap}
+.js .stepper-ctl{display:flex}
+.stepper-ctl [data-step-status]{flex:1;min-width:8rem;color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}
+
+/* ---- practice quiz: [data-quiz] (never graded — graded quizzes use ai-faculty-quiz-generator) ---- */
+.quiz{display:grid;gap:14px;margin:1rem 0}
+.quiz-score{font:700 1rem/1.3 var(--font-mono);color:var(--accent);margin:0}
+.q{border:1px solid var(--line);border-radius:var(--r);padding:12px 16px 14px;margin:0;background:var(--card);display:grid;gap:8px}
+.q>legend{font-weight:700;padding:0 6px}
+.q-opt{min-height:48px;text-align:left;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--soft);cursor:pointer;
+  transition:border-color var(--dur-1) var(--ease-out),transform var(--dur-1) var(--ease-out)}
+.q-opt:active{transform:scale(.99)}
+.q-opt[aria-pressed="true"].is-right,.q-opt.is-answer{border-color:var(--ok)}
+.q-opt[aria-pressed="true"].is-wrong{border-color:var(--bad)}
+.q-fb{margin:0;min-height:1.2em}
+.q-fb.ok{color:var(--ok)}.q-fb.no{color:var(--bad)}
+@media (hover:hover){.q-opt:not(:disabled):hover{border-color:var(--accent)}}
+.q-opt:disabled{cursor:default}
+.no-js-only{display:block}.js .no-js-only{display:none}
+
+/* ---- locked solution: <details class="reveal" data-lock="3"> or data-lock-key="…" (a deterrent, not security) ---- */
+.lock-form{display:none;gap:8px;align-items:center;flex-wrap:wrap;margin:-6px 0 12px}
+.lock-form.is-open{display:flex}
+.lock-form input{flex:1;min-width:10rem}
+.lock-msg{font-size:.85rem;color:var(--muted);margin:0;flex-basis:100%}
+
+@media print{
+  .docs{display:block}.docs-left,.docs-right,.stepper-ctl,.code .copy,.lock-form{display:none !important}
+  .js .stepper-steps>li{display:list-item !important}
+  .js .flip>span{transform:none !important;grid-area:auto}
+  details.reveal>div{display:block}
+  .code pre{white-space:pre-wrap;border:1px solid #999;background:#fff;color:#000}
+  section,.q,.glass{break-inside:avoid}
+}
+.h-sm{font-size:var(--step-1);margin:0 0 .4em}
+/* ===== PAGE DESIGN (this page's own look) ===== */
+/* arc-slides 1.0.0 talk look "ledger" (from the RPE example's rpe_page.css): paper white, navy ink, one seal-red accent,
+   serif display; restrained for panels and committees. A talk may add its own CSS after this file (--css or "css" in
+   the source) to change the tokens; component class names stay. Slides: body text 32px or more at 1280px (kp-html-base
+   references/deck.md, "Slide rules"). */
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --soft:#ebe8df; --fg:#18202e; --muted:#4f5663;
+  --line:#cfcabd; --accent:#a3261d; --accent-fg:#ffffff; --accent-2:#1f3a5f;
+  --nav-bg:rgba(247,246,242,.88);
+  --font-display:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#10141c; --card:#19202c; --soft:#252d3b; --fg:#ecebe6; --muted:#aab0bb;
+  --line:#3a4354; --accent:#ff8a7a; --accent-fg:#10141c; --accent-2:#9cc0ea; --nav-bg:rgba(16,20,28,.88);}}
+:root[data-theme="dark"]{
+  --bg:#10141c; --card:#19202c; --soft:#252d3b; --fg:#ecebe6; --muted:#aab0bb;
+  --line:#3a4354; --accent:#ff8a7a; --accent-fg:#10141c; --accent-2:#9cc0ea; --nav-bg:rgba(16,20,28,.88);}
+
+/* ---- deck ---- */
+.kicker{font:700 .74rem/1.3 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0}
+.slide h1{font-size:clamp(2.1rem,1.4rem + 3.6vw,4.2rem);line-height:1.05;max-width:18ch}
+.slide h2{max-width:30ch}
+.slide h1 em,.slide h2 em{font-style:italic;color:var(--accent)}
+.byline{color:var(--muted);font-size:var(--step-1);margin-top:var(--gap)}
+.slide .display{font-size:clamp(1.8rem,1.2rem + 2.8vw,3.2rem);line-height:1.12;max-width:22ch}
+.lead{max-width:40ch;margin:.6em 0 0}
+.points{margin:.6em 0 0;padding-left:1.1em;display:grid;gap:.35em;max-width:44ch}
+.facts{display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));border-block:1px solid var(--line);padding-block:var(--gap);margin-top:var(--gap)}
+.fact b{display:block;font:700 clamp(1.6rem,1.2rem + 1.8vw,2.6rem)/1.1 var(--font-display);color:var(--accent-2)}
+.fact span{color:var(--muted)}
+.tcards{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));margin-top:var(--gap)}
+.tcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:grid;gap:4px;align-content:start;box-shadow:var(--shadow-1)}
+.tcard b{font-family:var(--font-display);font-size:1.1em;color:var(--accent-2)}
+.tcard .tag{font:700 .68rem/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);margin-top:var(--gap)}
+.table-wrap table{border-collapse:collapse;width:100%;background:var(--card)}
+.table-wrap th,.table-wrap td{padding:8px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.table-wrap th{background:var(--soft)}
+.steps{list-style:none;margin:var(--gap) 0 0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));counter-reset:st}
+.steps>li{counter-increment:st;background:var(--card);border:1px solid var(--line);border-top:4px solid var(--accent-2);border-radius:var(--r);padding:12px 14px}
+.steps>li::before{content:counter(st);display:block;font:700 .8em/1 var(--font-mono);color:var(--accent);margin-bottom:.3em}
+.predict{display:grid;gap:.8rem;justify-items:start;margin-top:var(--gap)}
+.reveal-ans{margin:0}
+.stamp{font:700 1.05rem/1.1 var(--font-mono);letter-spacing:.16em;color:var(--accent);border:3px double currentColor;border-radius:.4em;padding:.45em .8em;--tilt:-5deg;transform:rotate(var(--tilt));display:inline-block;margin-left:.4em}
+.qa{font:700 var(--step-2)/1.1 var(--font-display);color:var(--accent);margin-top:var(--gap)}
+.slide .src{max-width:none}
+.deck .layers{margin-top:var(--gap)}
+
+/* the back of the room: body text 32px or more at 1280px (deck.md); phones keep the body size */
+@media (min-width:1024px){
+  .deck .slide-inner{font-size:32px;line-height:1.35}
+  .deck .slide-inner h2{font-size:44px;line-height:1.15}
+  .deck .slide-inner h1{font-size:56px;line-height:1.08}
+  .deck .slide-inner .display{font-size:52px}
+  .deck .slide-inner .kicker{font-size:20px}
+  .deck .slide-inner .src{font-size:18px}
+  .deck .slide-inner .refs>li{font-size:24px}
+  .deck .slide-inner .btn{font-size:28px}
+  .deck .slide-inner .tcard .tag{font-size:16px}
+  .deck .slide-inner .byline{font-size:1em}
+  .deck .slide-inner .stamp{font-size:32px}
+  .deck .slide-inner .fact b{font-size:56px}
+  .deck .slide-inner .layers-ctl .btn{font-size:24px}
+}
+
+/* ---- speaker script ---- */
+.glance{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:var(--r);background:var(--card);padding:12px 16px;margin:.8rem 0}
+.glance dl{display:grid;grid-template-columns:max-content 1fr;gap:.35em .9em;margin:0}
+.glance dt{font-weight:700;color:var(--accent-2)}
+.glance dd{margin:0}
+.glance .g-min{font:700 .8rem/1 var(--font-mono);color:var(--accent);margin:0 0 .5em}
+.timing td.num,.timing th.num{text-align:right;white-space:nowrap}
+.timing tr.can-skip td:last-child{color:var(--muted);font-style:italic}
+/* the docs kit keeps table cells on one line; the timing table must fit the screen (KP, A3 review) */
+.timing .t-slide{white-space:normal;min-width:10rem}
+.timing .t-short{display:none}
+@media (max-width:640px){
+  .timing th,.timing td{padding:8px 6px;white-space:normal}
+  .timing .t-slide{min-width:0}
+  .timing .has-short .t-long{display:none}
+  .timing .t-short{display:inline}
+}
+.open-slides{display:inline-flex;margin-top:.6rem;text-decoration:none}
+.timing a,.glance a{color:var(--accent-2);text-underline-offset:.15em}
+@media (max-width:480px){.glance dl{grid-template-columns:1fr}.glance dd{margin-bottom:.4em}}
+/* RPE Unit 4 playbook: field-guide palette (one open-access amber accent) and the demo and simulated-finder widgets */
+:root{--accent:#a14a06;--accent-fg:#ffffff;--accent-2:#0f5e66}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent:#fdba74;--accent-fg:#1a1205;--accent-2:#7dd3dc}}
+:root[data-theme="dark"]{--accent:#fdba74;--accent-fg:#1a1205;--accent-2:#7dd3dc}
+.demo{display:grid;gap:var(--gap)}
+.demo-links{display:flex;flex-wrap:wrap;gap:10px}
+.demo-links .btn{min-height:48px}
+.abstract{margin:0;padding:var(--pad);max-width:var(--measure)}
+.abstract figcaption{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px}
+.abstract p{margin:0;font-size:var(--step-0);line-height:1.5}
+.sim{display:grid;gap:12px;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:start}
+.sim-badge{grid-column:1/-1;margin:0;justify-self:start;padding:6px 12px;border-radius:var(--r-pill);border:1px dashed var(--accent);color:var(--fg);font-size:var(--step--1)}
+.sim-in{display:grid;gap:8px}
+.sim-field{display:grid;gap:6px}
+.sim textarea{width:100%;min-height:96px;padding:10px;border-radius:var(--r);border:1px solid var(--line);background:var(--card);color:var(--fg);font:inherit;font-size:16px;resize:vertical}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:48px;padding:0 14px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--card);color:var(--fg);font:inherit;font-size:var(--step--1);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.chip:focus-visible{outline:3px solid var(--accent-2);outline-offset:2px}
+.sim-out{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.sim-row{padding:10px 12px;border-radius:var(--r);border:1px solid var(--line);background:var(--card)}
+.sim-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.sim-pct{color:var(--accent-2);font-weight:700;white-space:nowrap}
+.sim-bar{height:8px;margin:6px 0;border-radius:var(--r-pill);background:var(--soft);overflow:hidden}
+.sim-bar span{display:block;height:100%;background:var(--accent-2);transform:scaleX(0);transform-origin:left;transition:transform var(--dur-3) var(--ease-out)}
+.sim-meta{margin:0;color:var(--muted)}
+.sim-flag{border-color:var(--bad);border-width:2px}
+.sim-flag .sim-bar span{background:var(--bad)}
+.sim-flags{margin:6px 0 0;color:var(--bad);font-weight:600;font-size:var(--step--1)}
+.sim-none{color:var(--muted)}
+@media (max-width:760px){.sim{grid-template-columns:1fr}}
+.slide .sim-head b{font-size:1.1rem;line-height:1.3}
+.slide .sim-pct{font-size:1rem}
+.slide .sim-meta{font-size:.95rem;line-height:1.4}
+.slide .sim-flags{font-size:.92rem;line-height:1.4}
+.slide .sim-none{font-size:1rem}
+.slide .connect-link b{font-size:1.15rem;line-height:1.3}
+.slide .connect-avatar{width:112px;height:112px}
+.deck .slide .table-wrap{font-size:1.15rem}
+.deck .slide .table-wrap td,.deck .slide .table-wrap th{line-height:1.35}
+.deck .slide .demo,.deck .slide .demo .btn,.deck .slide .sim{font-size:1.05rem}
+.deck .slide .demo .btn{text-decoration:none}
+.deck .slide .demo .small,.deck .slide .sim .small,.deck .slide .sim p.sim-meta{font-size:.98rem}
+
+/* ===== 6. REDUCED MOTION — always last ===== */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;transition-delay:0s !important;scroll-behavior:auto !important}
+  .js [data-reveal]{opacity:1 !important;transform:none !important}
+  .mote{display:none !important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- NAV: exact snippet from KP's saved preferences + icon-only theme toggle. Only change the [context] text.
+     Page-specific extra links go in the NAV-EXTRA slot, only when KP asked for them.
+     Quiz/event pages: once the roll is confirmed, KP.setRoll(roll) swaps the kpsingh.in link for a non-clickable roll badge. -->
+<nav class="nav"><div class="nav-brand"><img class="nav-logo" src="KP_Singh.png" alt="K.P. Singh"/><div><div class="nav-name">K.P. Singh</div><div class="nav-sub">SGT University · PhD coursework · RPE Unit 4</div></div></div><!-- NAV-EXTRA --><button class="theme-toggle" type="button" id="themeToggle" aria-label="Switch to dark theme">🌙</button><a class="nav-cta" href="https://kpsingh.in" target="_blank">kpsingh.in ↗</a></nav>
+
+<div class="scroll-progress" data-scroll-progress aria-hidden="true"><span></span></div>
+<div class="docs">
+<aside class="docs-left" aria-label="This talk"><details class="docs-panel" open><summary>This talk</summary><nav aria-label="This talk"><a href="RPE-U4-JournalFinders_slides.html">Slides</a><a href="#top" aria-current="page">Speaker script</a></nav></details></aside>
+<main id="main" class="docs-main" tabindex="-1">
+<section id="top"><p class="kicker">PhD coursework · RPE Unit 4 · Speaker script</p><h1>Where should my paper go? Journal finders, hands on</h1><p class="sub">17 slides · 20 min · Q&amp;A after the talk</p><p>Open the slides full screen. Use → or the clicker, press N for notes and the timer, add <code>?all</code> to the address to print handouts.</p><p><a class="btn btn-primary open-slides" href="RPE-U4-JournalFinders_slides.html">Open the slides</a></p></section>
+<section id="timing"><h2>Timing</h2><div class="table-wrap"><table class="timing"><caption class="sr-only">Minutes per slide with the running total</caption><tr><th scope="col" class="num">#</th><th scope="col">Slide</th><th scope="col" class="num">Min</th><th scope="col" class="num">By the end</th><th scope="col">Can skip</th></tr><tr><td class="num">1</td><td class="t-slide has-short"><a href="RPE-U4-JournalFinders_slides.html#s1"><span class="t-long">Where should my paper go?  Let the journal finders help</span><span class="t-short" aria-hidden="true">Title</span></a></td><td class="num">1</td><td class="num">1</td><td></td></tr><tr><td class="num">2</td><td class="t-slide has-short"><a href="RPE-U4-JournalFinders_slides.html#s2"><span class="t-long">Scan the code and join with your name</span><span class="t-short" aria-hidden="true">Join</span></a></td><td class="num">1</td><td class="num">2</td><td></td></tr><tr><td class="num">3</td><td class="t-slide has-short"><a href="RPE-U4-JournalFinders_slides.html#s3"><span class="t-long">How did you choose, or plan to choose, a journal for your paper?</span><span class="t-short" aria-hidden="true">Poll: how you choose</span></a></td><td class="num">1</td><td class="num">3</td><td></td></tr><tr class="can-skip"><td class="num">4</td><td class="t-slide has-short"><a href="RPE-U4-JournalFinders_slides.html#s4"><span class="t-long">Open access means anyone can read your paper, by one of four routes</span><span class="t-short" aria-hidden="true">Four routes</span></a></td><td class="num">1.5</td><td class="num">4.5</td><td>can skip</td></tr><tr><td class="num">5</td><td class="t-slide has-short"><a href="RPE-U4-JournalFinders_slides.html#s5"><span class="t-long">A journal finder matches your abstract with what journals already publish</span><span class="t-short" aria-hidden="true">How finders work</span></a></td><td class="num">1.5</td><td class="num">6</td><td></td></tr><tr><td class="num">6</td><td class="t-slide has-short"><a href="RPE-U4-JournalFinders_slides.html#s6"><span class="t-long">You paste your abstract into Elsevier JournalFinder. Which journals can it suggest?</span><span class="t-short" aria-hidden="true">Q: whose shelf</span></a></td><td class="num">1</td><td class="num">7</td><td></td></tr><tr><td class="num">7</td><td class="t-slide has-short"><a href="RPE-U4-JournalFinders_slides.html#s7"><span class="t-long">Each finder searches its own shelf, so read the label first</span><span class="t-short" aria-hidden="true">Three finders</span></a></td><td class="num">1.5</td><td class="num">8.5</td><td></td></tr><tr><td class="num">8</td><td class="t-slide has-short"><a href="RPE-U4-JournalFinders_slides.html#s8"><span class="t-long">Live demo: run one abstract through all three finders</span><span class="t-short" aria-hidden="true">Live demo</span></a></td><td class="num">2</td><td class="num">10.5</td><td></td></tr><tr><td class="num">9</td><td class="t-slide has-short"><a href="RPE-U4-JournalFinders_slides.html#s9"><span class="t-long">Switch the publisher and watch the top journal change</span><span class="t-short" aria-hidden="true">Simulated finder</span></a></td><td class="num">2</td><td class="num">12.5</td><td></td></tr><tr><td class="num">10</td><td class="t-slide has-short"><a href="RPE-U4-JournalFinders_slides.html#s10"><span class="t-long">JANE shows a tag beside a suggested journal. Which tag should raise your trust?</span><span class="t-short" aria-hidden="true">Q: trust tag</span></a></td><td class="num">1</td><td class="num">13.5</td><td></td></tr><tr><td class="num">11</td><td class="t-slide has-short"><a href="RPE-U4-JournalFinders_slides.html#s11"><span class="t-long">A finder only suggests, so verify four things before you submit</span><span class="t-short" aria-hidden="true">Verify</span></a></td><td class="num">1.5</td><td class="num">15</td><td></td></tr><tr class="can-skip"><td class="num">12</td><td class="t-slide has-short"><a href="RPE-U4-JournalFinders_slides.html#s12"><span class="t-long">In India, journal checks moved from one central list to each institution</span><span class="t-short" aria-hidden="true">India&#x27;s list</span></a></td><td class="num">1</td><td class="num">16</td><td>can skip</td></tr><tr><td class="num">13</td><td class="t-slide has-short"><a href="RPE-U4-JournalFinders_slides.html#s13"><span class="t-long">An email promises review in 7 days, an Impact Factor of 9.8 from an unknown index, and a low fee. Your move?</span><span class="t-short" aria-hidden="true">Q: the email</span></a></td><td class="num">1</td><td class="num">17</td><td></td></tr><tr><td class="num">14</td><td class="t-slide has-short"><a href="RPE-U4-JournalFinders_slides.html#s14"><span class="t-long">Standings after four questions</span><span class="t-short" aria-hidden="true">Standings</span></a></td><td class="num">1</td><td class="num">18</td><td></td></tr><tr><td class="num">15</td><td class="t-slide has-short"><a href="RPE-U4-JournalFinders_slides.html#s15"><span class="t-long">Run two finders, then verify before you submit</span><span class="t-short" aria-hidden="true">Playbook</span></a></td><td class="num">1</td><td class="num">19</td><td></td></tr><tr><td class="num">16</td><td class="t-slide has-short"><a href="RPE-U4-JournalFinders_slides.html#s16"><span class="t-long">References</span><span class="t-short" aria-hidden="true">References</span></a></td><td class="num">0.5</td><td class="num">19.5</td><td></td></tr><tr><td class="num">17</td><td class="t-slide has-short"><a href="RPE-U4-JournalFinders_slides.html#s17"><span class="t-long">Questions?</span><span class="t-short" aria-hidden="true">Questions</span></a></td><td class="num">0.5</td><td class="num">20</td><td></td></tr></table></div></section>
+<section id="short"><h2>Running short</h2><p>Skip slides 4 and 12. That saves 2.5 min. Never skip the title, the takeaway or the references.</p></section>
+<section id="p1"><h2>Slide 1 · Where should my paper go?  Let the journal finders help</h2><div class="glance"><p class="g-min">1 min · by the end 1 min</p><dl><dt>Say</dt><dd>Good morning. Unit 4 is open access publishing. I will focus on one practical question every scholar faces: where should my paper go? We will use journal finder tools live, try a simulated one, and answer four quick questions on your phones.</dd><dt>Next</dt><dd>First, get your phones out and join.</dd><dt>Show</dt><dd><a href="RPE-U4-JournalFinders_slides.html#s1">slide 1</a></dd></dl></div><details class="reveal"><summary>Full script</summary><div><p class="say">Greet the teacher and the class. Say the plan in one breath: open access in two minutes, how journal finders work, a live demo, a simulated finder, then how to verify what a finder suggests.</p></div></details></section>
+<section id="p2"><h2>Slide 2 · Scan the code and join with your name</h2><div class="glance"><p class="g-min">1 min · by the end 2 min</p><dl><dt>Say</dt><dd>Scan the QR code or type the address. Enter your name. You will answer on the phone and see the result on the screen. Wait until the joined count stops moving.</dd><dt>Next</dt><dd>A warm-up question, no right answer.</dd><dt>Show</dt><dd><a href="RPE-U4-JournalFinders_slides.html#s2">slide 2</a></dd></dl></div><details class="reveal"><summary>Full script</summary><div><p class="say">Read the address aloud slowly. Help anyone whose phone does not open the page. If the Wi-Fi fails, the deck still runs and you ask for a show of hands.</p></div></details></section>
+<section id="p3"><h2>Slide 3 · How did you choose, or plan to choose, a journal for your paper?</h2><div class="glance"><p class="g-min">1 min · by the end 3 min</p><dl><dt>Say</dt><dd>This is a poll, there is no wrong answer. Most rooms split between the supervisor's advice and wherever a cited paper appeared. Both are reasonable starts, and today we add a method on top.</dd><dt>Next</dt><dd>Before the method, what does open access actually mean?</dd><dt>Show</dt><dd><a href="RPE-U4-JournalFinders_slides.html#s3">slide 3</a></dd></dl></div></section>
+<section id="p4"><h2>Slide 4 · Open access means anyone can read your paper, by one of four routes</h2><div class="glance"><p class="g-min">1.5 min · by the end 4.5 min · can skip</p><dl><dt>Say</dt><dd>Open access means free to read online. Gold is the journal opening it, often with an article processing charge. Green is you placing a version in a repository. Diamond charges neither reader nor author. Hybrid is a subscription journal that opens one paper for a fee.</dd><dt>Next</dt><dd>Now, how do you find the right journal among thousands?</dd><dt>Source</dt><dd>Budapest Open Access Initiative (2002). Action Plan for Diamond Open Access (2022).</dd><dt>Show</dt><dd><a href="RPE-U4-JournalFinders_slides.html#s4">slide 4</a></dd></dl></div><details class="reveal"><summary>Full script</summary><div><p class="say">APC means article processing charge. Mention that the route changes the cost, so the journal choice is also a budget choice.</p></div></details></section>
+<section id="p5"><h2>Slide 5 · A journal finder matches your abstract with what journals already publish</h2><div class="glance"><p class="g-min">1.5 min · by the end 6 min</p><dl><dt>Say</dt><dd>Think of it as matchmaking by vocabulary. Elsevier's JournalFinder builds a fingerprint of weighted terms from your abstract and compares it with published articles. JANE compares your text with millions of PubMed records. A journal that has published papers like yours ranks high.</dd><dt>Next</dt><dd>Quick check on your phones.</dd><dt>Source</dt><dd>Elsevier Connect (2013, relaunched 2019). JANE, jane.biosemantics.org.</dd><dt>Show</dt><dd><a href="RPE-U4-JournalFinders_slides.html#s5">slide 5</a></dd></dl></div></section>
+<section id="p6"><h2>Slide 6 · You paste your abstract into Elsevier JournalFinder. Which journals can it suggest?</h2><div class="glance"><p class="g-min">1 min · by the end 7 min</p><dl><dt>Say</dt><dd>Answer B. It suggests Elsevier journals only. The tool is honest about this, but many users never notice.</dd><dt>Next</dt><dd>So read the label on each finder.</dd><dt>Show</dt><dd><a href="RPE-U4-JournalFinders_slides.html#s6">slide 6</a></dd></dl></div></section>
+<section id="p7"><h2>Slide 7 · Each finder searches its own shelf, so read the label first</h2><div class="glance"><p class="g-min">1.5 min · by the end 8.5 min</p><dl><dt>Say</dt><dd>JANE is free and publisher neutral but covers biomedical and life sciences through PubMed. Elsevier and Springer Nature each search their own journals, more than 2,500 each. So for a physics or a humanities paper, check whether the tool even covers your field.</dd><dt>Next</dt><dd>Let's try them live.</dd><dt>Source</dt><dd>jane.biosemantics.org. Elsevier Connect (2019 relaunch). Springer Nature, Selecting a journal (accessed 21 Oct 2026).</dd><dt>Show</dt><dd><a href="RPE-U4-JournalFinders_slides.html#s7">slide 7</a></dd></dl></div><details class="reveal"><summary>Full script</summary><div><p class="say">Point at the middle column. JANE is neutral but biomedical. The other two are wide in field but each covers one publisher.</p><p class="say">JANE also tags journals indexed in MEDLINE and open access journals approved by DOAJ, because PubMed can include papers from questionable journals.</p></div></details></section>
+<section id="p8"><h2>Slide 8 · Live demo: run one abstract through all three finders</h2><div class="glance"><p class="g-min">2 min · by the end 10.5 min</p><dl><dt>Say</dt><dd>Copy the sample abstract and paste it into each finder. Read the top three journals aloud each time. Point out that Elsevier and Springer Nature never suggest each other's journals, and that JANE leans to medical education because it searches PubMed.</dd><dt>Next</dt><dd>No Wi-Fi, or want to see the bias clearly? Here is a simulated finder.</dd><dt>Show</dt><dd><a href="RPE-U4-JournalFinders_slides.html#s8">slide 8</a></dd></dl></div><details class="reveal"><summary>Full script</summary><div><p class="say">Open the three tabs before the session starts, so the demo costs no loading time.</p><p class="say">The sample abstract is invented for the demo. Its numbers are not results from a real study. Say so if asked.</p><p class="say">If a site is slow, show one tool only and move on. The simulated finder on the next slide makes the same point.</p></div></details></section>
+<section id="p9"><h2>Slide 9 · Switch the publisher and watch the top journal change</h2><div class="glance"><p class="g-min">2 min · by the end 12.5 min</p><dl><dt>Say</dt><dd>This finder is a simulation with invented journals. Pick an abstract, then switch the shelf from all publishers to one publisher. The top journal changes, though the paper did not. Under all publishers, one result carries red flags. A finder ranks by words, never by honesty.</dd><dt>Next</dt><dd>Back to the phones.</dd><dt>Show</dt><dd><a href="RPE-U4-JournalFinders_slides.html#s9">slide 9</a></dd></dl></div><details class="reveal"><summary>Full script</summary><div><p class="say">Ask one scholar from a non-technical discipline to pick the sample closest to their field.</p><p class="say">Switch the shelf to Northfield Press only, then Lumen Academic only. Ask: did the paper change, or the shelf?</p><p class="say">Under All publishers, point at the red-flag journal: it matches the words well but promises review in 72 hours.</p></div></details></section>
+<section id="p10"><h2>Slide 10 · JANE shows a tag beside a suggested journal. Which tag should raise your trust?</h2><div class="glance"><p class="g-min">1 min · by the end 13.5 min</p><dl><dt>Say</dt><dd>Answer A, indexed in MEDLINE. JANE adds that tag because PubMed can include papers from questionable journals. Speed and low fees are marketing, not quality.</dd><dt>Next</dt><dd>So a finder suggests. You verify.</dd><dt>Show</dt><dd><a href="RPE-U4-JournalFinders_slides.html#s10">slide 10</a></dd></dl></div></section>
+<section id="p11"><h2>Slide 11 · A finder only suggests, so verify four things before you submit</h2><div class="glance"><p class="g-min">1.5 min · by the end 15 min</p><dl><dt>Say</dt><dd>Never trust a journal's own website for its indexing. Search it in Scopus or Web of Science. DOAJ lists vetted open access journals. Sherpa Romeo, which the syllabus names, is now part of Jisc's Open Policy Finder and tells you which version you may self-archive. Think Check Submit is a checklist.</dd><dt>Next</dt><dd>India has its own story here.</dd><dt>Source</dt><dd>Jisc, Open Policy Finder (2024). doaj.org. thinkchecksubmit.org.</dd><dt>Show</dt><dd><a href="RPE-U4-JournalFinders_slides.html#s11">slide 11</a></dd></dl></div><details class="reveal"><summary>Full script</summary><div><p class="say">Sherpa Romeo, Juliet and Fact were combined into Open Policy Finder by Jisc in November 2024. Old Sherpa Romeo links point there.</p></div></details></section>
+<section id="p12"><h2>Slide 12 · In India, journal checks moved from one central list to each institution</h2><div class="glance"><p class="g-min">1 min · by the end 16 min · can skip</p><dl><dt>Say</dt><dd>A 2018 study from SPPU, Pune, found most journals recommended for the UGC list were of poor quality. UGC removed 4,305 journals that year and built the CARE list in 2019, screened at SPPU. In 2025 UGC discontinued the list. Each institution now judges journals using suggested parameters.</dd><dt>Next</dt><dd>One last question, a real-looking email.</dd><dt>Source</dt><dd>Nature Index (3 May 2018). Scholarly Kitchen (5 Feb 2020). UGC 584th meeting (3 Oct 2024), announced Feb 2025.</dd><dt>Show</dt><dd><a href="RPE-U4-JournalFinders_slides.html#s12">slide 12</a></dd></dl></div><details class="reveal"><summary>Full script</summary><div><p class="say">Unit 4.3 names the SPPU tool for identifying predatory publications. Present it as the SPPU Centre for Publication Ethics screening behind UGC-CARE. If asked for its current status, say you would confirm it, since the CARE list itself was discontinued.</p></div></details></section>
+<section id="p13"><h2>Slide 13 · An email promises review in 7 days, an Impact Factor of 9.8 from an unknown index, and a low fee. Your move?</h2><div class="glance"><p class="g-min">1 min · by the end 17 min</p><dl><dt>Say</dt><dd>Answer B. Check it in Scopus or Web of Science, DOAJ and Think Check Submit first. Seven-day review and an impact factor from an unknown index are classic red flags.</dd><dt>Next</dt><dd>Let's see who leads.</dd><dt>Show</dt><dd><a href="RPE-U4-JournalFinders_slides.html#s13">slide 13</a></dd></dl></div></section>
+<section id="p14"><h2>Slide 14 · Standings after four questions</h2><div class="glance"><p class="g-min">1 min · by the end 18 min</p><dl><dt>Say</dt><dd>Show the standings, read the top three and applaud. Accuracy decides the order, speed adds at most 30 percent.</dd><dt>Next</dt><dd>The playbook to take home.</dd><dt>Show</dt><dd><a href="RPE-U4-JournalFinders_slides.html#s14">slide 14</a></dd></dl></div></section>
+<section id="p15"><h2>Slide 15 · Run two finders, then verify before you submit</h2><div class="glance"><p class="g-min">1 min · by the end 19 min</p><dl><dt>Say</dt><dd>Here is the playbook. A clear abstract, two finders from different publishers, a shortlist of three, then verify indexing, open access and rights. Finally read the journal's aims and a few recent papers. The finder saves you time. Your judgement keeps you safe.</dd><dt>Next</dt><dd>The sources I used.</dd><dt>Show</dt><dd><a href="RPE-U4-JournalFinders_slides.html#s15">slide 15</a></dd></dl></div></section>
+<section id="p16"><h2>Slide 16 · References</h2><div class="glance"><p class="g-min">0.5 min · by the end 19.5 min</p><dl><dt>Say</dt><dd>Every fact on the slides comes from these sources, checked on 21 October 2026.</dd><dt>Next</dt><dd>Questions, please.</dd><dt>Show</dt><dd><a href="RPE-U4-JournalFinders_slides.html#s16">slide 16</a></dd></dl></div></section>
+<section id="p17"><h2>Slide 17 · Questions?</h2><div class="glance"><p class="g-min">0.5 min · by the end 20 min</p><dl><dt>Say</dt><dd>Thank you. I am happy to take questions, or to run a finder on anyone's own abstract.</dd><dt>Show</dt><dd><a href="RPE-U4-JournalFinders_slides.html#s17">slide 17</a></dd></dl></div></section>
+<section id="questions"><h2>Likely questions</h2><details class="reveal"><summary>Which finder should a social science or humanities scholar use?</summary><div><p>JANE covers PubMed, so it suits biomedical work. Use the publisher finders (Elsevier, Springer Nature) for other fields, and cross-check in Scopus or Web of Science and DOAJ.</p></div></details><details class="reveal"><summary>Is a journal with an APC predatory?</summary><div><p>No. Many genuine gold open access journals charge an APC. Predatory journals charge without real peer review. Check DOAJ and the database indexing, not the fee alone.</p></div></details><details class="reveal"><summary>Is Sherpa Romeo still available?</summary><div><p>Jisc combined Sherpa Romeo, Juliet and Fact into Open Policy Finder in 2024. It shows what version you may self-archive and when.</p></div></details><details class="reveal"><summary>Since the UGC-CARE list is gone, how do we judge a journal?</summary><div><p>UGC asked institutions to set up their own evaluation using its suggested parameters, such as editorial board, peer review policy, ethics and visibility. Check your university's current rule.</p></div></details><details class="reveal"><summary>Do journal finders keep my abstract private?</summary><div><p>Each tool has its own terms. Do not paste unpublished results you are not ready to share. Read the tool's privacy note first.</p></div></details><details class="reveal"><summary>Should I just choose the highest Impact Factor?</summary><div><p>No. Scope fit decides acceptance. A good fit in a solid indexed journal beats a desk rejection from a famous one.</p></div></details><details class="reveal"><summary>What was the SPPU tool?</summary><div><p>SPPU's Centre for Publication Ethics ran the screening protocol behind the UGC-CARE list. Its current status should be checked, since the CARE list was discontinued in 2025.</p></div></details></section>
+<section id="references"><h2>References</h2><ol class="refs" data-lint="skip"><li>Budapest Open Access Initiative. (2002). Budapest Open Access Initiative declaration. https://www.budapestopenaccessinitiative.org/read/</li><li>Science Europe, cOAlition S, OPERAS, &amp; Agence Nationale de la Recherche. (2022). Action plan for diamond open access. Zenodo. https://zenodo.org/record/6282403</li><li>Schuemie, M. J., &amp; Kors, J. A. (2008). Jane: Suggesting journals, finding experts. Bioinformatics, 24(5), 727-728. https://doi.org/10.1093/bioinformatics/btn006</li><li>Elsevier. (2013, relaunched 2019). What's the best journal for my paper? New tool can help. Elsevier Connect. https://www.elsevier.com/connect/whats-the-best-journal-for-my-paper-new-tool-can-help</li><li>Springer Nature. (n.d.). Selecting a journal. Retrieved October 21, 2026, from https://www.springer.com/gp/authors-editors/journal-author/journal-author-helpdesk/selecting-a-journal/1258</li><li>Jisc. (2024). Sherpa services combined into new user-friendly platform Open Policy Finder. https://www.jisc.ac.uk/news/all/sherpa-services-combined-into-new-user-friendly-platform-open-policy-finder</li><li>Directory of Open Access Journals. (n.d.). https://doaj.org</li><li>Think. Check. Submit. (n.d.). https://thinkchecksubmit.org</li><li>Nature Index. (2018, May 3). India culls 4,305 dubious journals from approved list. https://www.nature.com/nature-index/news/india-culls-four-thousand-three-hundred-dubious-journals-from-approved-list</li><li>The Scholarly Kitchen. (2020, February 5). India's fight against predatory journals: An interview with Professor Bhushan Patwardhan. https://scholarlykitchen.sspnet.org/2020/02/05/indias-fight-against-predatory-journals-an-interview-with-professor-bhushan-patwardhan/</li><li>Organiser. (2025, February 12). UGC discontinues UGC-CARE journal listing, new parameters for peer-reviewed journals introduced. https://organiser.org/2025/02/12/277820/bharat/ugc-discontinues-ugc-care-journal-listing-new-parameters-for-peer-reviewed-journals-introduced/</li></ol></section>
+</main>
+<aside class="docs-right" aria-label="On this page"><details class="docs-panel" open><summary>On this page</summary><nav data-spy aria-label="On this page"><a href="#top">Start</a><a href="#timing">Timing</a><a href="#short">Running short</a><a href="#p1">Slide 1 · Title</a><a href="#p2">Slide 2 · Join</a><a href="#p3">Slide 3 · Poll: how you choose</a><a href="#p4">Slide 4 · Four routes</a><a href="#p5">Slide 5 · How finders work</a><a href="#p6">Slide 6 · Q: whose shelf</a><a href="#p7">Slide 7 · Three finders</a><a href="#p8">Slide 8 · Live demo</a><a href="#p9">Slide 9 · Simulated finder</a><a href="#p10">Slide 10 · Q: trust tag</a><a href="#p11">Slide 11 · Verify</a><a href="#p12">Slide 12 · India&#x27;s list</a><a href="#p13">Slide 13 · Q: the email</a><a href="#p14">Slide 14 · Standings</a><a href="#p15">Slide 15 · Playbook</a><a href="#p16">Slide 16 · References</a><a href="#p17">Slide 17 · Questions</a><a href="#questions">Likely questions</a><a href="#references">References</a></nav></details></aside>
+</div>
+
+
+<script>
+/* ===== KP BASE JS ===== */
+(function(){
+  'use strict';
+  var root=document.documentElement;
+  var KP=window.KP=window.KP||{};
+  var RM=matchMedia('(prefers-reduced-motion: reduce)');
+  KP.reduced=function(){return RM.matches;};
+  var $$=function(s,c){return [].slice.call((c||document).querySelectorAll(s));};
+
+  /* -- MODULE: STORE (PERSIST SWAP — lab / notes / lecture / deck pages ONLY, never quizzes).
+        Persistent but safe: falls back to memory when storage is blocked (private mode, in-app browsers).
+        Only theme + checkpoint ticks are stored. No names, roll numbers, answers or scores. -- */
+  var mem={};
+  var pk=function(k,g){return 'kp:'+(g?'':root.dataset.page+':')+k;};
+  KP.store={
+    get:function(k,g){
+      try{var v=localStorage.getItem(pk(k,g));if(v!==null)return v;}catch(e){}
+      return Object.prototype.hasOwnProperty.call(mem,pk(k,g))?mem[pk(k,g)]:null;
+    },
+    set:function(k,v,g){mem[pk(k,g)]=String(v);try{localStorage.setItem(pk(k,g),String(v));}catch(e){}},
+    remove:function(k,g){delete mem[pk(k,g)];try{localStorage.removeItem(pk(k,g));}catch(e){}}
+  };
+
+  /* -- MODULE: CHECKPOINTS (lab manual / notes). Markup:
+        <label class="cp"><input type="checkbox" data-cp="cp1"> Checkpoint 1 …</label>
+        <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Checkpoint progress" data-cp-meter><span></span></div>
+        <p data-cp-label></p>  <button class="btn" type="button" data-cp-reset>Reset progress</button>   -- */
+  KP.checkpoints=function(){
+    var boxes=[].slice.call(document.querySelectorAll('input[data-cp]'));if(!boxes.length)return;
+    var meter=document.querySelector('[data-cp-meter]'),label=document.querySelector('[data-cp-label]'),reset=document.querySelector('[data-cp-reset]');
+    function paint(){
+      var done=boxes.filter(function(b){return b.checked;}).length,pct=Math.round(done/boxes.length*100);
+      if(meter){meter.setAttribute('aria-valuenow',pct);if(meter.firstElementChild)meter.firstElementChild.style.setProperty('--p',pct/100);}
+      if(label)label.textContent=done+' of '+boxes.length+' checkpoints done';
+    }
+    boxes.forEach(function(b){
+      b.checked=KP.store.get('cp:'+b.dataset.cp)==='1';
+      b.addEventListener('change',function(){KP.store.set('cp:'+b.dataset.cp,b.checked?'1':'0');paint();});
+    });
+    if(reset)reset.addEventListener('click',function(){boxes.forEach(function(b){b.checked=false;KP.store.set('cp:'+b.dataset.cp,'0');});paint();});
+    paint();
+  };
+  setTimeout(function(){KP.checkpoints();},0);
+
+  /* -- MODULE: THEME TOGGLE (three-layer pattern; icon-only) -- */
+  var btn=document.getElementById('themeToggle');
+  var mq=matchMedia('(prefers-color-scheme: dark)');
+  function isDark(){return root.dataset.theme?root.dataset.theme==='dark':mq.matches;}
+  function paintToggle(){
+    var d=isDark();
+    if(btn){btn.textContent=d?'☀️':'🌙';btn.setAttribute('aria-label',d?'Switch to light theme':'Switch to dark theme');}
+    var m=document.getElementById('themeColor'),bg=getComputedStyle(root).getPropertyValue('--bg').trim();
+    if(m&&bg)m.setAttribute('content',bg);
+  }
+  var saved=KP.store.get('theme',true);
+  if(saved==='light'||saved==='dark')root.dataset.theme=saved;
+  if(btn)btn.addEventListener('click',function(){
+    var next=isDark()?'light':'dark';root.dataset.theme=next;KP.store.set('theme',next,true);paintToggle();
+  });
+  if(mq.addEventListener)mq.addEventListener('change',paintToggle);
+  paintToggle();
+
+  /* -- MODULE: COUNT-UP — 0 -> N (tabular digits). Auto: <b data-count="85" data-suffix="%" data-decimals="0">85%</b>
+        data-group → Indian digit grouping (10,00,000); data-locale="en-US" for 1,000,000.
+        The element's own text is the final value, so JS-off / reduced-motion readers see the truth. -- */
+  KP.countUp=function(el,to,o){
+    o=o||{};var ms=o.ms||900,dec=o.decimals||0,suf=o.suffix||'',pre=o.prefix||'';
+    var fmt=function(v){return pre+(o.group?v.toLocaleString(o.locale||'en-IN',{minimumFractionDigits:dec,maximumFractionDigits:dec}):v.toFixed(dec))+suf;};
+    if(KP.reduced()){el.textContent=fmt(to);return;}
+    var t0=performance.now();
+    (function step(now){
+      var p=Math.min((now-t0)/ms,1),e=1-Math.pow(1-p,3);
+      el.textContent=fmt(to*e);
+      if(p<1)requestAnimationFrame(step);
+    })(t0);
+    setTimeout(function(){el.textContent=fmt(to);},ms+80);      // background-tab safety: always land on the true value
+  };
+  KP.runCount=function(el){
+    var to=parseFloat(el.dataset.count);if(isNaN(to)||el.children.length)return;   /* 1.8.1: only a bare number counts up; an element that holds others is never overwritten */
+    KP.countUp(el,to,{group:el.hasAttribute('data-group'),locale:el.dataset.locale,decimals:+(el.dataset.decimals||0),suffix:el.dataset.suffix||'',prefix:el.dataset.prefix||'',ms:+(el.dataset.ms||900)});
+  };
+
+  /* -- MODULE: REPLAY — restart a CSS animation every time (reflow trick). <span class="stamp" data-replay="kp-slam">ACCEPTED</span> -- */
+  KP.replay=function(el,cls){
+    cls=cls||el.dataset.replay||'kp-slam';
+    try{el.classList.remove(cls);void el.offsetWidth;el.classList.add(cls);}catch(e){}
+  };
+
+  /* -- MODULE: REVEAL (scroll-in, IntersectionObserver, capped stagger; deck slides are handled by the deck kit) -- */
+  var items=$$('[data-reveal]').filter(function(el){return !el.closest('[data-deck]');});
+  $$('[data-stagger]').forEach(function(box){
+    $$('[data-reveal]',box).forEach(function(el,i){el.style.setProperty('--d',Math.min(i,8)*70+'ms');el.dataset.staggered='1';});
+  });
+  var counts=$$('[data-count]').filter(function(el){return !el.closest('[data-deck]');});
+  function showAll(){items.forEach(function(el){el.classList.add('is-in');});}
+  if(RM.matches||!('IntersectionObserver' in window)){showAll();}
+  else{
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(!e.isIntersecting)return;var t=e.target;io.unobserve(t);
+      if(t.hasAttribute('data-reveal'))t.classList.add('is-in');
+      if(t.hasAttribute('data-count'))KP.runCount(t);
+      if(t.hasAttribute('data-replay'))KP.replay(t);
+    });},{rootMargin:'0px 0px -10% 0px',threshold:0.15});
+    items.forEach(function(el,i){if(!el.dataset.staggered)el.style.setProperty('--d',Math.min(i%6,5)*70+'ms');io.observe(el);});
+    counts.forEach(function(el){io.observe(el);});
+    $$('[data-replay]').filter(function(el){return !el.closest('[data-deck]');}).forEach(function(el){io.observe(el);});
+  }
+
+  /* -- MODULE: SCROLL PROGRESS — <div class="scroll-progress" data-scroll-progress aria-hidden="true"><span></span></div> -- */
+  var sp=document.querySelector('[data-scroll-progress]>span');
+  if(sp){
+    var ticking=false;
+    var paintSP=function(){ticking=false;var h=document.documentElement.scrollHeight-innerHeight;sp.style.setProperty('--p',h>0?Math.min(1,scrollY/h):0);};
+    addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(paintSP);}},{passive:true});
+    addEventListener('resize',paintSP);paintSP();
+  }
+
+  /* -- MODULE: SCROLL-SPY — <nav data-spy aria-label="Contents"><a href="#sec1">…</a></nav>; marks the section being read -- */
+  $$('[data-spy]').forEach(function(nav){
+    if(!('IntersectionObserver' in window))return;
+    var links=$$('a[href^="#"]',nav),map={};
+    links.forEach(function(a){var t=document.getElementById(decodeURIComponent(a.hash.slice(1)));if(t)map[t.id]=a;});
+    var sio=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(!e.isIntersecting||!map[e.target.id])return;
+      links.forEach(function(a){a.removeAttribute('aria-current');});map[e.target.id].setAttribute('aria-current','true');
+    });},{rootMargin:'-35% 0px -55% 0px'});
+    Object.keys(map).forEach(function(id){sio.observe(document.getElementById(id));});
+  });
+
+  /* -- MODULE: PAUSE MOTION — <button class="btn" type="button" data-pause-motion aria-pressed="false">⏸ Pause motion</button>
+        Required whenever anything loops > 5 s (motes, pulse, marquee). -- */
+  $$('[data-pause-motion]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var paused=root.dataset.motion==='paused';
+      if(paused)delete root.dataset.motion;else root.dataset.motion='paused';
+      $$('[data-pause-motion]').forEach(function(x){x.setAttribute('aria-pressed',String(!paused));x.textContent=paused?'⏸ Pause motion':'▶ Play motion';});
+    });
+  });
+
+  /* -- MODULE: PERF GUARD (weak phones: flag so heavy effects can switch off) -- */
+  (function(){
+    var last=performance.now(),slow=0,n=0;
+    (function tick(t){
+      var dt=t-last;last=t;
+      if(dt>34&&++slow>12)root.dataset.perf='low';
+      if(++n<240&&!root.dataset.perf)requestAnimationFrame(tick);   // sample ~4s, then stop
+    })(last);
+  })();
+
+  /* -- MODULE: LOGO FALLBACK (1.6.1; .nav-mark 1.7.0) — a nav logo that fails to load is hidden; the name stays -- */
+  $$('.nav-logo,.nav-mark img').forEach(function(img){
+    var hide=function(){(img.closest('.nav-mark')||img).hidden=true;};
+    if(img.complete&&!img.naturalWidth)hide();else img.addEventListener('error',hide);
+  });
+
+  /* ===== KIT: DOCS / REFERENCE PAGE (kp-html-base 1.6.0) — panels, flip cards, stepper, practice quiz, copy, locks ===== */
+
+  /* -- DOCS PANELS: open on wide screens, folded on phones; tapping an "On this page" link folds the phone bar -- */
+  (function(){
+    var right=document.querySelector('.docs-right .docs-panel'),left=document.querySelector('.docs-left .docs-panel');
+    if(!right&&!left)return;
+    var mqR=matchMedia('(min-width: 860px)'),mqL=matchMedia('(min-width: 1100px)');
+    function sync(){if(right)right.open=mqR.matches;if(left)left.open=mqL.matches;}
+    sync();
+    [mqR,mqL].forEach(function(m){if(m.addEventListener)m.addEventListener('change',sync);});
+    if(right)$$('a[href^="#"]',right).forEach(function(a){a.addEventListener('click',function(){if(!mqR.matches)right.open=false;});});
+  })();
+
+  /* -- FLIP CARDS -- */
+  $$('.flip').forEach(function(b){
+    if(!b.hasAttribute('aria-pressed'))b.setAttribute('aria-pressed','false');
+    b.addEventListener('click',function(){b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true'));});
+  });
+
+  /* -- STEPPER: <div class="stepper card" data-stepper> <ol class="stepper-steps"><li>…</li></ol>
+        <div class="stepper-ctl"><button class="btn" type="button" data-step-reset>Reset</button><span data-step-status aria-live="polite"></span>
+        <button class="btn btn-primary" type="button" data-step-next>Next step →</button></div></div>
+        Fires 'kp:step' on the stepper (detail.index, detail.total) so page code can redraw a diagram. → advances the stepper in view. -- */
+  var steppers=$$('[data-stepper]').map(function(box){
+    var steps=$$('.stepper-steps>li',box),N=steps.length,k=0;
+    var nx=box.querySelector('[data-step-next]'),rs=box.querySelector('[data-step-reset]'),st=box.querySelector('[data-step-status]');
+    function paint(){
+      steps.forEach(function(li,i){li.classList.toggle('is-shown',i<=k);li.classList.toggle('is-current',i===k);});
+      if(st)st.textContent='Step '+(k+1)+' of '+N;
+      if(nx)nx.disabled=k>=N-1;
+      try{box.dispatchEvent(new CustomEvent('kp:step',{bubbles:true,detail:{index:k,total:N}}));}catch(e){}
+    }
+    function next(){if(k<N-1){k++;paint();}}
+    if(nx)nx.addEventListener('click',next);
+    if(rs)rs.addEventListener('click',function(){k=0;paint();});
+    if(N)paint();
+    return {box:box,next:next};
+  });
+  if(steppers.length&&!document.querySelector('[data-deck]'))addEventListener('keydown',function(e){
+    if(e.key!=='ArrowRight'||e.altKey||e.ctrlKey||e.metaKey)return;
+    var t=e.target;if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))return;
+    var mid=innerHeight/2,hit=null;
+    steppers.forEach(function(s){var r=s.box.getBoundingClientRect();if(!hit&&r.top<mid&&r.bottom>mid*.4)hit=s;});
+    if(hit){e.preventDefault();hit.next();}
+  });
+
+  /* -- PRACTICE QUIZ: <div class="quiz" data-quiz><p class="quiz-score" data-quiz-score aria-live="polite"></p>
+        <fieldset class="q"><legend>Q1 …</legend><button type="button" class="q-opt" data-correct data-why="…">…</button>
+        <button type="button" class="q-opt" data-why="why this is tempting but wrong">…</button><p class="q-fb" aria-live="polite"></p></fieldset></div>
+        Instant feedback with a one-line reason; score is practice-only and never stored. -- */
+  $$('[data-quiz]').forEach(function(qz){
+    var qs=$$('.q',qz),score=0,done=0,out=qz.querySelector('[data-quiz-score]');
+    function paint(){if(out)out.textContent='Score: '+score+' / '+qs.length+(done===qs.length?(score===qs.length?' 🎉':' — review the reasons above'):'');}
+    qs.forEach(function(q){
+      var opts=$$('.q-opt',q),fb=q.querySelector('.q-fb'),right=q.querySelector('.q-opt[data-correct]');
+      opts.forEach(function(o){o.setAttribute('aria-pressed','false');o.addEventListener('click',function(){
+        if(q.dataset.answered)return;q.dataset.answered='1';done++;
+        var ok=o.hasAttribute('data-correct');if(ok)score++;
+        o.setAttribute('aria-pressed','true');o.classList.add(ok?'is-right':'is-wrong');
+        if(!ok&&right)right.classList.add('is-answer');
+        opts.forEach(function(x){x.disabled=true;});
+        if(fb){fb.className='q-fb '+(ok?'ok':'no');
+          fb.textContent=ok?('✅ Right. '+(o.dataset.why||'')):('🙈 Close, here\u2019s why: '+(o.dataset.why||'')+(right?' Answer: '+right.textContent.trim()+'.':''));}
+        paint();
+      });});
+    });
+    paint();
+  });
+
+  /* -- COPY BUTTONS on <div class="code" data-copy><pre><code>…</code></pre></div> -- */
+  $$('.code[data-copy]').forEach(function(box){
+    var pre=box.querySelector('pre');if(!pre)return;
+    var b=document.createElement('button');b.type='button';b.className='copy';b.textContent='Copy';b.setAttribute('aria-label','Copy code');
+    b.addEventListener('click',function(){
+      var txt=pre.innerText,done=function(){b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy';},1400);};
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(done,fallback);else fallback();
+      function fallback(){var ta=document.createElement('textarea');ta.value=txt;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';
+        document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(ta);}
+    });
+    box.appendChild(b);
+  });
+
+  /* -- LOCKED SOLUTIONS (deterrent, not security — the text is in the page source):
+        <details class="reveal" data-lock="3"> … tap summary 3 times quickly;  <details class="reveal" data-lock-key="lab6answers"> … instructor key -- */
+  $$('details[data-lock],details[data-lock-key]').forEach(function(d){
+    var sm=d.querySelector('summary');if(!sm)return;var unlocked=false;
+    var key=d.getAttribute('data-lock-key'),need=+(d.getAttribute('data-lock')||3),taps=0,timer;
+    var base=sm.textContent;
+    if(key){
+      var f=document.createElement('div');f.className='lock-form';
+      var id='lk'+Math.random().toString(36).slice(2,8);
+      f.innerHTML='<label class="sr-only" for="'+id+'">Instructor key</label><input id="'+id+'" type="text" autocomplete="off" placeholder="Instructor key"><button class="btn" type="button">Unlock</button><p class="lock-msg" aria-live="polite"></p>';
+      d.parentNode.insertBefore(f,d.nextSibling);
+      var inp=f.querySelector('input'),msg=f.querySelector('.lock-msg');
+      var tryKey=function(){if(inp.value.trim().toLowerCase()===key.toLowerCase()){unlocked=true;f.classList.remove('is-open');d.open=true;}else{msg.textContent='That key doesn\u2019t match — your instructor shares it at the end.';}};
+      f.querySelector('button').addEventListener('click',tryKey);
+      inp.addEventListener('keydown',function(e){if(e.key==='Enter')tryKey();});
+    }
+    sm.addEventListener('click',function(e){
+      if(unlocked)return;e.preventDefault();
+      if(key){f.classList.toggle('is-open');if(f.classList.contains('is-open'))inp.focus();return;}
+      taps++;clearTimeout(timer);timer=setTimeout(function(){taps=0;sm.textContent=base;},1600);
+      if(taps>=need){unlocked=true;sm.textContent=base;d.open=true;}
+      else sm.textContent='Tap '+(need-taps)+' more time'+(need-taps>1?'s':'')+' to open';
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
