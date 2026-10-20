@@ -601,6 +601,62 @@ body.aud-mode .aud{display:block}
 @media (max-width:900px){.routes,.vcards{grid-template-columns:repeat(2,minmax(0,1fr))}.pipe{grid-template-columns:1fr}.pipe-arrow{transform:rotate(90deg);justify-self:center}.tline{grid-template-columns:1fr 1fr}.tline::before{display:none}.play{grid-template-columns:1fr 1fr}.play li::after{display:none}}
 @media (max-width:520px){.routes,.vcards,.tline,.play{grid-template-columns:1fr}}
 @media (min-width:1001px){.talk-title h1,.talk-title .byline,.talk-title .kicker{max-width:56%}.title-art{width:min(32vw,420px)}}
+/* journal page anatomy */
+.anat{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:20px;align-items:center;margin-top:var(--gap)}
+.anat-page{border-radius:var(--r-lg);border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow-2);overflow:hidden}
+.anat-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:var(--soft);border-bottom:1px solid var(--line)}
+.anat-bar span{width:11px;height:11px;border-radius:50%;background:var(--line)}
+.deck .slide .anat-bar b{margin-left:10px;font-family:var(--font-mono);font-size:.85rem;color:var(--muted);font-weight:500}
+.anat-head{display:flex;gap:14px;align-items:center;padding:16px 18px}
+.anat-logo{width:54px;height:54px;border-radius:12px;display:grid;place-items:center;background:var(--accent-2);color:#fff;font-weight:800;font-size:1.1rem}
+.deck .slide .anat-title{display:block;font-family:var(--font-display);font-size:1.35rem;color:var(--fg)}
+.deck .slide .anat-sub{font-size:.9rem;color:var(--muted)}
+.anat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 18px 18px}
+.anat-spot{display:flex;align-items:center;gap:10px;min-height:56px;padding:10px 12px;border-radius:var(--r);border:1px dashed var(--line);background:var(--bg);color:var(--fg);font:inherit;font-size:1rem;text-align:left;cursor:pointer;transition:transform var(--dur-1) var(--ease-out)}
+.anat-spot:hover{transform:translateY(-2px)}
+.anat-spot.seen{border-style:solid;border-color:var(--accent-2)}
+.anat-spot.on{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 30%,transparent)}
+.anat-n{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--accent-fg);font-weight:800;font-size:.95rem}
+.anat-call{min-height:160px;padding:22px;border-radius:var(--r-lg);background:color-mix(in srgb,var(--accent) 10%,var(--card));border-left:6px solid var(--accent)}
+.deck .slide .anat-call b{display:block;font-family:var(--font-display);font-size:1.6rem;color:var(--fg);margin-bottom:8px}
+.deck .slide .anat-call p{margin:0;font-size:1.2rem;line-height:1.45;color:var(--fg)}
+.deck .slide .anat-hint{color:var(--muted)!important;font-size:1.2rem}
+/* red-flag email */
+.mail{max-width:46rem;margin-top:var(--gap);padding:20px 22px;border-radius:var(--r-lg);background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow-2)}
+.mail-head{display:flex;gap:12px;align-items:center;padding-bottom:12px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+.mail-av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--oa-hybrid);color:#fff;font-weight:800}
+.deck .slide .mail-head b{display:block;font-size:1.05rem;color:var(--fg)}
+.deck .slide .mail-from{font-family:var(--font-mono);font-size:.9rem;color:var(--muted)}
+.deck .slide .mail-tag{margin-left:auto;padding:4px 10px;border-radius:var(--r-pill);border:1px dashed var(--accent);font-size:.8rem;color:var(--muted)}
+.deck .slide .mail p{margin:.55em 0;font-size:1.15rem;line-height:1.6;color:var(--fg)}
+.flag{display:inline;padding:2px 4px;margin:0;border:0;border-bottom:2px dotted var(--muted);border-radius:4px;background:transparent;color:inherit;font:inherit;cursor:pointer;min-height:auto}
+.flag:hover{background:color-mix(in srgb,var(--bad) 10%,transparent)}
+.flag.found{background:color-mix(in srgb,var(--bad) 18%,transparent);border-bottom-color:var(--bad);color:var(--fg)}
+.deck .slide .mail-count{margin-top:12px;font-size:1.2rem;color:var(--fg)}
+.deck .slide .mail-count b{font-size:1.6rem;color:var(--bad)}
+.deck .slide .mail-count .small{font-size:1rem;color:var(--muted)}
+/* versions */
+.vers{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:stretch;margin-top:var(--gap)}
+.ver{display:grid;gap:6px;justify-items:start;padding:18px;border-radius:var(--r-lg);background:var(--card);border:1px solid var(--line);border-top:6px solid var(--oa-green);box-shadow:var(--shadow-1)}
+.ver:nth-of-type(1){border-top-color:var(--oa-gold)}.ver:nth-of-type(3){border-top-color:var(--oa-diamond)}
+.ver-ico{font-size:1.6rem;color:var(--accent-2)}
+.deck .slide .ver b{font-family:var(--font-display);font-size:1.5rem;color:var(--fg)}
+.deck .slide .ver span:not(.ver-ico){font-size:1.05rem;line-height:1.4;color:var(--muted)}
+.vers-links{margin-top:18px}
+.deck .slide .vers-links .btn{font-size:1.05rem;text-decoration:none;min-height:48px}
+@media (max-width:900px){.anat{grid-template-columns:1fr}.vers{grid-template-columns:1fr}.vers .pipe-arrow{transform:rotate(90deg);justify-self:center}}
+@media (max-width:520px){.anat-grid{grid-template-columns:1fr}}
+.anat-logo{color:var(--bg)}
+.mail-av{color:var(--bg)}
+.deck .slide .mail p{line-height:2.2}
+.flag{padding:10px 4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.deck .slide .mail p{line-height:1.75;font-size:1.08rem;margin:.35em 0}
+.flag{padding:6px 3px;border-bottom:0;text-decoration:underline dotted var(--muted);text-underline-offset:5px}
+.flag.found{text-decoration-color:var(--bad)}
+.mail{padding:16px 20px;margin-top:10px}
+.deck .slide .mail-count{margin-top:8px}
+@media (max-width:760px){.flag{padding:12px 3px}.deck .slide .mail p{line-height:2.3}.deck .slide .mail-from .flag{display:inline-block;padding:8px 2px;min-height:44px}}
+@media (max-width:760px){.flag{padding:12px 3px}.deck .slide .mail p{line-height:2.3}.deck .slide .mail-from .flag{display:inline-block;padding:8px 2px;min-height:44px}}
 
 .connect{display:grid;gap:calc(var(--gap) * 1.5);grid-template-columns:1fr;align-items:center;margin-top:var(--gap)}
 @media (min-width:900px){.connect{grid-template-columns:minmax(0,26rem) auto;justify-content:center}}
@@ -734,7 +790,7 @@ body.aud-mode .aud{display:block}
   </section>
 <section class="slide" id="s2" data-min="1" data-notes="Scan the QR code or type the address. Enter your name. You will answer on the phone and see the result on the screen. Wait until the joined count stops moving. Next: A warm-up question, no right answer.">
   <div class="slide-inner">
-    <p class="kicker" data-reveal>Live round · 4 questions on your phone</p>
+    <p class="kicker" data-reveal>Live round · 6 questions on your phone</p>
     <h2 data-reveal>Scan the code and join with your name</h2>
     <div class="join" data-reveal>
       <div class="qr" data-live-qr aria-label="QR code to join"><p class="qr-placeholder">QR appears once the page is served from a web address</p></div>
@@ -751,114 +807,150 @@ body.aud-mode .aud{display:block}
 </section>
 <section class="slide" id="s3" data-min="1" data-q="q1" data-kind="poll" data-notes="Poll, no right answer. Timing: you open (O) and reveal (R). This is a poll, there is no wrong answer. Most rooms split between the supervisor&#x27;s advice and wherever a cited paper appeared. Both are reasonable starts, and today we add a method on top. Next: Before the method, what does open access actually mean?">
   <div class="slide-inner">
-    <p class="kicker" data-reveal>Question 1 of 4 · poll</p>
+    <p class="kicker" data-reveal>Question 1 of 6 · poll</p>
     <h2 data-reveal>How did you choose, or plan to choose, a journal for your paper?</h2>
     
     <ol class="choices" data-reveal><li>My supervisor suggested it</li><li>Where a paper I cite was published</li><li>A web search</li><li>An email invitation</li><li>Not chosen yet</li></ol>
     <div class="live" data-live data-reveal></div>
   </div>
 </section>
-  <section class="slide talk-claim" id="s4" data-min="1.5" data-notes="Open access means free to read online. Gold is the journal opening it, often with an article processing charge. Green is you placing a version in a repository. Diamond charges neither reader nor author. Hybrid is a subscription journal that opens one paper for a fee. Next: Now, how do you find the right journal among thousands?">
+  <section class="slide talk-claim" id="s4" data-min="1.5" data-notes="Open access means free to read online. Gold is the journal opening it, often with an article processing charge. Green is you placing a version in a repository. Diamond charges neither reader nor author. Hybrid is a subscription journal that opens one paper for a fee. Next: Quick check on your phones.">
     <div class="slide-inner">
       <h2 data-reveal>Open access means anyone can read your paper, by one of four routes</h2>
       <div data-reveal><div class="routes" data-stagger><div class="route r-gold" data-reveal><span class="route-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/></svg></span><span class="route-tag">Gold</span><b>Journal opens it</b><span class="route-txt">Free to read, may charge an APC</span></div><div class="route r-green" data-reveal><span class="route-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M8 4v6l2-1.5L12 10V4"/></svg></span><span class="route-tag">Green</span><b>You archive it</b><span class="route-txt">A version in a repository, often after an embargo</span></div><div class="route r-diamond" data-reveal><span class="route-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M9 3l3 18 3-18"/></svg></span><span class="route-tag">Diamond</span><b>Free both ways</b><span class="route-txt">No fee to read, no fee to publish</span></div><div class="route r-hybrid" data-reveal><span class="route-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><path d="M12 15v2"/></svg></span><span class="route-tag">Hybrid</span><b>Pay to open</b><span class="route-txt">A subscription journal opens one article for a fee</span></div></div></div>
       <p class="src" data-reveal>Source: Budapest Open Access Initiative (2002). Action Plan for Diamond Open Access (2022).</p>
     </div>
   </section>
-  <section class="slide talk-claim" id="s5" data-min="1.5" data-notes="Think of it as matchmaking by vocabulary. Elsevier&#x27;s JournalFinder builds a fingerprint of weighted terms from your abstract and compares it with published articles. JANE compares your text with millions of PubMed records. A journal that has published papers like yours ranks high. Next: Quick check on your phones.">
+<section class="slide" id="s5" data-min="1" data-q="q2" data-kind="quiz" data-notes="Answer: B (Green). Timing: you open (O) and reveal (R). Answer B, green. The journal stays subscription, but you archive your own accepted version after an embargo. That is green open access. Next: Now, how do you find the right journal in the first place?">
+  <div class="slide-inner">
+    <p class="kicker" data-reveal>Question 2 of 6 · scored</p>
+    <h2 data-reveal>Your subscription journal lets you post the accepted manuscript in a repository after 12 months. Which route is that?</h2>
+    
+    <ol class="choices" data-ans="1" data-reveal><li>Gold</li><li>Green</li><li>Diamond</li><li>Hybrid</li></ol>
+    <div class="live" data-live data-reveal></div>
+  </div>
+</section>
+  <section class="slide talk-claim" id="s6" data-min="1.5" data-notes="Think of it as matchmaking by vocabulary. Elsevier&#x27;s JournalFinder builds a fingerprint of weighted terms from your abstract and compares it with published articles. JANE compares your text with millions of PubMed records. A journal that has published papers like yours ranks high. Next: Quick check on your phones.">
     <div class="slide-inner">
       <h2 data-reveal>A journal finder matches your abstract with what journals already publish</h2>
       <div data-reveal><div class="pipe" data-stagger><div class="pipe-step" data-reveal><span class="pipe-n">1</span><div class="pipe-doc"><i></i><i></i><i class="s"></i><i></i><i class="s"></i></div><p>You paste a title and abstract</p></div><span class="pipe-arrow" aria-hidden="true">→</span><div class="pipe-step" data-reveal><span class="pipe-n">2</span><div class="pipe-chips"><span class="w3">calibration</span><span class="w2">students</span><span class="w1">prediction</span><span class="w2">learning</span><span class="w1">alerts</span></div><p>The text becomes weighted key terms</p></div><span class="pipe-arrow" aria-hidden="true">→</span><div class="pipe-step" data-reveal><span class="pipe-n">3</span><div class="pipe-stack"><i></i><i></i><i></i><i></i></div><p>It compares them with articles each journal published</p></div><span class="pipe-arrow" aria-hidden="true">→</span><div class="pipe-step" data-reveal><span class="pipe-n">4</span><div class="pipe-bars"><i style="--w:.92"></i><i style="--w:.74"></i><i style="--w:.55"></i></div><p>The closest journals rise to the top</p></div></div></div>
       <p class="src" data-reveal>Source: Elsevier Connect (2013, relaunched 2019). JANE, jane.biosemantics.org.</p>
     </div>
   </section>
-<section class="slide" id="s6" data-min="1" data-q="q2" data-kind="quiz" data-notes="Answer: B (Elsevier journals only). Timing: you open (O) and reveal (R). Answer B. It suggests Elsevier journals only. The tool is honest about this, but many users never notice. Next: So read the label on each finder.">
+<section class="slide" id="s7" data-min="1" data-q="q3" data-kind="quiz" data-notes="Answer: B (Elsevier journals only). Timing: you open (O) and reveal (R). Answer B. It suggests Elsevier journals only. The tool is honest about this, but many users never notice. Next: So read the label on each finder.">
   <div class="slide-inner">
-    <p class="kicker" data-reveal>Question 2 of 4 · scored</p>
+    <p class="kicker" data-reveal>Question 3 of 6 · scored</p>
     <h2 data-reveal>You paste your abstract into Elsevier JournalFinder. Which journals can it suggest?</h2>
     
     <ol class="choices" data-ans="1" data-reveal><li>Any journal indexed in Scopus</li><li>Elsevier journals only</li><li>Open access journals only</li><li>Journals on the UGC-CARE list</li></ol>
     <div class="live" data-live data-reveal></div>
   </div>
 </section>
-  <section class="slide talk-claim" id="s7" data-min="1.5" data-notes="JANE is free and publisher neutral but covers biomedical and life sciences through PubMed. Elsevier and Springer Nature each search their own journals, more than 2,500 each. So for a physics or a humanities paper, check whether the tool even covers your field. Next: Let&#x27;s try them live.">
+  <section class="slide talk-claim" id="s8" data-min="1.5" data-notes="JANE is free and publisher neutral but covers biomedical and life sciences through PubMed. Elsevier and Springer Nature each search their own journals, more than 2,500 each. So for a physics or a humanities paper, check whether the tool even covers your field. Next: Let&#x27;s try them live.">
     <div class="slide-inner">
       <h2 data-reveal>Each finder searches its own shelf, so read the label first</h2>
       <div class="table-wrap" data-reveal><table><caption class="sr-only">Three journal finders compared</caption><tr><th scope="col">Tool</th><th scope="col">Searches</th><th scope="col">You give</th><th scope="col">It shows</th></tr><tr><td>JANE</td><td>Journals with papers in PubMed</td><td>Title or abstract</td><td>MEDLINE and DOAJ tags, open access filter, likely authors and articles</td></tr><tr><td>Elsevier JournalFinder</td><td>Elsevier journals only (2,500+)</td><td>Keywords or abstract</td><td>CiteScore, Impact Factor, time to first decision, open access options</td></tr><tr><td>Springer Nature Journal Suggester</td><td>Springer Nature journals only (2,500+)</td><td>Abstract or sample text</td><td>Filters by Impact Factor and by fully open access or hybrid</td></tr></table></div>
       <p class="src" data-reveal>Source: jane.biosemantics.org. Elsevier Connect (2019 relaunch). Springer Nature, Selecting a journal (accessed 21 Oct 2026).</p>
     </div>
   </section>
-  <section class="slide talk-claim" id="s8" data-min="2" data-notes="Copy the sample abstract and paste it into each finder. Read the top three journals aloud each time. Point out that Elsevier and Springer Nature never suggest each other&#x27;s journals, and that JANE leans to medical education because it searches PubMed. Next: No Wi-Fi, or want to see the bias clearly? Here is a simulated finder.">
+  <section class="slide talk-claim" id="s9" data-min="3" data-notes="Copy the sample abstract and paste it into each finder. Read the top three journals aloud each time. Point out that Elsevier and Springer Nature never suggest each other&#x27;s journals, and that JANE leans to medical education because it searches PubMed. Next: No Wi-Fi, or want to see the bias clearly? Here is a simulated finder.">
     <div class="slide-inner">
       <h2 data-reveal>Live demo: run one abstract through all three finders</h2>
       <div data-reveal><div class="demo" data-demo><div class="demo-links"><a class="btn btn-primary demo-go" href="https://jane.biosemantics.org/" target="_blank" rel="noopener">Open JANE ↗</a><a class="btn btn-primary demo-go" href="https://journalfinder.elsevier.com/" target="_blank" rel="noopener">Open Elsevier JournalFinder ↗</a><a class="btn btn-primary demo-go" href="https://journalsuggester.springer.com/" target="_blank" rel="noopener">Open Springer Nature Suggester ↗</a></div><figure class="abstract card"><figcaption><span class="tag">Sample abstract, written for this demo</span><button class="btn demo-copy" type="button" data-copy="#oa-abs">Copy abstract</button><span class="small" data-copy-msg role="status"></span></figcaption><p id="oa-abs">Learning analytics dashboards flag students who may fail a course, but a predicted risk of 70 percent is only useful if such students fail about 70 percent of the time. We study confidence calibration in student performance prediction using logistic regression and gradient boosting on records from 1,200 engineering undergraduates. Temperature scaling reduced the expected calibration error from 0.11 to 0.04 without loss of accuracy, and calibrated alerts led advisors to contact fewer students with better hit rates.</p></figure><p class="small">Or paste your own abstract. If the Wi-Fi fails, go to the next slide.</p></div></div>
     </div>
   </section>
-  <section class="slide talk-claim" id="s9" data-min="2" data-notes="This finder is a simulation with invented journals. Pick an abstract, then switch the shelf from all publishers to one publisher. The top journal changes, though the paper did not. Under all publishers, one result carries red flags. A finder ranks by words, never by honesty. Next: Back to the phones.">
+  <section class="slide talk-claim" id="s10" data-min="2" data-notes="This finder is a simulation with invented journals. Pick an abstract, then switch the shelf from all publishers to one publisher. The top journal changes, though the paper did not. Under all publishers, one result carries red flags. A finder ranks by words, never by honesty. Next: Back to the phones.">
     <div class="slide-inner">
       <h2 data-reveal>Switch the publisher and watch the top journal change</h2>
       <div data-reveal><div class="sim" data-sim><p class="sim-badge">Simulation · invented journals, publishers and numbers · for practice only</p><div class="sim-in"><div class="sim-field"><span class="tag" id="sim-pick-l">Pick a sample abstract</span><div class="chips" role="group" aria-labelledby="sim-pick-l" data-sim-pick></div></div><label class="tag" for="sim-text">Or type your own title and abstract</label><textarea id="sim-text" rows="3" data-sim-text></textarea><div class="sim-field"><span class="tag" id="sim-shelf-l">Which shelf does the finder search?</span><div class="chips" role="group" aria-labelledby="sim-shelf-l" data-sim-shelf></div></div></div><ol class="sim-out" data-sim-out aria-live="polite"></ol></div></div>
     </div>
   </section>
-<section class="slide" id="s10" data-min="1" data-q="q3" data-kind="quiz" data-notes="Answer: A (Indexed in MEDLINE). Timing: you open (O) and reveal (R). Answer A, indexed in MEDLINE. JANE adds that tag because PubMed can include papers from questionable journals. Speed and low fees are marketing, not quality. Next: So a finder suggests. You verify.">
+<section class="slide" id="s11" data-min="1" data-q="q4" data-kind="quiz" data-notes="Answer: A (Indexed in MEDLINE). Timing: you open (O) and reveal (R). Answer A, indexed in MEDLINE. JANE adds that tag because PubMed can include papers from questionable journals. Speed and low fees are marketing, not quality. Next: Let&#x27;s read a journal page the way a reviewer would.">
   <div class="slide-inner">
-    <p class="kicker" data-reveal>Question 3 of 4 · scored</p>
+    <p class="kicker" data-reveal>Question 4 of 6 · scored</p>
     <h2 data-reveal>JANE shows a tag beside a suggested journal. Which tag should raise your trust?</h2>
     
     <ol class="choices" data-ans="0" data-reveal><li>Indexed in MEDLINE</li><li>Publication in 7 days</li><li>Invited by email</li><li>Lowest fee</li></ol>
     <div class="live" data-live data-reveal></div>
   </div>
 </section>
-  <section class="slide talk-claim" id="s11" data-min="1.5" data-notes="Never trust a journal&#x27;s own website for its indexing. Search it in Scopus or Web of Science. DOAJ lists vetted open access journals. Sherpa Romeo, which the syllabus names, is now part of Jisc&#x27;s Open Policy Finder and tells you which version you may self-archive. Think Check Submit is a checklist. Next: India has its own story here.">
+  <section class="slide talk-claim" id="s12" data-min="2" data-notes="Every journal page has the same six places to check. Tap each number. Scope decides fit. A real board has names you can find on university pages. Indexing must be checked in the database. Fees should be clear before you submit. Very fast review is a warning. Recent issues show what they really publish. Next: Now a real-looking email.">
     <div class="slide-inner">
-      <h2 data-reveal>A finder only suggests, so verify four things before you submit</h2>
-      <div data-reveal><div class="vcards" data-stagger><div class="vcard" data-reveal><span class="vcard-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span><span class="route-tag">Indexing</span><b>Search the database itself</b><span class="route-txt">Scopus or Web of Science, not the journal's own claim</span></div><div class="vcard" data-reveal><span class="vcard-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/></svg></span><span class="route-tag">Open access</span><b>DOAJ</b><span class="route-txt">Lists vetted open access journals</span></div><div class="vcard" data-reveal><span class="vcard-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h8M9 17h6"/></svg></span><span class="route-tag">Rights</span><b>Open Policy Finder</b><span class="route-txt">Formerly Sherpa Romeo: what you may self-archive, and when</span></div><div class="vcard" data-reveal><span class="vcard-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6l2 2 3-3M4 13l2 2 3-3M4 20l2 2 3-3"/><path d="M12 7h8M12 14h8M12 21h8"/></svg></span><span class="route-tag">Checklist</span><b>Think. Check. Submit.</b><span class="route-txt">A short checklist to judge a journal</span></div></div></div>
-      <p class="src" data-reveal>Source: Jisc, Open Policy Finder (2024). doaj.org. thinkchecksubmit.org.</p>
+      <h2 data-reveal>Read a journal's home page like a detective</h2>
+      <div data-reveal><div class="anat" data-anat><div class="anat-page" aria-label="A sample journal home page, invented for practice"><div class="anat-bar"><span></span><span></span><span></span><b>journal-of-learning-signals.example</b></div><div class="anat-head"><div class="anat-logo">JLS</div><div><b class="anat-title">Journal of Learning Signals</b><span class="anat-sub">Invented journal · for practice</span></div></div><div class="anat-grid"><button type="button" class="anat-spot" data-spot="0"><span class="anat-n">1</span>Aims &amp; scope</button><button type="button" class="anat-spot" data-spot="1"><span class="anat-n">2</span>Editorial board</button><button type="button" class="anat-spot" data-spot="2"><span class="anat-n">3</span>Indexed in ★★★</button><button type="button" class="anat-spot" data-spot="3"><span class="anat-n">4</span>Fees (APC)</button><button type="button" class="anat-spot" data-spot="4"><span class="anat-n">5</span>Review in 72 hours!</button><button type="button" class="anat-spot" data-spot="5"><span class="anat-n">6</span>Recent issues</button></div></div><div class="anat-call" data-anat-call aria-live="polite"><p class="anat-hint">Tap a number</p></div></div></div>
     </div>
   </section>
-  <section class="slide talk-claim" id="s12" data-min="1" data-notes="A 2018 study from SPPU, Pune, found most journals recommended for the UGC list were of poor quality. UGC removed 4,305 journals that year and built the CARE list in 2019, screened at SPPU. In 2025 UGC discontinued the list. Each institution now judges journals using suggested parameters. Next: One last question, a real-looking email.">
-    <div class="slide-inner">
-      <h2 data-reveal>In India, journal checks moved from one central list to each institution</h2>
-      <div data-reveal><ol class="tline" data-stagger><li data-reveal><b class="num">2018</b><span>SPPU study: about 88% of journals recommended for the UGC list were poor</span></li><li data-reveal><b class="num">May 2018</b><span>UGC removes 4,305 journals from its list</span></li><li data-reveal><b class="num">2019</b><span>UGC-CARE list, screened at SPPU’s Centre for Publication Ethics</span></li><li data-reveal><b class="num">2025</b><span>CARE list discontinued, institutions now evaluate journals</span></li></ol></div>
-      <p class="src" data-reveal>Source: Nature Index (3 May 2018). Scholarly Kitchen (5 Feb 2020). UGC 584th meeting (3 Oct 2024), announced Feb 2025.</p>
-    </div>
-  </section>
-<section class="slide" id="s13" data-min="1" data-q="q4" data-kind="quiz" data-notes="Answer: B (Check Scopus or Web of Science, DOAJ and Think. Check. Submit. first). Timing: you open (O) and reveal (R). Answer B. Check it in Scopus or Web of Science, DOAJ and Think Check Submit first. Seven-day review and an impact factor from an unknown index are classic red flags. Next: Let&#x27;s see who leads.">
+<section class="slide" id="s13" data-min="1" data-q="q5" data-kind="quiz" data-notes="Answer: B (Check Scopus or Web of Science, DOAJ and Think. Check. Submit. first). Timing: you open (O) and reveal (R). Answer B. Check it in Scopus or Web of Science, DOAJ and Think Check Submit first. Seven-day review and an impact factor from an unknown index are classic red flags. Next: Now find every flag in it.">
   <div class="slide-inner">
-    <p class="kicker" data-reveal>Question 4 of 4 · scored</p>
+    <p class="kicker" data-reveal>Question 5 of 6 · scored</p>
     <h2 data-reveal>An email promises review in 7 days, an Impact Factor of 9.8 from an unknown index, and a low fee. Your move?</h2>
     
     <ol class="choices" data-ans="1" data-reveal><li>Submit, it is fast and cheap</li><li>Check Scopus or Web of Science, DOAJ and Think. Check. Submit. first</li><li>Ask them for a discount</li><li>Submit there and to another journal at once</li></ol>
     <div class="live" data-live data-reveal></div>
   </div>
 </section>
-<section class="slide" id="s14" data-min="1" data-notes="Show the standings, read the top three and applaud. Accuracy decides the order, speed adds at most 30 percent. Next: The playbook to take home.">
+  <section class="slide talk-claim" id="s14" data-min="2" data-notes="This email is invented, but every line is typical. Ask the room to shout out what looks wrong and click each phrase. There are seven flags, from the webmail address to the reply-by-email submission. Next: So how do you verify properly?">
+    <div class="slide-inner">
+      <h2 data-reveal>Spot the red flags in this invitation</h2>
+      <div data-reveal><div class="mail" data-mail><div class="mail-head"><span class="mail-av">G</span><div><b>Global Omni-Science Journal</b><span class="mail-from">editor.gosj<button type="button" class="flag" data-flag="A journal editor writing from a free webmail address">@gmail.com</button></span></div><span class="mail-tag">Invented email</span></div><p><button type="button" class="flag" data-flag="No name: a mass mailing">Dear Esteemed Author,</button></p><p>We read your excellent paper and invite you to our <button type="button" class="flag" data-flag="One journal for every subject: no real scope">multidisciplinary journal of all sciences</button>. We guarantee <button type="button" class="flag" data-flag="Real peer review takes weeks">publication within 7 days</button>.</p><p>Our <button type="button" class="flag" data-flag="An impact factor from an unknown index">Impact Factor is 9.8 (Global Impact Index)</button> and the fee is <button type="button" class="flag" data-flag="Low fee bait, often followed by more charges">only $99</button>.</p><p><button type="button" class="flag" data-flag="No submission system: just email it">Kindly send your manuscript by reply email.</button></p></div><p class="mail-count"><b data-mail-count>0</b> of 7 red flags found <span class="small" data-mail-last aria-live="polite"></span></p></div>
+    </div>
+  </section>
+  <section class="slide talk-claim" id="s15" data-min="1.5" data-notes="Never trust a journal&#x27;s own website for its indexing. Search it in Scopus or Web of Science. DOAJ lists vetted open access journals. Sherpa Romeo, which the syllabus names, is now part of Jisc&#x27;s Open Policy Finder and tells you which version you may self-archive. Think Check Submit is a checklist. Next: Rights depend on which version of your paper you share.">
+    <div class="slide-inner">
+      <h2 data-reveal>A finder only suggests, so verify four things before you submit</h2>
+      <div data-reveal><div class="vcards" data-stagger><div class="vcard" data-reveal><span class="vcard-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span><span class="route-tag">Indexing</span><b>Search the database itself</b><span class="route-txt">Scopus or Web of Science, not the journal's own claim</span></div><div class="vcard" data-reveal><span class="vcard-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/></svg></span><span class="route-tag">Open access</span><b>DOAJ</b><span class="route-txt">Lists vetted open access journals</span></div><div class="vcard" data-reveal><span class="vcard-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h8M9 17h6"/></svg></span><span class="route-tag">Rights</span><b>Open Policy Finder</b><span class="route-txt">Formerly Sherpa Romeo: what you may self-archive, and when</span></div><div class="vcard" data-reveal><span class="vcard-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6l2 2 3-3M4 13l2 2 3-3M4 20l2 2 3-3"/><path d="M12 7h8M12 14h8M12 21h8"/></svg></span><span class="route-tag">Checklist</span><b>Think. Check. Submit.</b><span class="route-txt">A short checklist to judge a journal</span></div></div></div>
+      <p class="src" data-reveal>Source: Jisc, Open Policy Finder (2024). doaj.org. thinkchecksubmit.org.</p>
+    </div>
+  </section>
+  <section class="slide talk-claim" id="s16" data-min="2" data-notes="Publishers set rules per version. Open Policy Finder shows, for a journal, which version you may post, where, and after what embargo. Search one journal live, for example one the finder suggested earlier, and read the green, accepted manuscript row. Next: One more question on your phones.">
+    <div class="slide-inner">
+      <h2 data-reveal>Three versions of your paper, and what you may share</h2>
+      <div data-reveal><div class="vers" data-stagger><div class="ver" data-reveal><span class="ver-ico">✎</span><b>Submitted</b><span>Your draft before peer review (preprint)</span></div><span class="pipe-arrow" aria-hidden="true">→</span><div class="ver" data-reveal><span class="ver-ico">✔</span><b>Accepted</b><span>After peer review, your own final text</span></div><span class="pipe-arrow" aria-hidden="true">→</span><div class="ver" data-reveal><span class="ver-ico">❖</span><b>Published</b><span>The journal's typeset version</span></div></div><div class="demo-links vers-links" data-reveal><a class="btn btn-primary" href="https://openpolicyfinder.jisc.ac.uk/" target="_blank" rel="noopener">Open Policy Finder ↗</a><a class="btn" href="https://doaj.org/" target="_blank" rel="noopener">DOAJ ↗</a><a class="btn" href="https://thinkchecksubmit.org/" target="_blank" rel="noopener">Think. Check. Submit. ↗</a></div></div>
+    </div>
+  </section>
+<section class="slide" id="s17" data-min="1" data-q="q6" data-kind="quiz" data-notes="Answer: B (You find it in Scopus when you search Scopus yourself). Timing: you open (O) and reveal (R). Answer B. You found it in Scopus yourself. A board list, an ISSN or fast review can all be faked or shown by questionable journals. Next: India has its own story here.">
   <div class="slide-inner">
-    <h2 data-reveal>Standings after four questions</h2>
+    <p class="kicker" data-reveal>Question 6 of 6 · scored</p>
+    <h2 data-reveal>Which is the strongest sign that a journal is genuine?</h2>
+    
+    <ol class="choices" data-ans="1" data-reveal><li>Its website lists an editorial board</li><li>You find it in Scopus when you search Scopus yourself</li><li>It has an ISSN</li><li>It promises review within a week</li></ol>
+    <div class="live" data-live data-reveal></div>
+  </div>
+</section>
+  <section class="slide talk-claim" id="s18" data-min="1" data-notes="A 2018 study from SPPU, Pune, found most journals recommended for the UGC list were of poor quality. UGC removed 4,305 journals that year and built the CARE list in 2019, screened at SPPU. In 2025 UGC discontinued the list. Each institution now judges journals using suggested parameters. Next: One last question, a real-looking email.">
+    <div class="slide-inner">
+      <h2 data-reveal>In India, journal checks moved from one central list to each institution</h2>
+      <div data-reveal><ol class="tline" data-stagger><li data-reveal><b class="num">2018</b><span>SPPU study: about 88% of journals recommended for the UGC list were poor</span></li><li data-reveal><b class="num">May 2018</b><span>UGC removes 4,305 journals from its list</span></li><li data-reveal><b class="num">2019</b><span>UGC-CARE list, screened at SPPU’s Centre for Publication Ethics</span></li><li data-reveal><b class="num">2025</b><span>CARE list discontinued, institutions now evaluate journals</span></li></ol></div>
+      <p class="src" data-reveal>Source: Nature Index (3 May 2018). Scholarly Kitchen (5 Feb 2020). UGC 584th meeting (3 Oct 2024), announced Feb 2025.</p>
+    </div>
+  </section>
+<section class="slide" id="s19" data-min="1" data-notes="Show the standings, read the top three and applaud. Accuracy decides the order, speed adds at most 30 percent. Next: The playbook to take home.">
+  <div class="slide-inner">
+    <h2 data-reveal>Standings after six questions</h2>
     <p class="small" data-reveal>100 points per correct answer, up to 30 more for speed, 10 for each poll answered.</p>
     <div class="lb" data-leaderboard data-reveal><p class="lb-empty">Waiting for the scores…</p></div>
     <div class="live-ctl" style="margin-left:0;margin-top:12px" data-reveal><button class="btn btn-primary" type="button" data-live-refresh>Refresh</button><button class="btn" type="button" data-live-final>Send final standings to phones</button></div>
     <p class="small save-line" data-live-save role="status"></p><button class="btn" type="button" data-live-save-again hidden>Send again</button>
   </div>
 </section>
-  <section class="slide talk-takeaway" id="s15" data-min="1" data-notes="Here is the playbook. A clear abstract, two finders from different publishers, a shortlist of three, then verify indexing, open access and rights. Finally read the journal&#x27;s aims and a few recent papers. The finder saves you time. Your judgement keeps you safe. Next: The sources I used.">
+  <section class="slide talk-takeaway" id="s20" data-min="1" data-notes="Here is the playbook. A clear abstract, two finders from different publishers, a shortlist of three, then verify indexing, open access and rights. Finally read the journal&#x27;s aims and a few recent papers. The finder saves you time. Your judgement keeps you safe. Next: The sources I used.">
     <div class="slide-inner">
       <h2 class="display" data-reveal>Run two finders, then verify before you submit</h2>
       <div data-reveal><ol class="play" data-stagger><li data-reveal><span class="play-n">1</span><b>Write</b><span>a clear title and abstract</span></li><li data-reveal><span class="play-n">2</span><b>Run</b><span>two finders, from different publishers</span></li><li data-reveal><span class="play-n">3</span><b>Shortlist</b><span>three journals</span></li><li data-reveal><span class="play-n">4</span><b>Verify</b><span>indexing, DOAJ and self-archiving rights</span></li><li data-reveal><span class="play-n">5</span><b>Read</b><span>the aims, scope and recent issues</span></li></ol></div>
     </div>
   </section>
-  <section class="slide talk-refs" id="s16" data-min="0.5" data-notes="Every fact on the slides comes from these sources, checked on 21 October 2026. Next: Questions, please.">
+  <section class="slide talk-refs" id="s21" data-min="0.5" data-notes="Every fact on the slides comes from these sources, checked on 21 October 2026. Next: Questions, please.">
     <div class="slide-inner">
       <h2 data-reveal>References</h2>
       <ul class="refs" data-reveal data-lint="skip"><li>Budapest Open Access Initiative. (2002). Budapest Open Access Initiative declaration. https://www.budapestopenaccessinitiative.org/read/</li><li>Science Europe, cOAlition S, OPERAS, &amp; Agence Nationale de la Recherche. (2022). Action plan for diamond open access. Zenodo. https://zenodo.org/record/6282403</li><li>Schuemie, M. J., &amp; Kors, J. A. (2008). Jane: Suggesting journals, finding experts. Bioinformatics, 24(5), 727-728. https://doi.org/10.1093/bioinformatics/btn006</li><li>Elsevier. (2013, relaunched 2019). What's the best journal for my paper? New tool can help. Elsevier Connect. https://www.elsevier.com/connect/whats-the-best-journal-for-my-paper-new-tool-can-help</li><li>Springer Nature. (n.d.). Selecting a journal. Retrieved October 21, 2026, from https://www.springer.com/gp/authors-editors/journal-author/journal-author-helpdesk/selecting-a-journal/1258</li><li>Jisc. (2024). Sherpa services combined into new user-friendly platform Open Policy Finder. https://www.jisc.ac.uk/news/all/sherpa-services-combined-into-new-user-friendly-platform-open-policy-finder</li><li>Directory of Open Access Journals. (n.d.). https://doaj.org</li><li>Think. Check. Submit. (n.d.). https://thinkchecksubmit.org</li><li>Nature Index. (2018, May 3). India culls 4,305 dubious journals from approved list. https://www.nature.com/nature-index/news/india-culls-four-thousand-three-hundred-dubious-journals-from-approved-list</li><li>The Scholarly Kitchen. (2020, February 5). India's fight against predatory journals: An interview with Professor Bhushan Patwardhan. https://scholarlykitchen.sspnet.org/2020/02/05/indias-fight-against-predatory-journals-an-interview-with-professor-bhushan-patwardhan/</li><li>Organiser. (2025, February 12). UGC discontinues UGC-CARE journal listing, new parameters for peer-reviewed journals introduced. https://organiser.org/2025/02/12/277820/bharat/ugc-discontinues-ugc-care-journal-listing-new-parameters-for-peer-reviewed-journals-introduced/</li></ul>
     </div>
   </section>
-  <section class="slide talk-questions" id="s17" data-min="0.5" data-notes="Thank you. I am happy to take questions, or to run a finder on anyone&#x27;s own abstract.">
+  <section class="slide talk-questions" id="s22" data-min="0.5" data-notes="Thank you. I am happy to take questions, or to run a finder on anyone&#x27;s own abstract.">
     <div class="slide-inner">
       <h2 class="display" data-reveal>Questions?</h2>
     </div>
   </section>
-  <section class="slide" id="s18" data-min="0.5" data-notes="Leave this slide on screen after questions. The QR code opens the same card on phones: portfolio, WhatsApp and LinkedIn. ">
+  <section class="slide" id="s23" data-min="0.5" data-notes="Leave this slide on screen after questions. The QR code opens the same card on phones: portfolio, WhatsApp and LinkedIn. ">
     <div class="slide-inner">
       <p class="kicker" data-reveal>Stay in touch</p>
       <div class="connect">
@@ -2242,6 +2334,29 @@ document.querySelectorAll('[data-talk-reveal]').forEach(function(b){
     try{var q=qrcode(0,'M');q.addData('https://kpsingh.in/uiet/connect');q.make();cq.innerHTML=q.createSvgTag({cellSize:4,margin:0,scalable:true});
       var sv=cq.querySelector('svg');if(sv){sv.setAttribute('role','img');sv.setAttribute('aria-label','QR code for kpsingh.in/uiet/connect');}}catch(e){}
   });
+  /* Read a journal page: six hotspots on an invented journal home page */
+  (function(){
+    var box=document.querySelector('[data-anat]');if(!box)return;
+    var C=[['Aims & scope','Does your paper fit? Scope decides desk rejection, so read it first.'],
+      ['Editorial board','Real people? Search two names on their university pages.'],
+      ['Indexing claims','Badges prove nothing. Search the journal in Scopus or Web of Science yourself.'],
+      ['Fees (APC)','The fee should be stated clearly before you submit, not after acceptance.'],
+      ['Review speed','Review in days instead of weeks is a classic red flag.'],
+      ['Recent issues','Open two recent papers. Is the quality one you would cite?']];
+    var call=box.querySelector('[data-anat-call]');
+    box.querySelectorAll('[data-spot]').forEach(function(b){b.addEventListener('click',function(){
+      var i=+b.getAttribute('data-spot');box.querySelectorAll('[data-spot]').forEach(function(x){x.classList.toggle('on',x===b);});
+      b.classList.add('seen');call.textContent='';var h=document.createElement('b');h.textContent=(i+1)+'. '+C[i][0];var p=document.createElement('p');p.textContent=C[i][1];
+      call.appendChild(h);call.appendChild(p);});});
+  })();
+  /* Spot the red flags: click each suspicious phrase in an invented email */
+  (function(){
+    var box=document.querySelector('[data-mail]');if(!box)return;
+    var cnt=document.querySelector('[data-mail-count]'),last=document.querySelector('[data-mail-last]'),n=0;
+    box.querySelectorAll('[data-flag]').forEach(function(b){b.addEventListener('click',function(){
+      if(!b.classList.contains('found')){b.classList.add('found');n++;cnt.textContent=n;if(window.KP&&KP.replay)KP.replay(cnt);}
+      last.textContent='· '+b.getAttribute('data-flag');});});
+  })();
 })();
 </script>
 </body>
