@@ -1,0 +1,18 @@
+.connect{display:grid;gap:calc(var(--gap) * 1.5);grid-template-columns:1fr;align-items:center;margin-top:var(--gap)}
+@media (min-width:900px){.connect{grid-template-columns:minmax(0,26rem) auto;justify-content:center}}
+.connect-card{display:grid;justify-items:center;text-align:center;gap:4px}
+.connect-avatar{width:132px;height:132px;border-radius:50%;object-fit:cover;border:4px solid var(--card);box-shadow:var(--shadow-2);background:var(--card)}
+.slide h2.connect-name,.connect-name{margin:.35em 0 0;max-width:none}
+.connect-role{color:var(--muted);font-size:var(--step-0);line-height:1.5;margin:0 0 .8em}
+.connect-links{display:grid;gap:12px;width:100%;text-align:left}
+.connect-link{display:flex;align-items:center;gap:14px;min-height:56px;padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);color:var(--fg);text-decoration:none;box-shadow:var(--shadow-1);
+  transition:transform var(--dur-1) var(--ease-out),border-color var(--dur-1) var(--ease-out)}
+.connect-link svg{width:26px;height:26px;flex:none;color:var(--accent)}
+.connect-link span{display:grid;gap:2px;min-width:0}
+.connect-link b{overflow-wrap:anywhere}
+.connect-link small{color:var(--muted);font-size:.9rem}
+.connect-link:active{transform:scale(.98)}
+@media (hover:hover){.connect-link:hover{transform:translateY(-2px);border-color:var(--accent)}}
+.connect-qr{display:grid;justify-items:center;gap:8px;text-align:center}
+.connect-qr .qr{width:min(58vw,240px)}
+.aud .connect-links{margin-top:6px}

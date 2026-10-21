@@ -1,0 +1,17 @@
+{
+ "schema_version": "ace-quiz-1",
+ "preset": "in_lecture",
+ "quiz_id": "RPE-L04-LIVE",
+ "title": "Where should my paper go? Journal finders, hands on",
+ "context": "PHD-RPE-2026",
+ "cohort_id": "PHD_RPE_2026",
+ "confidence": {
+  "capture": "off"
+ },
+ "page0": {
+  "show": true,
+  "tiles": [
+   "questions"
+  ]
+ }
+}

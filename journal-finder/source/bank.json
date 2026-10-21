@@ -1,0 +1,81 @@
+[
+ {
+  "id": "q1",
+  "kind": "poll",
+  "q": "How did you choose, or plan to choose, a journal for your paper?",
+  "opts": [
+   "My supervisor suggested it",
+   "Where a paper I cite was published",
+   "A web search",
+   "An email invitation",
+   "Not chosen yet"
+  ],
+  "tag": "choosing",
+  "difficulty": "easy"
+ },
+ {
+  "id": "q2",
+  "q": "Your subscription journal lets you post the accepted manuscript in a repository after 12 months. Which route is that?",
+  "opts": [
+   "Gold",
+   "Green",
+   "Diamond",
+   "Hybrid"
+  ],
+  "a": 1,
+  "difficulty": "easy",
+  "tag": "choosing"
+ },
+ {
+  "id": "q3",
+  "q": "You paste your abstract into Elsevier JournalFinder. Which journals can it suggest?",
+  "opts": [
+   "Any journal indexed in Scopus",
+   "Elsevier journals only",
+   "Open access journals only",
+   "Journals on the UGC-CARE list"
+  ],
+  "a": 1,
+  "difficulty": "easy",
+  "tag": "choosing"
+ },
+ {
+  "id": "q4",
+  "q": "JANE shows a tag beside a suggested journal. Which tag should raise your trust?",
+  "opts": [
+   "Indexed in MEDLINE",
+   "Publication in 7 days",
+   "Invited by email",
+   "Lowest fee"
+  ],
+  "a": 0,
+  "difficulty": "medium",
+  "tag": "verifying"
+ },
+ {
+  "id": "q5",
+  "q": "An email promises review in 7 days, an Impact Factor of 9.8 from an unknown index, and a low fee. Your move?",
+  "opts": [
+   "Submit, it is fast and cheap",
+   "Check Scopus or Web of Science, DOAJ and Think. Check. Submit. first",
+   "Ask them for a discount",
+   "Submit there and to another journal at once"
+  ],
+  "a": 1,
+  "difficulty": "easy",
+  "tag": "verifying"
+ },
+ {
+  "id": "q6",
+  "q": "Which is the strongest sign that a journal is genuine?",
+  "opts": [
+   "Its website lists an editorial board",
+   "You find it in Scopus when you search Scopus yourself",
+   "It has an ISSN",
+   "It promises review within a week"
+  ],
+  "a": 1,
+  "difficulty": "medium",
+  "tag": "verifying"
+ }
+]
